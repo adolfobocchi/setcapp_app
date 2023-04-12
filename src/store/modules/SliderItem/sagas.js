@@ -24,7 +24,6 @@ import api from '../../../services/api';
 export function* listarSlider() {
   try {
     const response = yield call(() => api.get('/slider'));
-    console.log(response.data);
     const slider = response.data;
     yield put({ type: LISTAR_SLIDER_SUCCESS, payload: slider });
   } catch (error) {

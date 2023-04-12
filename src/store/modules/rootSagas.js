@@ -1,8 +1,12 @@
 import { all, call } from "redux-saga/effects";
+import { criarAcordo, deleteAcordo, listarAcordo, showAcordo, updateAcordo, watchCriarAcordo, watchDeleteAcordo, watchListarAcordo, watchShowAcordo, watchUpdateAcordo } from "./Acordo/sagas";
 import {authSaga, login} from "./Auth/sagas";
+import { criarConfederado, deleteConfederado, listarConfederado, showConfederado, updateConfederado, watchCriarConfederado, watchDeleteConfederado, watchListarConfederado, watchShowConfederado, watchUpdateConfederado } from "./Confederado/sagas";
 import { criarEmpresa, listarEmpresa, showEmpresa, updateEmpresa, deleteEmpresa, watchCriarEmpresa, watchShowEmpresa, watchListarEmpresa, watchUpdateEmpresa, watchDeleteEmpresa } from "./Empresa/sagas";
 import { criarEvento, deleteEvento, listarEvento, showEvento, updateEvento, watchCriarEvento, watchDeleteEvento, watchListarEvento, watchShowEvento, watchUpdateEvento } from "./Evento/sagas";
 import { criarLegislacao, deleteLegislacao, listarLegislacao, showLegislacao, updateLegislacao, watchCriarLegislacao, watchDeleteLegislacao, watchListarLegislacao, watchShowLegislacao, watchUpdateLegislacao } from './Legislacao/sagas'
+import { criarNoticia, deleteNoticia, listarNoticia, showNoticia, updateNoticia, watchCriarNoticia, watchDeleteNoticia, watchListarNoticia, watchShowNoticia, watchUpdateNoticia } from "./Noticia/sagas";
+import { criarServico, deleteServico, listarServico, showServico, updateServico, watchCriarServico, watchDeleteServico, watchListarServico, watchShowServico, watchUpdateServico } from "./Servico/sagas";
 import { criarSlider, deleteSlider, listarSlider, showSlider, updateSlider, watchCriarSlider, watchDeleteSlider, watchListarSlider, watchShowSlider, watchUpdateSlider } from "./SliderItem/sagas";
 
 export default function* rootSaga() {
@@ -49,5 +53,45 @@ export default function* rootSaga() {
     call(watchListarSlider),
     call(watchShowSlider),
     call(watchUpdateSlider),
+    call(criarNoticia),
+    call(listarNoticia),
+    call(showNoticia),
+    call(updateNoticia),
+    call(deleteNoticia),
+    call(watchCriarNoticia),
+    call(watchDeleteNoticia),
+    call(watchListarNoticia),
+    call(watchShowNoticia),
+    call(watchUpdateNoticia),
+    call(criarServico),
+    call(listarServico),
+    call(showServico),
+    call(updateServico),
+    call(deleteServico),
+    call(watchCriarServico),
+    call(watchDeleteServico),
+    call(watchListarServico),
+    call(watchShowServico),
+    call(watchUpdateServico),
+    call(criarConfederado),
+    call(listarConfederado),
+    call(showConfederado),
+    call(updateConfederado),
+    call(deleteConfederado),
+    call(watchCriarConfederado),
+    call(watchDeleteConfederado),
+    call(watchListarConfederado),
+    call(watchShowConfederado),
+    call(watchUpdateConfederado),
+    call(criarAcordo),
+    call(listarAcordo),
+    call(showAcordo),
+    call(updateAcordo),
+    call(deleteAcordo),
+    call(watchCriarAcordo),
+    call(watchDeleteAcordo),
+    call(watchListarAcordo),
+    call(watchShowAcordo),
+    call(watchUpdateAcordo),
   ]);
 }

@@ -12,8 +12,7 @@ const Login = ({isAuthenticated , fetchLogin}) => {
     const handleLogin = (e) => {
       // Handle login logic here
       e.preventDefault();
-      fetchLogin(login,password)
-      history('/painel')
+      fetchLogin(login,password,history)
     };
 
     if(isAuthenticated) {
@@ -51,7 +50,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchLogin: (login,password) => dispatch(loginRequest(login,password))
+    fetchLogin: (login,password, history) => dispatch(loginRequest(login,password,history))
   };
 };
 

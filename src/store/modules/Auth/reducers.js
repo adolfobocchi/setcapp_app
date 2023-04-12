@@ -17,6 +17,7 @@ const authReducer = (state = initialState, action) => {
         error: null,
       };
     case LOGIN_SUCCESS:
+      action.payload.history('/painel');
       return {
         ...state,
         isAuthenticated: true,

@@ -1,28 +1,15 @@
-import React, { useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { criarEmpresaRequest, listarEmpresaRequest, updateEmpresaRequest } from '../../store/modules/Empresa/actions';
 import { connect } from 'react-redux';
 import { Button, Form, Image, Input, Label } from './styled';
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import EditorHtml from '../EditorHtml';
 
 const API_URL = 'http://localhost:3001';
 
-const Editor = ({ name, control, defaultValue }) => {
-  return (
-    <Controller
-      name={name}
-      control={control}
-      defaultValue={defaultValue || ""}
-      render={({ field: { onChange, value } }) => (
-        <ReactQuill value={value} onChange={onChange} />
-      )}
-    />
-  );
-};
 
-const EmpresaForm = ({loading, empresa, error, fetchEmpresas, criarEmpresa, updateEmpresa}) => {
-  
+const EmpresaForm = ({loading, empresas, error, fetchEmpresas, criarEmpresa, updateEmpresa}) => {
+  const [empresa, setEmpresa] = useState(empresas);
   const { register, control, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: empresa
       ? {
@@ -53,15 +40,8 @@ const EmpresaForm = ({loading, empresa, error, fetchEmpresas, criarEmpresa, upda
   
   useEffect(() => {
     fetchEmpresas();
-  }, [fetchEmpresas]);
-
-  useEffect(() => {
-    fetchEmpresas();
-  }, [updateEmpresa, fetchEmpresas]);
-
-  useEffect(() => {
-    fetchEmpresas();
-  }, [criarEmpresa, fetchEmpresas]);
+    setEmpresa(empresas)
+  }, [empresas]);
 
   const onSubmit = (data) => {
     
@@ -76,10 +56,8 @@ const EmpresaForm = ({loading, empresa, error, fetchEmpresas, criarEmpresa, upda
     
     if(data.id && data.id > 0) {
       updateEmpresa(data.id, formData);
-      fetchEmpresas();
     } else {
       criarEmpresa(formData);
-      fetchEmpresas();
     }
     
   }
@@ -128,8 +106,10 @@ const EmpresaForm = ({loading, empresa, error, fetchEmpresas, criarEmpresa, upda
       <Label>Logo</Label>
       <Input  type='file' name='logoFile' {...register('logoFile', { required: false })} />
       {errors.logo && <span>Campo obrigatório</span>}
-
-      <Image src={`${API_URL}/images/${empresa?.logo || null}`} />
+      {empresa?.logo && 
+        <Image src={`${API_URL}/images/${empresa?.logo || null}`} />
+      }
+      
       
       <Label>Whatsapp</Label>
       <Input {...register('whatsapp', { required: true })} />
@@ -160,23 +140,26 @@ const EmpresaForm = ({loading, empresa, error, fetchEmpresas, criarEmpresa, upda
       {errors.longitude && <span>Campo obrigatório</span>}
 
       <Label>Institucional</Label>
-      <Editor name="institucional" control={control} defaultValue={empresa?.institucional} />
+      <EditorHtml name="institucional" control={control} defaultValue={empresa?.institucional} />
 
       <Label>Diretoria</Label>
-      <Editor name="diretoria" control={control} defaultValue={empresa?.diretoria} />
+      <EditorHtml name="diretoria" control={control} defaultValue={empresa?.diretoria} />
       
       <Label>Territorio</Label>
       <Input  type='file' name='territorioFile' {...register('territorioFile', { required: false })} />
       {errors.logo && <span>Campo obrigatório</span>}
 
-      <Image src={`${API_URL}/images/${empresa?.territorio || null}`} />
+      {empresa?.territorio && 
+        <Image src={`${API_URL}/images/${empresa?.territorio || null}`} />
+      }
+      
 
 
       <Label>Fotos</Label>
         <Input type='file' multiple name='files' {...register('files', { required: false })} />
         {errors.logo && <span>Campo obrigatório</span>}
-        {empresa?.imagens.map(imagem => {
-              return (<img src={`http://localhost:3001/images/${imagem.url}`} style={{ width: 40, height: 40 }} />)
+        {empresa?.imagens?.map(imagem => {
+              return (<img key={imagem.id} src={`http://localhost:3001/images/${imagem.url}`} style={{ width: 40, height: 40 }} />)
             })}
 
       <Button type="submit">Salvar</Button>
@@ -187,7 +170,7 @@ const EmpresaForm = ({loading, empresa, error, fetchEmpresas, criarEmpresa, upda
 const mapStateToProps = state => {
   return {
     loading: state.empresa.loading,
-    empresa: state.empresa.empresa,
+    empresas: state.empresa.empresa,
     error: state.empresa.error
   };
 };

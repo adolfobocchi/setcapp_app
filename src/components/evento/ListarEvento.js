@@ -8,9 +8,18 @@ import { Button, Card, Container, Form, Input, Label } from './styled'
 
 const API_URL = 'http://localhost:3001';
 
-const ListarEvento = ({ loading, evento, error, fetchEvento, criarEvento, updateEvento }) => {
-  const [eventoSelected, setEventoSelected] = useState({});
-  const [eventos, setEventos] = useState([]);
+const ListarEvento = ({ loading, eventos, error, fetchEvento, criarEvento, updateEvento }) => {
+  const formEmpty = {
+    id: '',
+    titulo: '',
+    descricao: '',
+    data: '',
+    hora: '',
+    local: '',
+    ativo: false,
+  }
+  const [eventoSelected, setEventoSelected] = useState(formEmpty);
+  const [eventosList, setEventosList] = useState([]);
   const { register, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: eventoSelected
       ? {
@@ -26,19 +35,16 @@ const ListarEvento = ({ loading, evento, error, fetchEvento, criarEvento, update
   });
 
   useEffect(() => {
-    fetchEvento()
-  }, []);
-
-  useEffect(() => {
-    setEventos(evento);
-  }, [evento]);
+    fetchEvento();
+    setEventosList(eventos)
+  }, [eventos]);
 
   useEffect(() => {
     reset(eventoSelected);
   }, [eventoSelected])
 
   const handleSelectEvento = (index) => {
-    setEventoSelected(evento[index]);
+    setEventoSelected(eventos[index]);
 
   }
 
@@ -46,7 +52,7 @@ const ListarEvento = ({ loading, evento, error, fetchEvento, criarEvento, update
   }
 
   const handleClearEvento = () => {
-    setEventoSelected(null)
+    setEventoSelected({...formEmpty})
   }
 
   const onSubmit = (data) => {
@@ -105,8 +111,7 @@ const ListarEvento = ({ loading, evento, error, fetchEvento, criarEvento, update
         <Label>Ativo</Label>
         <Input
           type='checkbox'
-          defaultValue={true}
-          {...register('ativo', { required: true })}
+          {...register('ativo')}
         />
         {errors.ativo && <span>Campo obrigatório</span>}
 
@@ -120,12 +125,12 @@ const ListarEvento = ({ loading, evento, error, fetchEvento, criarEvento, update
         <Button type="button" onClick={handleClearEvento}>Limpar</Button>
       </Form>
       <Container>
-        {eventos?.map((event, index) => (
+        {eventosList?.map((event, index) => (
           <Card key={event.id} onClick={() => { handleSelectEvento(index) }} >
             <h3>{event.titulo}</h3>
             <p>{event.descricao}</p>
             {event.imagens.map(imagem => {
-              return (<img src={`${API_URL}/${imagem.url}`} style={{ width: 40, height: 40 }} />)
+              return (<img src={`${API_URL}/images/${imagem.url}`} style={{ width: 40, height: 40 }} />)
             })}
             <button onClick={() => { handleDeleteEvento(index) }}>Delete</button>
           </Card>
@@ -139,7 +144,7 @@ const ListarEvento = ({ loading, evento, error, fetchEvento, criarEvento, update
 const mapStateToProps = state => {
   return {
     loading: state.evento.loading,
-    evento: state.evento.evento,
+    eventos: state.evento.evento,
     error: state.evento.error
   };
 };

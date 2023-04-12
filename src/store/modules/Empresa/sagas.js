@@ -54,7 +54,6 @@ export function* watchShowEmpresa() {
 // add empresa
 export function* criarEmpresa(action) {
   try {
-    console.log(action);
     const response = yield call(() => api.post('/empresa', action.payload.empresa));
     const empresa = response.data.empresa;
     yield takeEvery(CRIAR_EMPRESA_SUCCESS, function*(action) {
@@ -72,7 +71,6 @@ export function* watchCriarEmpresa() {
 // update empresa
 export function* updateEmpresa(action) {
   try {
-    console.log(action);
     const response = yield call(() => api.put(`/empresa/${action.payload.id}`, action.payload.empresa));
     const empresa = response.data.empresa;
     yield put({ type: UPDATE_EMPRESA_SUCCESS, payload: empresa });

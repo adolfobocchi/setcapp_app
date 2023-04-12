@@ -1,27 +1,13 @@
-import React, { useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { Button, Form, Input, Label } from './styled';
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import { criarLegislacaoRequest, listarLegislacaoRequest, updateLegislacaoRequest } from '../../store/modules/Legislacao/actions';
+import EditorHtml from '../EditorHtml';
 
-const Editor = ({ name, control, defaultValue }) => {
-  return (
-    <Controller
-      name={name}
-      control={control}
-      defaultValue={defaultValue || ""}
-      render={({ field: { onChange, value } }) => (
-        <ReactQuill value={value} onChange={onChange} />
-      )}
-    />
-  );
-};
-
-const LegislacaoForm = ({loading, legislacao, error, fetchLegislacao, criarLegislacao, updateLegislacao}) => {
-  
-  const { register, control, formState: { errors }, handleSubmit } = useForm({
+const LegislacaoForm = ({loading, legislacaos, error, fetchLegislacao, criarLegislacao, updateLegislacao}) => {
+  const [legislacao, setLegislacao] = useState(legislacaos);
+  const { register, control, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: legislacao
       ? {
           id: legislacao.id,
@@ -32,8 +18,8 @@ const LegislacaoForm = ({loading, legislacao, error, fetchLegislacao, criarLegis
 
   useEffect(() => {
     fetchLegislacao();
-  }, []);
-  
+    setLegislacao(legislacaos);
+  }, [legislacaos]);
 
   const onSubmit = (data) => {    
     if(data.id && data.id > 0) {
@@ -53,7 +39,7 @@ const LegislacaoForm = ({loading, legislacao, error, fetchLegislacao, criarLegis
       />
 
       <Label>Legislacao</Label>
-      <Editor name="conteudo" control={control} defaultValue={legislacao?.conteudo}/>
+      <EditorHtml name="conteudo" control={control} defaultValue={legislacao?.conteudo}/>
 
       <Button type="submit">Salvar</Button>
     </Form>
@@ -63,7 +49,7 @@ const LegislacaoForm = ({loading, legislacao, error, fetchLegislacao, criarLegis
 const mapStateToProps = state => {
   return {
     loading: state.legislacao.loading,
-    legislacao: state.legislacao.legislacao,
+    legislacaos: state.legislacao.legislacao,
     error: state.legislacao.error
   };
 };

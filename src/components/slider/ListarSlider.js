@@ -4,13 +4,21 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form';
 import { criarSliderRequest, listarSliderRequest, updateSliderRequest } from '../../store/modules/SliderItem/actions'
-import { Button, Card, Container, Form, Input, Label } from './styled'
+import { Button, Card, Container, Form, Image, Input, Label } from './styled'
 
 const API_URL = 'http://localhost:3001';
 
-const ListarSlider = ({ loading, slider, error, fetchSlider, criarSlider, updateSlider }) => {
-  const [sliderSelected, setSliderSelected] = useState({});
-  const [sliders, setSliders] = useState([]);
+const ListarSlider = ({ loading, sliders, error, fetchSlider, criarSlider, updateSlider }) => {
+  const formEmpty = {
+    id: '',
+    url: '',
+    descricao: '',
+    order: '',
+    ativo: false,
+    link: '',
+  }
+  const [sliderSelected, setSliderSelected] = useState(formEmpty);
+  const [sliderList, setSliderList] = useState([]);
   const { register, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: sliderSelected
       ? {
@@ -26,18 +34,16 @@ const ListarSlider = ({ loading, slider, error, fetchSlider, criarSlider, update
 
   useEffect(() => {
     fetchSlider()
-  }, []);
+    setSliderList(sliders)
+  }, [sliders]);
 
-  useEffect(() => {
-    setSliders(slider);
-  }, [slider]);
 
   useEffect(() => {
     reset(sliderSelected);
   }, [sliderSelected])
 
   const handleSelectSlider = (index) => {
-    setSliderSelected(slider[index]);
+    setSliderSelected(sliders[index]);
 
   }
 
@@ -45,7 +51,7 @@ const ListarSlider = ({ loading, slider, error, fetchSlider, criarSlider, update
   }
 
   const handleClearSlider = () => {
-    setSliderSelected(null)
+    setSliderSelected({...formEmpty})
   }
 
   const onSubmit = (data) => {
@@ -72,8 +78,10 @@ const ListarSlider = ({ loading, slider, error, fetchSlider, criarSlider, update
         <Label>Imagem</Label>
         <Input type='file' name='sliderFile' {...register('sliderFile', { required: false })} />
         {errors.logo && <span>Campo obrigatório</span>}
+        {sliderSelected?.url &&
+          <Image src={`${API_URL}/images/${sliderSelected?.url || null}`} />
+        }
 
-        <img src={`${API_URL}/images/${sliderSelected?.url || null}`} />
 
         <Label>ordem</Label>
         <Input
@@ -97,7 +105,7 @@ const ListarSlider = ({ loading, slider, error, fetchSlider, criarSlider, update
         <Label>Ativo</Label>
         <Input
           type='checkbox'
-          {...register('ativo', { required: true })}
+          {...register('ativo')}
         />
         {errors.ativo && <span>Campo obrigatório</span>}
 
@@ -105,14 +113,14 @@ const ListarSlider = ({ loading, slider, error, fetchSlider, criarSlider, update
         <Button type="button" onClick={handleClearSlider}>Limpar</Button>
       </Form>
       <Container>
-        {sliders?.map((slider, index) => (
+        {sliderList?.map((slider, index) => (
           <Card key={slider.id} onClick={() => { handleSelectSlider(index) }} >
             <h3>{slider.order}</h3>
             <p>{slider.descricao}</p>
             <p>{slider.link}</p>
             <p>{slider.ativo}</p>
             <img src={`http://localhost:3001/images/${slider.url}`} style={{ width: 40, height: 40 }} />
-            
+
             <button onClick={() => { handleDeleteSlider(index) }}>Delete</button>
           </Card>
         ))}
@@ -125,7 +133,7 @@ const ListarSlider = ({ loading, slider, error, fetchSlider, criarSlider, update
 const mapStateToProps = state => {
   return {
     loading: state.slider.loading,
-    slider: state.slider.slider,
+    sliders: state.slider.slider,
     error: state.slider.error
   };
 };
