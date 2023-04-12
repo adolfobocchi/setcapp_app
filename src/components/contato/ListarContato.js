@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form';
-import { criarContatoRequest, listarContatoRequest, updateContatoRequest } from '../../store/modules/Contato/actions'
-import { Button, Card, Container, Form, Image, Input, Label } from './styled'
+import { criarContatoRequest, deleteContatoRequest, listarContatoRequest, updateContatoRequest } from '../../store/modules/Contato/actions'
+import { Button, Card, Container, Form, Image, Input, Label, TextArea } from './styled'
 
 const API_URL = 'http://localhost:3001';
 
-const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, updateContato }) => {
+const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, updateContato, deleteContato }) => {
   const formEmpty = {
     id: '',
     nome: '',
@@ -44,18 +44,20 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
   }
 
   const handleDeleteContato = (index) => {
+    console.log(index);
+    deleteContato(index);
+    setContatoSelected({...formEmpty})
   }
 
   const onSubmit = (data) => {
-    const formData = new FormData();
-    formData.append('contato', JSON.stringify(data));
 
     if (data.id && data.id > 0) {
-      updateContato(data.id, formData);
+      updateContato(data.id, data);
 
     } else {
-      criarContato(formData);
+      criarContato(data);
     }
+    setContatoSelected({...formEmpty});
 
   }
   return (
@@ -87,8 +89,9 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
         />
         {errors.assunto && <span>Campo obrigatório</span>}
         <Label>Mensagem</Label>
-        <Input
+        <TextArea
           {...register('mensagem', { required: true })}
+          rows={10}
         />
         {errors.mensagem && <span>Campo obrigatório</span>}
 
@@ -96,10 +99,10 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
         <Button type="button" onClick={handleClearContato}>Limpar</Button>
       </Form>
       <Container>
-        {contatosList?.map((contato, index) => (
+        {contatosList.length > 0 && contatosList?.map((contato, index) => (
           <Card key={contato.id} onClick={() => { handleSelectContato(index) }} >
             <h3>{contato.nome}</h3>            
-            <button onClick={() => { handleDeleteContato(index) }}>Delete</button>
+            <button onClick={() => {handleDeleteContato(contato.id)}}>Delete</button>
           </Card>
         ))}
       </Container>
@@ -120,7 +123,8 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchContato: () => dispatch(listarContatoRequest()),
     criarContato: (contato) => dispatch(criarContatoRequest(contato)),
-    updateContato: (id, contato) => dispatch(updateContatoRequest(id, contato))
+    updateContato: (id, contato) => dispatch(updateContatoRequest(id, contato)),
+    deleteContato: (id) => dispatch(deleteContatoRequest(id))
   };
 };
 

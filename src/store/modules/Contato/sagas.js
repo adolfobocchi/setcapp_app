@@ -83,7 +83,8 @@ export function* watchUpdateContato() {
 // delete empresa
 export function* deleteContato(action) {
   try {
-    yield call(() => axios.delete(`/contato/${action.payload}`));
+    console.log(action);
+    yield call(() => api.delete(`/contato/${action.payload}`));
     yield put({ type: DELETE_CONTATO_SUCCESS, payload: action.payload });
   } catch (error) {
     yield put({ type: DELETE_CONTATO_FAILURE, payload: error.message });

@@ -130,7 +130,7 @@ const ListarEvento = ({ loading, eventos, error, fetchEvento, criarEvento, updat
             <h3>{event.titulo}</h3>
             <p>{event.descricao}</p>
             {event.imagens.map(imagem => {
-              return (<img src={`${API_URL}/images/${imagem.url}`} style={{ width: 40, height: 40 }} />)
+              return (<img key={imagem.id} src={`${API_URL}/images/${imagem.url}`} style={{ width: 40, height: 40 }} />)
             })}
             <button onClick={() => { handleDeleteEvento(index) }}>Delete</button>
           </Card>

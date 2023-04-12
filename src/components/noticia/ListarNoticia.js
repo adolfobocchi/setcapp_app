@@ -50,7 +50,7 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
   }
 
   const handleClearNoticia = () => {
-    setNoticiaSelected(null)
+    setNoticiaSelected({...formEmpty})
   }
 
   const onSubmit = (data) => {

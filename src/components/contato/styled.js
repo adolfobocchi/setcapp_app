@@ -30,6 +30,11 @@ export const Input = styled.input`
   margin-bottom: 1rem;
 `;
 
+export const TextArea = styled.textarea`
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+`;
+
 export const Button = styled.button`
   background-color: #007bff;
   color: white;

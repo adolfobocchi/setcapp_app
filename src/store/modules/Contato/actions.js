@@ -81,12 +81,12 @@ export const updateContatoFailure = (error) => ({
 
 export const deleteContatoRequest = (id) => ({
   type: DELETE_CONTATO_REQUEST,
-  payload: { id },
+  payload: id,
 });
 
 export const deleteContatoSuccess = (id) => ({
   type: DELETE_CONTATO_SUCCESS,
-  payload: { id },
+  payload: {id} ,
 });
 
 export const deleteContatoFailure = (error) => ({

@@ -92,13 +92,13 @@ const ListarSlider = ({ loading, sliders, error, fetchSlider, criarSlider, updat
 
         <Label>Descricao</Label>
         <Input
-          {...register('descricao', { required: true })}
+          {...register('descricao', { required: false })}
         />
         {errors.descricao && <span>Campo obrigatório</span>}
 
         <Label>Link</Label>
         <Input
-          {...register('link', { required: true })}
+          {...register('link', { required: false })}
         />
         {errors.link && <span>Campo obrigatório</span>}
 

@@ -73,7 +73,7 @@ import {
       case DELETE_CONTATO_SUCCESS:
         return {
           loading: false,
-          contato: state.contato.filter((user) => user.id !== action.payload),
+          contato: action.payload,
           error: '',
         };
       case LISTAR_CONTATO_FAILURE:
