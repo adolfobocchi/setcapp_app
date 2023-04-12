@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ListarAcordo from '../components/acordo/ListarAcordo';
 import ListarConfederado from '../components/confederado/ListarConfederado';
+import ListarContato from '../components/contato/ListarContato';
 import FormEmpresa from '../components/empresa/FormEmpresa';
 import ListarEvento from '../components/evento/ListarEvento';
 import LegislacaoForm from '../components/legislacao/FormLegislacao';
@@ -42,6 +43,7 @@ const Painel = () => {
     {key: 6, label: "Serviços", component: <ListarServico />}, 
     {key: 7, label: "Federação", component: <ListarConfederado />}, 
     {key: 8, label: "Acordos", component: <ListarAcordo />}, 
+    {key: 9, label: "Contatos", component: <ListarContato />}, 
     {key: 10, label: "Sair", component: <Logout />}, 
   ]
   const [selectedMenuItem, setSelectedMenuItem] = useState(menuItems[0]);

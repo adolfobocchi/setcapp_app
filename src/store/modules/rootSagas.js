@@ -2,6 +2,7 @@ import { all, call } from "redux-saga/effects";
 import { criarAcordo, deleteAcordo, listarAcordo, showAcordo, updateAcordo, watchCriarAcordo, watchDeleteAcordo, watchListarAcordo, watchShowAcordo, watchUpdateAcordo } from "./Acordo/sagas";
 import {authSaga, login} from "./Auth/sagas";
 import { criarConfederado, deleteConfederado, listarConfederado, showConfederado, updateConfederado, watchCriarConfederado, watchDeleteConfederado, watchListarConfederado, watchShowConfederado, watchUpdateConfederado } from "./Confederado/sagas";
+import { criarContato, deleteContato, listarContato, showContato, updateContato, watchCriarContato, watchDeleteContato, watchListarContato, watchShowContato, watchUpdateContato } from "./Contato/sagas";
 import { criarEmpresa, listarEmpresa, showEmpresa, updateEmpresa, deleteEmpresa, watchCriarEmpresa, watchShowEmpresa, watchListarEmpresa, watchUpdateEmpresa, watchDeleteEmpresa } from "./Empresa/sagas";
 import { criarEvento, deleteEvento, listarEvento, showEvento, updateEvento, watchCriarEvento, watchDeleteEvento, watchListarEvento, watchShowEvento, watchUpdateEvento } from "./Evento/sagas";
 import { criarLegislacao, deleteLegislacao, listarLegislacao, showLegislacao, updateLegislacao, watchCriarLegislacao, watchDeleteLegislacao, watchListarLegislacao, watchShowLegislacao, watchUpdateLegislacao } from './Legislacao/sagas'
@@ -93,5 +94,16 @@ export default function* rootSaga() {
     call(watchListarAcordo),
     call(watchShowAcordo),
     call(watchUpdateAcordo),
+    call(watchUpdateConfederado),
+    call(criarContato),
+    call(listarContato),
+    call(showContato),
+    call(updateContato),
+    call(deleteContato),
+    call(watchCriarContato),
+    call(watchDeleteContato),
+    call(watchListarContato),
+    call(watchShowContato),
+    call(watchUpdateContato),
   ]);
 }

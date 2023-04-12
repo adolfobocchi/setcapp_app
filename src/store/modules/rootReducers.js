@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import acordoReducer from './Acordo/reducers';
 import authReducer from './Auth/reducers';
 import confederadoReducer from './Confederado/reducers';
+import contatoReducer from './Contato/reducers';
 import empresaReducer from './Empresa/reducers';
 import eventoReducer from './Evento/reducers';
 import legislacaoReducer from './Legislacao/reducers';
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   servico: servicoReducer,
   confederado: confederadoReducer,
   acordo: acordoReducer,
+  contato: contatoReducer,
 });
 
 export default rootReducer;
