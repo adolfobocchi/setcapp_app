@@ -1,6 +1,6 @@
 import { all, call } from "redux-saga/effects";
 import { criarAcordo, deleteAcordo, listarAcordo, showAcordo, updateAcordo, watchCriarAcordo, watchDeleteAcordo, watchListarAcordo, watchShowAcordo, watchUpdateAcordo } from "./Acordo/sagas";
-import {authSaga, login} from "./Auth/sagas";
+import {authSaga, login, verificaToken, watchVerificaToken} from "./Auth/sagas";
 import { criarConfederado, deleteConfederado, listarConfederado, showConfederado, updateConfederado, watchCriarConfederado, watchDeleteConfederado, watchListarConfederado, watchShowConfederado, watchUpdateConfederado } from "./Confederado/sagas";
 import { criarContato, deleteContato, listarContato, showContato, updateContato, watchCriarContato, watchDeleteContato, watchListarContato, watchShowContato, watchUpdateContato } from "./Contato/sagas";
 import { criarEmpresa, listarEmpresa, showEmpresa, updateEmpresa, deleteEmpresa, watchCriarEmpresa, watchShowEmpresa, watchListarEmpresa, watchUpdateEmpresa, watchDeleteEmpresa } from "./Empresa/sagas";
@@ -24,6 +24,8 @@ export default function* rootSaga() {
     call(watchUpdateEmpresa),
     call(authSaga),
     call(login),
+    call(watchVerificaToken),
+    call(verificaToken),
     call(criarLegislacao),
     call(listarLegislacao),
     call(showLegislacao),

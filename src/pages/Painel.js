@@ -33,20 +33,21 @@ const Content = styled.div`
 `;
 
 const Painel = () => {
-  const menuItems=[
-    {key: 0, label: "Painel", component: <><h2>Painel de configuração</h2><h3>Utilize o menu lateral para configurar as seções do site.</h3></> },
-    {key: 1, label: "Empresa", component: <FormEmpresa /> },
-    {key: 2, label: "Legislacao", component: <LegislacaoForm />},
-    {key: 3, label: "Eventos", component: <ListarEvento />},
-    {key: 4, label: "Sliders", component: <ListarSlider />},
-    {key: 5, label: "Noticias", component: <ListarNoticia />},
-    {key: 6, label: "Serviços", component: <ListarServico />}, 
-    {key: 7, label: "Federação", component: <ListarConfederado />}, 
-    {key: 8, label: "Acordos", component: <ListarAcordo />}, 
-    {key: 9, label: "Contatos", component: <ListarContato />}, 
-    {key: 10, label: "Sair", component: <Logout />}, 
+  const menuItems = [
+    { key: 0, label: "Painel", component: <><h2>Painel de configuração</h2><h3>Utilize o menu lateral para configurar as seções do site.</h3></> },
+    { key: 1, label: "Empresa", component: <FormEmpresa /> },
+    { key: 2, label: "Legislacao", component: <LegislacaoForm /> },
+    { key: 3, label: "Eventos", component: <ListarEvento /> },
+    { key: 4, label: "Sliders", component: <ListarSlider /> },
+    { key: 5, label: "Noticias", component: <ListarNoticia /> },
+    { key: 6, label: "Serviços", component: <ListarServico /> },
+    { key: 7, label: "Federação", component: <ListarConfederado /> },
+    { key: 8, label: "Acordos", component: <ListarAcordo /> },
+    { key: 9, label: "Contatos", component: <ListarContato /> },
+    { key: 10, label: "Sair", component: <Logout /> },
   ]
   const [selectedMenuItem, setSelectedMenuItem] = useState(menuItems[0]);
+
 
   const handleMenuItemClick = (menuItem) => {
     setSelectedMenuItem(menuItem);
@@ -71,5 +72,4 @@ const Painel = () => {
     </Container>
   );
 };
-
 export default Painel;

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form';
 import { criarContatoRequest, deleteContatoRequest, listarContatoRequest, updateContatoRequest } from '../../store/modules/Contato/actions'
-import { Button, Card, Container, Form, Image, Input, Label, TextArea } from './styled'
+import { Button, Card, Container, Form, Input, Label, TextArea } from './styled'
 
 const API_URL = 'http://localhost:3001';
 
@@ -44,7 +44,6 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
   }
 
   const handleDeleteContato = (index) => {
-    console.log(index);
     deleteContato(index);
     setContatoSelected({...formEmpty})
   }
@@ -99,7 +98,7 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
         <Button type="button" onClick={handleClearContato}>Limpar</Button>
       </Form>
       <Container>
-        {contatosList.length > 0 && contatosList?.map((contato, index) => (
+        {contatosList?.length > 0 && contatosList?.map((contato, index) => (
           <Card key={contato.id} onClick={() => { handleSelectContato(index) }} >
             <h3>{contato.nome}</h3>            
             <button onClick={() => {handleDeleteContato(contato.id)}}>Delete</button>

@@ -1,5 +1,4 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
-import axios from 'axios';
 
 import {
   LISTAR_CONTATO_REQUEST,
@@ -83,7 +82,6 @@ export function* watchUpdateContato() {
 // delete empresa
 export function* deleteContato(action) {
   try {
-    console.log(action);
     yield call(() => api.delete(`/contato/${action.payload}`));
     yield put({ type: DELETE_CONTATO_SUCCESS, payload: action.payload });
   } catch (error) {
