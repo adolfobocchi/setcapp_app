@@ -6,7 +6,8 @@ import { useForm } from 'react-hook-form';
 import { criarSliderRequest, listarSliderRequest, updateSliderRequest } from '../../store/modules/SliderItem/actions'
 import { Button, Card, Container, Form, Image, Input, Label } from './styled'
 
-const API_URL = 'http://localhost:3001';
+const API_URL = 'http://setcapp-api.azurewebsites.net';
+/* const API_URL = 'http://localhost:3001'; */
 
 const ListarSlider = ({ loading, sliders, error, fetchSlider, criarSlider, updateSlider }) => {
   const formEmpty = {
@@ -119,7 +120,7 @@ const ListarSlider = ({ loading, sliders, error, fetchSlider, criarSlider, updat
             <p>{slider.descricao}</p>
             <p>{slider.link}</p>
             <p>{slider.ativo}</p>
-            <img src={`http://localhost:3001/images/${slider.url}`} style={{ width: 40, height: 40 }} />
+            <img src={`${API_URL}/images/${slider.url}`} style={{ width: 40, height: 40 }} />
 
             <button onClick={() => { handleDeleteSlider(index) }}>Delete</button>
           </Card>

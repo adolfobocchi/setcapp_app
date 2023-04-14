@@ -6,7 +6,8 @@ import { useForm } from 'react-hook-form';
 import { criarConfederadoRequest, listarConfederadoRequest, updateConfederadoRequest } from '../../store/modules/Confederado/actions'
 import { Button, Card, Container, Form, Image, Input, Label } from './styled'
 
-const API_URL = 'http://localhost:3001';
+/* const API_URL = 'http://localhost:3001'; */
+const API_URL = 'http://setcapp-api.azurewebsites.net';
 
 const ListarConfederado = ({ loading, confederados, error, fetchConfederado, criarConfederado, updateConfederado }) => {
   const formEmpty = {
@@ -92,7 +93,7 @@ const ListarConfederado = ({ loading, confederados, error, fetchConfederado, cri
         {confederadosList?.map((confederado, index) => (
           <Card key={confederado.id} onClick={() => { handleSelectConfederado(index) }} >
             <h3>{confederado.nome}</h3>
-            <img src={`http://localhost:3001/images/${confederado.url}`} style={{ width: 40, height: 40 }} />
+            <img src={`${API_URL}/images/${confederado.url}`} style={{ width: 40, height: 40 }} />
             
             <button onClick={() => { handleDeleteConfederado(index) }}>Delete</button>
           </Card>

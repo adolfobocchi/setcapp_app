@@ -6,6 +6,9 @@ import Header from '../components/Header';
 import Navbar from '../components/NavBar';
 import Titulo from '../components/Titulo';
 
+const API_URL = 'http://setcapp-api.azurewebsites.net';
+/* const API_URL = 'http://localhost:3001'; */
+
 const Home = ({loading, empresas, error}) => {
     const [empresa, setEmpresa] = useState(empresas);
     useEffect(() => {
@@ -18,7 +21,7 @@ const Home = ({loading, empresas, error}) => {
         <h3>Estrutura</h3>
         <GaleriaArea >
         {empresa?.imagens?.map(imagem => {
-              return (<img key={imagem.id} src={`http://localhost:3001/images/${imagem.url}`} style={{margin: 8, width: 'auto', height: 200 }} />)
+              return (<img key={imagem.id} src={`${API_URL}/images/${imagem.url}`} style={{margin: 8, width: 'auto', height: 200 }} />)
             })}
             </GaleriaArea>
         <Footer empresa={empresa}/>

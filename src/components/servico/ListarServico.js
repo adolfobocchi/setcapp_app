@@ -7,7 +7,8 @@ import { criarServicoRequest, listarServicoRequest, updateServicoRequest } from 
 import { Button, Card, Container, Form, Image, Input, Label } from './styled'
 import EditorHtml from '../EditorHtml';
 
-const API_URL = 'http://localhost:3001';
+/* const API_URL = 'http://localhost:3001'; */
+const API_URL = 'http://setcapp-api.azurewebsites.net';
 
 const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, updateServico }) => {
   const formEmpty = {
@@ -114,7 +115,7 @@ const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, u
         {servicosList?.map((servico, index) => (
           <Card key={servico.id} onClick={() => { handleSelectServico(index) }} >
             <h3>{servico.nome}</h3>
-            <img src={`http://localhost:3001/images/${servico.url}`} style={{ width: 40, height: 40 }} />
+            <img src={`${API_URL}/images/${servico.url}`} style={{ width: 40, height: 40 }} />
             
             <button onClick={() => { handleDeleteServico(index) }}>Delete</button>
           </Card>

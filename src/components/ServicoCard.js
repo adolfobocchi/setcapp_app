@@ -38,12 +38,14 @@ const Imagem = styled.img`
     width: 80px;
 `
 
+const API_URL = 'http://setcapp-api.azurewebsites.net';
+/* const API_URL = 'http://localhost:3001'; */
 const ServicoCard = ({ servico }) => {
 
     return (
         <ServicoCardArea>
             <CardImageArea>
-                <Imagem src={`http://localhost:3001/images/${servico.url}`} alt='Imagem servico' />
+                <Imagem src={`${API_URL}/images/${servico.url}`} alt='Imagem servico' />
             </CardImageArea>
             <CardTituloArea>
                 {servico.nome}

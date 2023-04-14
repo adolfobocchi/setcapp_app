@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { Button, Form, GaleriaArea, Image, Input, Label } from './styled';
 import EditorHtml from '../EditorHtml';
 
-const API_URL = 'http://localhost:3001';
+/* const API_URL = 'http://localhost:3001'; */
+const API_URL = 'http://setcapp-api.azurewebsites.net';
 
 
 const EmpresaForm = ({loading, empresas, error, fetchEmpresas, criarEmpresa, updateEmpresa}) => {
@@ -160,7 +161,7 @@ const EmpresaForm = ({loading, empresas, error, fetchEmpresas, criarEmpresa, upd
         {errors.logo && <span>Campo obrigatório</span>}
         <GaleriaArea>
         {empresa?.imagens?.map(imagem => {
-              return (<img key={imagem.id} src={`http://localhost:3001/images/${imagem.url}`} style={{ width: 40, height: 40 }} />)
+              return (<img key={imagem.id} src={`${API_URL}/images/${imagem.url}`} style={{ width: 40, height: 40 }} />)
             })}
         </GaleriaArea>
       <Button type="submit">Salvar</Button>

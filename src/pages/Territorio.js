@@ -6,6 +6,9 @@ import Header from '../components/Header';
 import Navbar from '../components/NavBar';
 import Titulo from '../components/Titulo';
 
+const API_URL = 'http://setcapp-api.azurewebsites.net';
+/* const API_URL = 'http://localhost:3001'; */
+
 const Home = ({loading, empresas, error}) => {
     const [empresa, setEmpresa] = useState(empresas);
     useEffect(() => {
@@ -16,7 +19,7 @@ const Home = ({loading, empresas, error}) => {
         <Header empresa={empresa}  />
         <Navbar />
         <h3>Território</h3>
-        <img key={empresa.id} src={`http://localhost:3001/images/${empresa.territorio}`} style={{margin: 8, width: 'auto', height: 200 }} />
+        <img key={empresa.id} src={`${API_URL}/images/${empresa.territorio}`} style={{margin: 8, width: 'auto', height: 200 }} />
         <Footer empresa={empresa}/>
         </>
     )
