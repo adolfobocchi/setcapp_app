@@ -8,8 +8,8 @@ import { Button, Card, Container, Form, Input, Label } from './styled'
 import EditorHtml from '../EditorHtml';
 import DataPicker from '../DataPicker';
 
-/* const API_URL = 'http://localhost:3001'; */
-const API_URL = 'http://setcapp-api.azurewebsites.net';
+const API_URL = 'http://localhost:3001';
+//const API_URL = 'http://setcapp-api.azurewebsites.net';
 
 const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, updateNoticia }) => {
   const formEmpty = {

@@ -2,8 +2,8 @@ import React from "react";
 import {useNavigate} from 'react-router-dom';
 import { ContatoArea, FormRow, HeaderArea, HeaderBar, HeaderContent, Input, LinkArea, LinkRedeSocial, LogoArea, LogoImg, SearchArea } from "./styled";
 import { FaInstagram, FaSearch } from 'react-icons/fa'
-const API_URL = 'http://setcapp-api.azurewebsites.net';
-/* const API_URL = 'http://localhost:3001'; */
+//const API_URL = 'http://setcapp-api.azurewebsites.net';
+const API_URL = 'http://localhost:3001';
 const Header = ({ empresa }) => {
   const history = useNavigate();
   function toHome() {

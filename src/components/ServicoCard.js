@@ -38,8 +38,8 @@ const Imagem = styled.img`
     width: 80px;
 `
 
-const API_URL = 'http://setcapp-api.azurewebsites.net';
-/* const API_URL = 'http://localhost:3001'; */
+//const API_URL = 'http://setcapp-api.azurewebsites.net';
+const API_URL = 'http://localhost:3001'; 
 const ServicoCard = ({ servico }) => {
 
     return (

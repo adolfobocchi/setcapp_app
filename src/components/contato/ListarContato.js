@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form';
 import { criarContatoRequest, deleteContatoRequest, listarContatoRequest, updateContatoRequest } from '../../store/modules/Contato/actions'
 import { Button, Card, Container, Form, Input, Label, TextArea } from './styled'
 
-const API_URL = 'http://setcapp-api.azurewebsites.net';
-/* const API_URL = 'http://localhost:3001'; */
+//const API_URL = 'http://setcapp-api.azurewebsites.net';
+const API_URL = 'http://localhost:3001';
 
 const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, updateContato, deleteContato }) => {
   const formEmpty = {

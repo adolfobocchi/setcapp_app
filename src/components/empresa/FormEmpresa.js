@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { Button, Form, GaleriaArea, Image, Input, Label } from './styled';
 import EditorHtml from '../EditorHtml';
 
-/* const API_URL = 'http://localhost:3001'; */
-const API_URL = 'http://setcapp-api.azurewebsites.net';
+const API_URL = 'http://localhost:3001';
+//const API_URL = 'http://setcapp-api.azurewebsites.net';
 
 
 const EmpresaForm = ({loading, empresas, error, fetchEmpresas, criarEmpresa, updateEmpresa}) => {

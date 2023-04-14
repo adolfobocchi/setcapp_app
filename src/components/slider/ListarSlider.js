@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form';
 import { criarSliderRequest, listarSliderRequest, updateSliderRequest } from '../../store/modules/SliderItem/actions'
 import { Button, Card, Container, Form, Image, Input, Label } from './styled'
 
-const API_URL = 'http://setcapp-api.azurewebsites.net';
-/* const API_URL = 'http://localhost:3001'; */
+//const API_URL = 'http://setcapp-api.azurewebsites.net';
+const API_URL = 'http://localhost:3001';
 
 const ListarSlider = ({ loading, sliders, error, fetchSlider, criarSlider, updateSlider }) => {
   const formEmpty = {
