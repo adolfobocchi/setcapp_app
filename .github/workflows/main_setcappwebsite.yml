@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'setcappwebsite'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_846CC3DBA5C14272AD15ED953288FC9B }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A218FB0F2F174F759CC5A8D64CE05C19 }}
           package: .
