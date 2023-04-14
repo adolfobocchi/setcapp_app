@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { listarConfederadoRequest } from '../store/modules/Confederado/actions';
 
+
+const API_URL = process.env.REACT_APP_URL_API;
+
 const Home = ({loadin, confederados, fetchConfederado}) => {
     const [confederado, setConfederado] = useState(confederados);
     useEffect(() => {

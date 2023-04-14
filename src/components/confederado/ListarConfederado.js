@@ -6,8 +6,7 @@ import { useForm } from 'react-hook-form';
 import { criarConfederadoRequest, listarConfederadoRequest, updateConfederadoRequest } from '../../store/modules/Confederado/actions'
 import { Button, Card, Container, Form, Image, Input, Label } from './styled'
 
-const API_URL = 'http://localhost:3001';
-//const API_URL = 'http://setcapp-api.azurewebsites.net';
+const API_URL = process.env.REACT_APP_URL_API;
 
 const ListarConfederado = ({ loading, confederados, error, fetchConfederado, criarConfederado, updateConfederado }) => {
   const formEmpty = {

@@ -6,8 +6,7 @@ import { useForm } from 'react-hook-form';
 import { criarEventoRequest, listarEventoRequest, updateEventoRequest } from '../../store/modules/Evento/actions'
 import { Button, Card, Container, Form, Input, Label } from './styled'
 
-const API_URL = 'http://localhost:3001';
-//const API_URL = 'http://setcapp-api.azurewebsites.net';
+const API_URL = process.env.REACT_APP_URL_API;
 
 const ListarEvento = ({ loading, eventos, error, fetchEvento, criarEvento, updateEvento }) => {
   const formEmpty = {

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const API_URL = process.env.REACT_APP_URL_API;
+
 const ServicoCardArea = styled.div`
     height: 300px;
     width: 50%;
@@ -38,8 +40,6 @@ const Imagem = styled.img`
     width: 80px;
 `
 
-//const API_URL = 'http://setcapp-api.azurewebsites.net';
-const API_URL = 'http://localhost:3001'; 
 const ServicoCard = ({ servico }) => {
 
     return (

@@ -4,6 +4,8 @@ import { listarServicoRequest } from '../store/modules/Servico/actions';
 import ServicoCard from './ServicoCard';
 import { SectionArea } from './styled';
 
+const API_URL = process.env.REACT_APP_URL_API;
+
 const Home = ({ loadin, servicos, fetchServico }) => {
   const [servico, setServico] = useState(servicos);
   useEffect(() => {
@@ -12,6 +14,7 @@ const Home = ({ loadin, servicos, fetchServico }) => {
   }, [fetchServico, servicos])
   return (
     <SectionArea background={'#FFF'} direcao={'row'}>
+      
       {
         servico.map((item, index) => {
           return <ServicoCard key={item.id} servico={item} />

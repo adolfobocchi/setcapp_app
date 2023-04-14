@@ -4,6 +4,8 @@ import { listarNoticiaRequest } from '../store/modules/Noticia/actions';
 import { dataTimeFormatada } from '../utils/formats';
 import { NoticiaItemAnchor, NoticiaItemData, NoticiaItemlist, NoticiaListArea, SectionArea } from './styled';
 
+const API_URL = process.env.REACT_APP_URL_API;
+
 const Home = ({ loadin, noticias, fetchNoticia }) => {
   const [noticia, setNoticia] = useState(noticias);
   useEffect(() => {

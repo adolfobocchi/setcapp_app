@@ -4,6 +4,8 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Navbar from '../components/NavBar';
 
+const API_URL = process.env.REACT_APP_URL_API;
+
 const Home = ({loading, empresas, error}) => {
     const [empresa, setEmpresa] = useState(empresas);
     useEffect(() => {

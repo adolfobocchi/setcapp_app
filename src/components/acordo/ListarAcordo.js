@@ -6,8 +6,7 @@ import { useForm } from 'react-hook-form';
 import { criarAcordoRequest, listarAcordoRequest, updateAcordoRequest } from '../../store/modules/Acordo/actions'
 import { Button, Card, Container, Form, Image, Input, Label } from './styled'
 
-const API_URL = 'http://localhost:3001';
-//const API_URL = 'http://setcapp-api.azurewebsites.net';
+const API_URL = process.env.REACT_APP_URL_API;
 
 const ListarAcordo = ({ loading, acordos, error, fetchAcordo, criarAcordo, updateAcordo }) => {
   const formEmpty = {

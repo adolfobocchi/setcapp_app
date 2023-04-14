@@ -5,6 +5,8 @@ import { Button, Form, Input, Label } from './styled';
 import { criarLegislacaoRequest, listarLegislacaoRequest, updateLegislacaoRequest } from '../../store/modules/Legislacao/actions';
 import EditorHtml from '../EditorHtml';
 
+const API_URL = process.env.REACT_APP_URL_API;
+
 const LegislacaoForm = ({loading, legislacaos, error, fetchLegislacao, criarLegislacao, updateLegislacao}) => {
   const [legislacao, setLegislacao] = useState(legislacaos);
   const { register, control, formState: { errors }, handleSubmit, reset } = useForm({

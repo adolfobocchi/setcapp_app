@@ -5,8 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { BannerAnchor, BannerArea, BannerImage, BannerSlider, BannerText } from './styled';
 
-//const API_URL = 'http://setcapp-api.azurewebsites.net';
-const API_URL = 'http://localhost:3001';
+const API_URL = process.env.REACT_APP_URL_API;
 
 const BannerWrapper = ({ loading, sliders, fetchSlider }) => {
     const settings = {

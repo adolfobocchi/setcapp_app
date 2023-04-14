@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
 
+const API_URL = process.env.REACT_APP_URL_API;
+
 const FooterContainer = styled.footer`
   background-color: #000;
   color: #F38735;

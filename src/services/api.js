@@ -2,8 +2,7 @@ import axios from 'axios';
 import {store} from '../store/index';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3001/api',
-  //baseURL: 'http://setcapp-api.azurewebsites.net/api',
+  baseURL: `${process.env.REACT_APP_URL_API}/api`,
 });
 
 api.interceptors.request.use((config)  => {

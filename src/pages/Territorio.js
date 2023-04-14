@@ -6,8 +6,7 @@ import Header from '../components/Header';
 import Navbar from '../components/NavBar';
 import Titulo from '../components/Titulo';
 
-const API_URL = 'http://setcapp-api.azurewebsites.net';
-/* const API_URL = 'http://localhost:3001'; */
+const API_URL = process.env.REACT_APP_URL_API;
 
 const Home = ({loading, empresas, error}) => {
     const [empresa, setEmpresa] = useState(empresas);

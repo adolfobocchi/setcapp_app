@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+const API_URL = process.env.REACT_APP_URL_API;
+
 const Nav = styled.nav`
   display: flex;
   justify-content: space-between;

@@ -7,8 +7,7 @@ import { criarServicoRequest, listarServicoRequest, updateServicoRequest } from 
 import { Button, Card, Container, Form, Image, Input, Label } from './styled'
 import EditorHtml from '../EditorHtml';
 
-const API_URL = 'http://localhost:3001';
-//const API_URL = 'http://setcapp-api.azurewebsites.net';
+const API_URL = process.env.REACT_APP_URL_API;
 
 const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, updateServico }) => {
   const formEmpty = {

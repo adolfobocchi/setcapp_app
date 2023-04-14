@@ -9,6 +9,9 @@ import Navbar from '../components/NavBar';
 import Noticias from '../components/Noticias';
 import Servicos from '../components/Servicos';
 import { listarEmpresaRequest } from '../store/modules/Empresa/actions';
+import ServicosFixo from '../components/ServicosFixos';
+
+const API_URL = process.env.REACT_APP_URL_API;
 
 const Home = ({loadin, empresas, fetchEmpresas}) => {
     const [empresa, setEmpresa] = useState(empresas);
@@ -23,6 +26,7 @@ const Home = ({loadin, empresas, fetchEmpresas}) => {
         <Banner />
         <Destaque />
         <Noticias />
+        <ServicosFixo />
         <Servicos />
         <Footer empresa={empresa}/>
         </>
