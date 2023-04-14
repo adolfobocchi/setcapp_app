@@ -1,29 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import Banner from '../components/Banner';
-import Destaque from '../components/Destaque';
-import Federados from '../components/Federados';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Navbar from '../components/NavBar';
-import Noticias from '../components/Noticias';
-import Servicos from '../components/Servicos';
 import { listarEmpresaRequest } from '../store/modules/Empresa/actions';
 
-const Home = ({loadin, empresas, fetchEmpresas}) => {
+const Home = ({loading, empresas, error}) => {
     const [empresa, setEmpresa] = useState(empresas);
     useEffect(() => {
-        fetchEmpresas();
         setEmpresa(empresas)
-    }, [fetchEmpresas, empresas])
+    }, [empresas])
     return(
         <>
         <Header empresa={empresa}  />
         <Navbar />
-        <Banner />
-        <Destaque />
-        <Noticias />
-        <Servicos />
+        <div dangerouslySetInnerHTML={{ __html: empresa.institucional }}></div>
         <Footer empresa={empresa}/>
         </>
     )
@@ -37,10 +28,4 @@ const mapStateToProps = state => {
     };
   };
   
-  const mapDispatchToProps = dispatch => {
-    return {
-      fetchEmpresas: () => dispatch(listarEmpresaRequest()),
-    };
-  };
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(Home)
+  export default connect(mapStateToProps, null)(Home)

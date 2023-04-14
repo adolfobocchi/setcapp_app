@@ -10,10 +10,12 @@ import Logout from '../components/Logout';
 import ListarNoticia from '../components/noticia/ListarNoticia';
 import ListarServico from '../components/servico/ListarServico';
 import ListarSlider from '../components/slider/ListarSlider';
+import Titulo from '../components/Titulo';
 
 const Container = styled.div`
   display: flex;
-  height: 100%;
+  height: auto;
+  width: 100%;
 `;
 
 const Menu = styled.div`
@@ -32,9 +34,15 @@ const Content = styled.div`
   padding: 20px;
 `;
 
+const HomePainel = () => {
+  return (
+    <><h3>Utilize o menu lateral para configurar as seções do site.</h3></>
+  )
+}
+
 const Painel = () => {
   const menuItems = [
-    { key: 0, label: "Painel", component: <><h2>Painel de configuração</h2><h3>Utilize o menu lateral para configurar as seções do site.</h3></> },
+    { key: 0, label: "Painel", component: <HomePainel /> },
     { key: 1, label: "Empresa", component: <FormEmpresa /> },
     { key: 2, label: "Legislacao", component: <LegislacaoForm /> },
     { key: 3, label: "Eventos", component: <ListarEvento /> },
@@ -68,7 +76,10 @@ const Painel = () => {
           </MenuItem>
         ))}
       </Menu>
-      <Content>{selectedMenuItem.component}</Content>
+      <Content>
+        <Titulo titulo={selectedMenuItem.label} ></Titulo>
+        {selectedMenuItem.component}
+      </Content>
     </Container>
   );
 };

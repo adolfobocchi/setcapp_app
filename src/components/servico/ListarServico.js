@@ -10,6 +10,14 @@ import EditorHtml from '../EditorHtml';
 const API_URL = 'http://localhost:3001';
 
 const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, updateServico }) => {
+  const formEmpty = {
+    id: '',
+    nome: '',
+    conteudo: '',
+    link: '',
+    ativo: false,
+    url: ''
+  }
   const [servicoSelected, setServicoSelected] = useState({});
   const [servicosList, setServicosList] = useState([]);
   const { register, control, formState: { errors }, handleSubmit, reset } = useForm({
@@ -32,7 +40,7 @@ const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, u
   }, [servicos]);
 
   useEffect(() => {
-    reset(servicoSelected);
+    reset({...servicoSelected});
   }, [servicoSelected])
 
 
@@ -45,7 +53,7 @@ const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, u
   }
 
   const handleClearServico = () => {
-    setServicoSelected(null)
+    setServicoSelected({...formEmpty})
   }
 
   const onSubmit = (data) => {

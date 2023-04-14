@@ -28,3 +28,12 @@ export const Image = styled.img`
   width: 80px;
   height: 80px;
 `;
+
+
+export const GaleriaArea = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`

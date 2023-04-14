@@ -2,10 +2,21 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    border: 0;
 }
 
 body {
-    margin: 0 auto;
-    width: 1080px;
+    display: flex;
+    justify-content: center;
+}
+
+.ql-align-center {
+    text-align: center;
+}
+
+.ql-align-right {
+    text-align: right;
+}
+
+.ql-align-justify {
+    text-align: justify;
 }

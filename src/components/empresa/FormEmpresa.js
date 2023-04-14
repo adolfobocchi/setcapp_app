@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { criarEmpresaRequest, listarEmpresaRequest, updateEmpresaRequest } from '../../store/modules/Empresa/actions';
 import { connect } from 'react-redux';
-import { Button, Form, Image, Input, Label } from './styled';
+import { Button, Form, GaleriaArea, Image, Input, Label } from './styled';
 import EditorHtml from '../EditorHtml';
 
 const API_URL = 'http://localhost:3001';
@@ -158,10 +158,11 @@ const EmpresaForm = ({loading, empresas, error, fetchEmpresas, criarEmpresa, upd
       <Label>Fotos</Label>
         <Input type='file' multiple name='files' {...register('files', { required: false })} />
         {errors.logo && <span>Campo obrigatório</span>}
+        <GaleriaArea>
         {empresa?.imagens?.map(imagem => {
               return (<img key={imagem.id} src={`http://localhost:3001/images/${imagem.url}`} style={{ width: 40, height: 40 }} />)
             })}
-
+        </GaleriaArea>
       <Button type="submit">Salvar</Button>
     </Form>
   );
