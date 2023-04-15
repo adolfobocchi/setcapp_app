@@ -13,7 +13,7 @@ import Territorio from './pages/Territorio';
 const ContentArea = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1140px;
+  width: 1141px;
 `
 
 function App() {
