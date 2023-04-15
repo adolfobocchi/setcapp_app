@@ -9,6 +9,7 @@ import Institucional from './pages/Institucional';
 import Diretoria from './pages/Diretoria';
 import Estrutura from './pages/Estrutura';
 import Territorio from './pages/Territorio';
+import Legislacao from './pages/Legislacao';
 
 const ContentArea = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/">
-
+            
             <Route index element={
               <Home />
             } />
@@ -37,6 +38,9 @@ function App() {
             } />
             <Route exact path="/territorio" element={
               <Territorio />
+            } />
+            <Route exact path="/legislacao" element={
+              <Legislacao />
             } />
           </Route>
           <Route exact path="/login" element={

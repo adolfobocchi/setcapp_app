@@ -2,10 +2,11 @@ import React from "react";
 import {useNavigate} from 'react-router-dom';
 import { ContatoArea, FormRow, HeaderArea, HeaderBar, HeaderContent, Input, LinkArea, LinkRedeSocial, LogoArea, LogoImg, SearchArea } from "./styled";
 import { FaInstagram, FaSearch } from 'react-icons/fa'
+import { connect } from "react-redux";
 
 const API_URL = process.env.REACT_APP_URL_API;
 
-const Header = ({ empresa }) => {
+const Header = ({ empresas }) => {
   const history = useNavigate();
   function toHome() {
     history('/')
@@ -13,11 +14,11 @@ const Header = ({ empresa }) => {
   return (
     <HeaderArea>
       <HeaderBar>
-        {empresa.nome}
+        {empresas.nome}
       </HeaderBar>
       <HeaderContent>
         <LogoArea>
-          <LogoImg onClick={toHome} src={`${API_URL}/images/${empresa.logo}`} />
+          <LogoImg onClick={toHome} src={`${API_URL}/images/${empresas.logo}`} />
         </LogoArea>
         <SearchArea>
           <FormRow>
@@ -26,7 +27,7 @@ const Header = ({ empresa }) => {
         </SearchArea>
         <ContatoArea>
           <LinkArea href="contato">FALE CONOSCO</LinkArea>
-          <LinkRedeSocial href={empresa.instagram} target='_blank'>
+          <LinkRedeSocial href={empresas.instagram} target='_blank'>
             <FaInstagram style={{ height: '2em', width: '2em' }} />
           </LinkRedeSocial>
         </ContatoArea>
@@ -36,4 +37,11 @@ const Header = ({ empresa }) => {
   );
 };
 
-export default Header;
+const mapStateToProps = state => {
+  return {
+    loading: state.empresa.loading,
+    empresas: state.empresa.empresa,
+    error: state.empresa.error
+  };
+};
+export default connect(mapStateToProps, null)(Header);

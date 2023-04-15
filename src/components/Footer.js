@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
+import { connect } from 'react-redux';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
@@ -52,43 +53,51 @@ const FooterIcon = styled.span`
   margin-right: 0.5rem;
 `;
 
-const Footer = ({empresa}) => {
+const Footer = ({empresas}) => {
   return (
     <FooterContainer>
       <FooterInfo>
         <FooterTitle>Endereço</FooterTitle>
-        <FooterText>{`${empresa.endereco} ${empresa.numero}`}</FooterText>
-        <FooterText>{`${empresa.bairro} ${empresa.cidade}`}</FooterText>
-        <FooterText>{`${empresa.estado}`}</FooterText>
+        <FooterText>{`${empresas.endereco} ${empresas.numero}`}</FooterText>
+        <FooterText>{`${empresas.bairro} ${empresas.cidade}`}</FooterText>
+        <FooterText>{`${empresas.estado}`}</FooterText>
       </FooterInfo>
 
       <FooterInfo>
         <FooterTitle>Telefone</FooterTitle>
-        <FooterText>{`${empresa.telefone}`}</FooterText>
-        <FooterText>{`${empresa.whatsapp}`}</FooterText>
+        <FooterText>{`${empresas.telefone}`}</FooterText>
+        <FooterText>{`${empresas.whatsapp}`}</FooterText>
       </FooterInfo>
 
       <FooterInfo>
         <FooterTitle>E-mail</FooterTitle>
-        <FooterLink href={`mailto:${empresa.email}`}>
+        <FooterLink href={`mailto:${empresas.email}`}>
           <FooterIcon>
             <FaEnvelope />
           </FooterIcon>
-          {`${empresa.email}`}
+          {`${empresas.email}`}
         </FooterLink>
       </FooterInfo>
 
       <FooterInfo>
         <FooterTitle>WhatsApp</FooterTitle>
-        <FooterLink href={`https://wa.me/55${empresa.whatsapp}`}>
+        <FooterLink href={`https://wa.me/55${empresas.whatsapp}`}>
           <FooterIcon>
             <FaWhatsapp />
           </FooterIcon>
-          {`${empresa.whatsapp}`}
+          {`${empresas.whatsapp}`}
         </FooterLink>
       </FooterInfo>
     </FooterContainer>
   );
 };
 
-export default Footer;
+
+const mapStateToProps = state => {
+  return {
+    loading: state.empresa.loading,
+    empresas: state.empresa.empresa,
+    error: state.empresa.error
+  };
+};
+export default connect(mapStateToProps, null)(Footer);

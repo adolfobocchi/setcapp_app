@@ -10,10 +10,11 @@ import Noticias from '../components/Noticias';
 import Servicos from '../components/Servicos';
 import { listarEmpresaRequest } from '../store/modules/Empresa/actions';
 import ServicosFixo from '../components/ServicosFixos';
+import { listarLegislacaoRequest } from '../store/modules/Legislacao/actions';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
-const Home = ({loadin, empresas, fetchEmpresas}) => {
+const Home = ({loadin, empresas, fetchEmpresas, fetchLegislacao}) => {
     const [empresa, setEmpresa] = useState(empresas);
     useEffect(() => {
         fetchEmpresas();
@@ -21,14 +22,15 @@ const Home = ({loadin, empresas, fetchEmpresas}) => {
     }, [fetchEmpresas, empresas])
     return(
         <>
-        <Header empresa={empresa}  />
+        <Header />
         <Navbar />
         <Banner />
         <Destaque />
         <Noticias />
         <ServicosFixo />
         <Servicos />
-        <Footer empresa={empresa}/>
+        <Federados />
+        <Footer />
         </>
     )
 }
@@ -44,6 +46,7 @@ const mapStateToProps = state => {
   const mapDispatchToProps = dispatch => {
     return {
       fetchEmpresas: () => dispatch(listarEmpresaRequest()),
+      fetchLegislacao: () => dispatch(listarLegislacaoRequest()),
     };
   };
   
