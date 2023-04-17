@@ -29,7 +29,7 @@ const BannerWrapper = ({ loading, sliders, fetchSlider }) => {
     return (
         <BannerArea >
             <BannerSlider {...settings} >
-                {sliderList?.map((slider, index) =>
+            {sliderList?.map((slider, index) =>
                 (
                     <BannerImage key={slider.id} imageUrl={`${API_URL}/images/${slider.url}`}>
                         {slider.link &&
@@ -62,7 +62,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        fetchSlider: () => dispatch(listarSliderRequest())
+        fetchSlider: () => {console.log('banner'); dispatch(listarSliderRequest())}
     };
 };
 

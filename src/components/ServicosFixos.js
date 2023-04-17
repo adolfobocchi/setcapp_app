@@ -13,7 +13,7 @@ const ServicoFixoCard = styled.a`
     background-color: ${props => props.background};
     padding: 8px;
     text-decoration: none;
-    
+    opacity: 0.8;
     color: #000;
 `
 const ServicoFixoCardIconArea = styled.div`
@@ -50,7 +50,7 @@ const ServicosFixo = () => {
         {key: 2, icone: 'FaFileUpload', nome: 'curriculum', descricao: 'Envie-nos seu currículo e candidate-se para possíveis vagas no setor de transporte.', link:'curriculo', background: '#BA29F2' },
     ]
     return (
-        <SectionArea background='#FFF' direcao={'row'} altura={200}>
+        <SectionArea background='transparent' direcao={'row'} altura={200}>
         {destaqueItem.map(item => 
             <ServicoFixoCard key={item.key} href={item.link} background={item.background}>
                 <ServicoFixoCardIconArea>

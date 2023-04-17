@@ -14,48 +14,61 @@ import Legislacao from './pages/Legislacao';
 const ContentArea = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1140px;
+  max-width: 1140px;
 `
 
 function App() {
   return (
-    <ContentArea>
-      <Router>
-        <Routes>
-          <Route exact path="/">
-            
-            <Route index element={
+
+    <Router>
+      <Routes>
+        <Route exact path="/">
+
+          <Route index element={
+            <ContentArea>
               <Home />
-            } />
-            <Route exact path="/institucional" element={
-              <Institucional />
-            } /> 
-            <Route exact path="/diretoria" element={
-              <Diretoria />
-            } />
-            <Route exact path="/estrutura" element={
-              <Estrutura />
-            } />
-            <Route exact path="/territorio" element={
-              <Territorio />
-            } />
-            <Route exact path="/legislacao" element={
-              <Legislacao />
-            } />
-          </Route>
-          <Route exact path="/login" element={
-            <Login />
+            </ContentArea>
           } />
-          <Route path='/painel' >
-            <Route index element={
-              <PrivateRoute >
-                <PainelPage />
-              </PrivateRoute>
-            } />
-          </Route>
-        </Routes>
-      </Router>
-    </ContentArea>
+          <Route exact path="/institucional" element={
+            <ContentArea>
+              <Institucional />
+            </ContentArea>
+
+          } />
+          <Route exact path="/diretoria" element={
+            <ContentArea><Diretoria /></ContentArea>
+
+          } />
+          <Route exact path="/estrutura" element={
+            <ContentArea>
+              <Estrutura />
+            </ContentArea>
+          } />
+          <Route exact path="/territorio" element={
+            <ContentArea>
+              <Territorio />
+            </ContentArea>
+          } />
+          <Route exact path="/legislacao" element={
+            <ContentArea>
+              <Legislacao />
+            </ContentArea>
+          } />
+        </Route>
+        <Route exact path="/login" element={
+          <ContentArea>
+            <Login />
+          </ContentArea>
+        } />
+        <Route path='/painel' >
+          <Route index element={
+            <PrivateRoute >
+              <PainelPage />
+            </PrivateRoute>
+          } />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 

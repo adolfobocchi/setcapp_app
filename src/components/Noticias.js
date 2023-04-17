@@ -6,14 +6,14 @@ import { NoticiaItemAnchor, NoticiaItemData, NoticiaItemlist, NoticiaListArea, S
 
 const API_URL = process.env.REACT_APP_URL_API;
 
-const Home = ({ loadin, noticias, fetchNoticia }) => {
+const Home = ({ loadin, noticias }) => {
   const [noticia, setNoticia] = useState(noticias);
   useEffect(() => {
-    fetchNoticia();
-    setNoticia(noticias)
-  }, [fetchNoticia, noticias])
+    setNoticia(noticias);
+    
+  }, [noticias])
   return (
-    <SectionArea background='#DDD' direcao={'column'} altura={500}>
+    <SectionArea background='rgba(200,200,200,0.7)' direcao={'column'} altura={500}>
       <h3 style={{marginTop: 20}}>ULTIMAS NOTICIAS</h3>
       <NoticiaListArea>
         {
@@ -40,10 +40,5 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchNoticia: () => dispatch(listarNoticiaRequest()),
-  };
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, null)(Home)

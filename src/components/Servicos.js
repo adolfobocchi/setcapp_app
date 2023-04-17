@@ -1,22 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { listarServicoRequest } from '../store/modules/Servico/actions';
-import { SectionArea } from './styled';
+import { SectionArea, ServicoCard} from './styled';
 import styled from 'styled-components';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
 
-const ServicoCard = styled.a`
-    display: flex;
-    height: 300px;
-    flex: 1;
-    margin: 12px;
-    background-color: ${props => props.background};
-    padding: 4px;
-    text-decoration: none;
-    color: #000;
-`
 const ServicoCardIconArea = styled.div`
     width: 30%;
     height: 100%;
@@ -46,14 +35,13 @@ const ServicoCardTitulo = styled.div`
     font-weight: bold;
 `
 
-const Home = ({ loadin, servicos, fetchServico }) => {
+const Home = ({ loadin, servicos }) => {
   const [servico, setServico] = useState(servicos);
   useEffect(() => {
-    fetchServico();
-    setServico(servicos)
-  }, [fetchServico, servicos])
+    setServico(servicos);
+  }, [servicos])
   return (
-    <SectionArea background={'#DDD'} direcao={'row'} altura={200}>
+    <SectionArea background='rgba(200,200,200,0.7)'  direcao={'row'} altura={200}>
       
       {
         servico.map((item, index) =>
@@ -80,10 +68,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchServico: () => dispatch(listarServicoRequest()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps,  null)(Home)

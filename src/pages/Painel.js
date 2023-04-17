@@ -13,9 +13,10 @@ import ListarSlider from '../components/slider/ListarSlider';
 import Titulo from '../components/Titulo';
 
 const Container = styled.div`
+  background: #FFF;
   display: flex;
-  height: auto;
-  width: 100%;
+  min-height: 100vh;
+  width: 100vw;
 `;
 
 const Menu = styled.div`

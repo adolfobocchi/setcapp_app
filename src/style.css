@@ -1,8 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+
+
+
+html { 
+    background: url(../public/bg.png) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Montserrat', sans-serif;
+  }
 
 body {
     display: flex;

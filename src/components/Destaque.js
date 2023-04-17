@@ -15,6 +15,8 @@ const DestaqueCard = styled.a`
     text-transform: uppercase;
     font-size: 1.1em;
     font-weight: bold;
+    opacity: 0.8;
+    
 `
 const DestaqueCardIconArea = styled.div`
     width: 30%;
@@ -39,7 +41,7 @@ const Destaque = () => {
         {key: 2, icone: 'FaHandshake', descricao: 'Acordo Coletivo', link:'sindical', background: '#BA29F2' },
     ]
     return (
-        <SectionArea background='#FFF' direcao={'row'} altura={200}>
+        <SectionArea background='transparent' direcao={'row'} altura={200}>
         {destaqueItem.map(item => 
             <DestaqueCard key={item.key} href='#' background={item.background}>
                 <DestaqueCardIconArea>

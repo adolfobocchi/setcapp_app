@@ -1,7 +1,7 @@
 import React from "react";
 import {useNavigate} from 'react-router-dom';
 import { ContatoArea, FormRow, HeaderArea, HeaderBar, HeaderContent, Input, LinkArea, LinkRedeSocial, LogoArea, LogoImg, SearchArea } from "./styled";
-import { FaInstagram, FaSearch } from 'react-icons/fa'
+import { FaInstagram, FaSearch, FaWhatsapp } from 'react-icons/fa'
 import { connect } from "react-redux";
 
 const API_URL = process.env.REACT_APP_URL_API;
@@ -27,6 +27,9 @@ const Header = ({ empresas }) => {
         </SearchArea>
         <ContatoArea>
           <LinkArea href="contato">FALE CONOSCO</LinkArea>
+          <LinkRedeSocial href={`https://wa.me/55${empresas.whatsapp}`} target='_blank'>
+            <FaWhatsapp style={{ height: '2em', width: '2em' }} />
+          </LinkRedeSocial>
           <LinkRedeSocial href={empresas.instagram} target='_blank'>
             <FaInstagram style={{ height: '2em', width: '2em' }} />
           </LinkRedeSocial>

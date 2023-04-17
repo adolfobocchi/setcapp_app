@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { FaChevronDown, FaChevronUp} from 'react-icons/fa'
 
 const API_URL = process.env.REACT_APP_URL_API;
 
@@ -8,6 +9,7 @@ const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   background-color: #F38735;
+  opacity: 0.8;
   margin-bottom: 20px;
   height: 60px;
 `;
@@ -65,7 +67,7 @@ const NavDropdown = ({descricao, links}) => {
 
   return (
     <NavItem>
-      <NavLink onClick={handleDropdown}>{descricao}</NavLink>
+      <NavLink onClick={handleDropdown}>{descricao}{showDropdown ? <FaChevronUp /> : <FaChevronDown />}</NavLink>
       {showDropdown && (
         <DropdownContent>
           {links.map(link => <NavLink href={link.rota}>{link.descricao}</NavLink>)}

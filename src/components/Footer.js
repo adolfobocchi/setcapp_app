@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaWhatsapp, FaPaperPlane } from 'react-icons/fa';
 import { connect } from 'react-redux';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
 const FooterContainer = styled.footer`
-  background-color: #000;
-  color: #F38735;
+  background-color: rgba(0,0,0,0.5);
+  color: #CCC;
   display: flex;
   justify-content: center;
   padding: 2rem;
@@ -18,12 +18,14 @@ const FooterContainer = styled.footer`
 `;
 
 const FooterInfo = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 1rem;
   border-right: 2px solid rgba(240,240,240,0.5);
-  padding-right: 10px;
+  &:nth-child(4) {
+    border-right: none;
+    }
 `;
 
 const FooterTitle = styled.h3`
@@ -40,9 +42,8 @@ const FooterText = styled.p`
 `;
 
 const FooterLink = styled.a`
-  color: #F38735;
+  color: #CCC;
   text-decoration: none;
-  font-weight: bold;
   text-transform: uppercase;
   display: flex;
   flex-direction: column;
@@ -53,24 +54,28 @@ const FooterIcon = styled.span`
   margin-right: 0.5rem;
 `;
 
-const Footer = ({empresas}) => {
+const Footer = ({ empresas }) => {
   return (
     <FooterContainer>
       <FooterInfo>
-        <FooterTitle>Endereço</FooterTitle>
+      <FooterIcon>
+            <FaPaperPlane />
+          </FooterIcon>
         <FooterText>{`${empresas.endereco} ${empresas.numero}`}</FooterText>
-        <FooterText>{`${empresas.bairro} ${empresas.cidade}`}</FooterText>
+        <FooterText>{`${empresas.bairro}`}</FooterText>
+        <FooterText>{`${empresas.cidade}`}</FooterText>
         <FooterText>{`${empresas.estado}`}</FooterText>
       </FooterInfo>
 
       <FooterInfo>
-        <FooterTitle>Telefone</FooterTitle>
+      <FooterIcon>
+            <FaPhone />
+          </FooterIcon>
         <FooterText>{`${empresas.telefone}`}</FooterText>
         <FooterText>{`${empresas.whatsapp}`}</FooterText>
       </FooterInfo>
 
       <FooterInfo>
-        <FooterTitle>E-mail</FooterTitle>
         <FooterLink href={`mailto:${empresas.email}`}>
           <FooterIcon>
             <FaEnvelope />
@@ -80,7 +85,6 @@ const Footer = ({empresas}) => {
       </FooterInfo>
 
       <FooterInfo>
-        <FooterTitle>WhatsApp</FooterTitle>
         <FooterLink href={`https://wa.me/55${empresas.whatsapp}`}>
           <FooterIcon>
             <FaWhatsapp />
