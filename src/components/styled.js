@@ -47,7 +47,7 @@ export const HeaderContent = styled.div`
 
 export const LogoArea = styled.a`
     width: 30%;
-    height: 90%;
+    height: 60%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,13 +58,18 @@ export const LogoArea = styled.a`
 export const LogoImg = styled.img`
     height: 100%;
     width: auto;
+    @media only screen and (max-width: 700px) {
+        height: 70%;
+    }
+    
     @media only (min-width: 699px) and (max-width: 500px) {
-        height: 50%;
+        height: 60%;
     }
 
     @media only screen and (max-width: 499px) {
-        height: 50%;
+        height: 40%;
     }
+    
 `
 
 export const SearchArea = styled.div`
