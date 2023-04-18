@@ -63,6 +63,7 @@ export const LogoImg = styled.img`
 
     @media only screen and (min-width: 500px) {
         height: 60%;
+        width: 80%;
     }
 `
 
@@ -82,6 +83,9 @@ export const ContatoArea = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
+    @media only screen and (min-width: 500px) {
+        justify-content: space-between;
+    }
 `
 
 
