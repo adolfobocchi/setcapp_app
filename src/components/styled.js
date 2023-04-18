@@ -60,6 +60,10 @@ export const LogoImg = styled.img`
     @media only screen and (max-width: 700px) {
         height: 80%;
     }
+
+    @media only screen and (min-width: 500px) {
+        height: 60%;
+    }
 `
 
 export const SearchArea = styled.div`
@@ -178,6 +182,17 @@ export const LinkRedeSocial = styled.a`
     justify-content: center;
     align-items: center;
     color: #000;
+`
+
+export const LinkRedeSocialInstagram = styled.a`
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    @media only screen and (max-width: 380px) {
+        display: none;
+    }
 `
 
 export const FormRow = styled.form`

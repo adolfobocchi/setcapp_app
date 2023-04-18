@@ -1,6 +1,6 @@
 import React from "react";
 import {useNavigate} from 'react-router-dom';
-import { ContatoArea, FaleConosco, FormRow, HeaderArea, HeaderBar, HeaderContent, Input, LinkArea, LinkRedeSocial, LogoArea, LogoImg, Menu, SearchArea } from "./styled";
+import { ContatoArea, FaleConosco, FormRow, HeaderArea, HeaderBar, HeaderContent, Input, LinkArea, LinkRedeSocial, LinkRedeSocialInstagram, LogoArea, LogoImg, Menu, SearchArea } from "./styled";
 import { FaInstagram, FaBars, FaSearch, FaWhatsapp } from 'react-icons/fa'
 import { connect } from "react-redux";
 
@@ -30,9 +30,9 @@ const Header = ({ empresas }) => {
           <LinkRedeSocial href={`https://wa.me/55${empresas.whatsapp}`} target='_blank'>
             <FaWhatsapp style={{ height: '2em', width: '2em' }} />
           </LinkRedeSocial>
-          <LinkRedeSocial href={empresas.instagram} target='_blank'>
+          <LinkRedeSocialInstagram href={empresas.instagram} target='_blank'>
             <FaInstagram style={{ height: '2em', width: '2em' }} />
-          </LinkRedeSocial>
+          </LinkRedeSocialInstagram>
           <Menu>
             <FaBars style={{ height: '2em', width: '2em' }} />
           </Menu>
