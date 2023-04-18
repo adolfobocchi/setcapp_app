@@ -267,6 +267,7 @@ export const PageAreaContent = styled.section`
     height: auto;
     flex: 1;
     z-index: 1;
+    padding: 16px;
 `
 
 export const NoticiaListArea = styled.ul`
