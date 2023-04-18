@@ -16,7 +16,7 @@ const Home = ({loading, empresas, error}) => {
         <>
         <Header />
         <Navbar />
-        <PageAreaContent  background='rgba(250,250,250,0.3)'  altura={400}  dangerouslySetInnerHTML={{ __html: empresa.diretoria }}></PageAreaContent>
+        <PageAreaContent  background='rgba(254,254,254,0.7)'  altura={400}  dangerouslySetInnerHTML={{ __html: empresa.diretoria }}></PageAreaContent>
         <Footer />
         </>
     )
