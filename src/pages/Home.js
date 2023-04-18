@@ -26,7 +26,7 @@ const Home = ({loadin, empresas, fetchEmpresas, fetchLegislacao, fetchNoticia, f
         fetchServico();
         fetchConfederado();
         setEmpresa(empresas)
-    }, [])
+    }, [empresas])
     return(
         <>
         <Header />

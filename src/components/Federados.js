@@ -13,7 +13,6 @@ const API_URL = process.env.REACT_APP_URL_API;
 const FederadoCard = styled.a`
     display: flex;
     flex: 1;
-    margin: 12px;
     background-color: ${props => props.background};
     padding: 4px;
     text-decoration: none;
@@ -27,7 +26,7 @@ const FederadoCard = styled.a`
 `
 const FederadoCardIconArea = styled.div`
     width: 200px;
-    height: 100%;
+    height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -81,13 +80,13 @@ const Home = ({ loadin, confederados, fetchConfederado }) => {
     ]
   };
   return (
-    <SectionArea background={'rgba(255,255,255,0.9)'} direcao={'row'} altura={200}>
+    <SectionArea background={'rgba(255,255,255,0.9)'} direcao={'row'} altura={200} >
     <FederadoSlider {...settings}>
       {
 
 
         confederado.map((item, index) =>
-            <FederadoCard key={item.id} href={`${item.link}`} >
+            <FederadoCard  key={item.id} href={`${item.link}`} >
               <FederadoCardIconArea>
                 <FederadoCardImg src={`${API_URL}/images/${item.url}`} />
               </FederadoCardIconArea>

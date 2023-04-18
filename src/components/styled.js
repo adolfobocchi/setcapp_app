@@ -67,21 +67,21 @@ export const ContatoArea = styled.div`
 
 export const BannerArea = styled.section`
     width: 100%;
-    z-index: 900;
+    z-index: 1;
     
 `;
 
 export const BannerSlider = styled(Slider)`
     height: calc(100vh - 300px);
     width: 100%;
-    z-index: 900;
+    z-index: 1;
 `
 
 
 export const FederadoSlider = styled(Slider)`
     height:100%;
     width: 100%;
-    z-index: 900;
+    z-index: 1;
     
 `
 
@@ -163,26 +163,23 @@ export const IconArea = styled.div`
 export const ServicoCard = styled.a`
     display: flex;
     height: 300px;
-    width: 100%;
-    margin: 12px;
+    width: calc(50% - 10px);
     background-color: ${props => props.background};
-    padding: 4px;
+    padding: 8px;
     text-decoration: none;
     color: #000;
+
 `
 export const SectionArea = styled.section`
     background-color: ${props => props.background};
     min-height: ${props => props.altura}px;
     height: auto;
-    width: 100%;
     display: flex;
     flex-direction: ${props => props.direcao};
     align-items: center;
     margin-top: 20px;
     flex-wrap: wrap;
-    div {
-        flex: 50%;
-    }
+    z-index: 1;
 `
 
 export const NoticiaListArea = styled.ul`

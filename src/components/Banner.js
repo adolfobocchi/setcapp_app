@@ -28,7 +28,7 @@ const BannerWrapper = ({ loading, sliders, fetchSlider }) => {
 
     return (
         <BannerArea >
-            <BannerSlider {...settings} >
+            <BannerSlider  {...settings} >
             {sliderList?.map((slider, index) =>
                 (
                     <BannerImage key={slider.id} imageUrl={`${API_URL}/images/${slider.url}`}>

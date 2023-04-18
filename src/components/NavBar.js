@@ -12,6 +12,7 @@ const Nav = styled.nav`
   opacity: 0.8;
   margin-bottom: 20px;
   height: 60px;
+  z-index: 2;
 `;
 
 const NavItem = styled.a`
@@ -32,6 +33,7 @@ const NavItem = styled.a`
   font-weight: 700;
   font-size: 0.99em;
   position: relative;
+  z-index: 2;
 `;
 const NavLink = styled.a`
   color: #000;
@@ -43,6 +45,7 @@ const NavLink = styled.a`
   &:hover {
     background-color: #C2F24E;
   }
+  z-index: 2;
 `;
 
 const DropdownContent = styled.div`
@@ -55,7 +58,7 @@ const DropdownContent = styled.div`
   left: 0;
   background-color: #F38735;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
+  z-index: 2;
 `;
 
 const NavDropdown = ({descricao, links}) => {

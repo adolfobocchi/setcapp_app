@@ -41,11 +41,11 @@ const Home = ({ loadin, servicos }) => {
     setServico(servicos);
   }, [servicos])
   return (
-    <SectionArea background='rgba(200,200,200,0.7)'  direcao={'row'} altura={200}>
+    <SectionArea background='rgba(200,200,200,0.7)'  direcao={'row'} altura={200} >
       
       {
         servico.map((item, index) =>
-          <ServicoCard style={{flexDirection: index === 1 && 'row-reverse'} } key={item.id} href={item.link} background={item.background}>
+          <ServicoCard style={{flexDirection: index % 2 === 1 && 'row-reverse'} } key={item.id} href={item.link} background={item.background}>
             <ServicoCardIconArea >
               <ServicoCardImg src={`${API_URL}/images/${item.url}`} />
             </ServicoCardIconArea>
