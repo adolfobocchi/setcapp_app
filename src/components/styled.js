@@ -57,10 +57,7 @@ export const LogoArea = styled.a`
 
 export const LogoImg = styled.img`
     height: 100%;
-    @media only screen and (max-width: 700px) {
-        height: 80%;
-    }
-
+    width: auto;
     @media only (min-width: 699px) and (max-width: 500px) {
         height: 50%;
     }
@@ -79,6 +76,7 @@ export const SearchArea = styled.div`
     @media only screen and (max-width: 620px) {
         display: none;
     }
+    
 `
 
 export const ContatoArea = styled.div`
