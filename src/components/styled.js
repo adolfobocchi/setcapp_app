@@ -61,9 +61,12 @@ export const LogoImg = styled.img`
         height: 80%;
     }
 
-    @media only screen and (min-width: 500px) {
-        height: 60%;
-        width: 80%;
+    @media only (min-width: 699px) and (max-width: 500px) {
+        height: 50%;
+    }
+
+    @media only screen and (max-width: 499px) {
+        height: 50%;
     }
 `
 
@@ -83,9 +86,8 @@ export const ContatoArea = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    @media only screen and (min-width: 500px) {
-        justify-content: space-between;
-    }
+    margin-left: 30px;
+
 `
 
 
@@ -139,6 +141,9 @@ export const BannerText = styled.div`
     color: #FFF;
     padding: 20px;
     font-size: 2em;
+    @media only screen and (max-width: 700px) {
+        font-size: 0.9em;
+    }
 `
 
 export const LinkArea = styled.a`
