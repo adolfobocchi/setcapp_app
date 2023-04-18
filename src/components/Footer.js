@@ -22,9 +22,37 @@ const FooterInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-right: 10px;
+  padding-left: 10px;
   border-right: 2px solid rgba(240,240,240,0.5);
   &:nth-child(4) {
     border-right: none;
+    }
+    @media only screen and (min-width: 840px) {
+        flex-basis: 22%;
+    }
+
+    @media (max-width: 839px) and (min-width: 700px)  {
+        flex-basis: 50%;
+        border-right: none;
+        &:nth-child(1),  &:nth-child(2){
+          border-bottom: 2px solid rgba(240,240,240,0.5);
+        }
+
+        &:nth-child(3),  &:nth-child(4){
+          margin-top: 12px;
+        }
+        
+    }
+
+    @media only screen and (max-width: 699px) {
+        flex-basis: 100%;
+        border-right: none;
+          border-bottom: 2px solid rgba(240,240,240,0.5);
+          margin-top: 12px;
+          margin-bottom: 12px;
+          padding-bottom: 12px;
+        
     }
 `;
 

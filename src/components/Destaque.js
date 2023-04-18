@@ -16,6 +16,13 @@ const DestaqueCard = styled.a`
     font-size: 1.1em;
     font-weight: bold;
     opacity: 0.8;
+    @media only screen and (min-width: 700px) {
+        flex-basis: 30%;
+    }
+
+    @media only screen and (max-width: 699px) {
+        flex-basis: 100%;
+    }
     
 `
 const DestaqueCardIconArea = styled.div`

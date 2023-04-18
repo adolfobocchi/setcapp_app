@@ -13,6 +13,9 @@ const Nav = styled.nav`
   margin-bottom: 20px;
   height: 60px;
   z-index: 2;
+  @media only screen and (max-width: 700px) {
+        display: none;
+    }
 `;
 
 const NavItem = styled.a`

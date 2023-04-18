@@ -15,6 +15,14 @@ const ServicoFixoCard = styled.a`
     text-decoration: none;
     opacity: 0.8;
     color: #000;
+    
+    @media only screen and (min-width: 700px) {
+        flex-basis: 30%;
+    }
+
+    @media only screen and (max-width: 699px) {
+        flex-basis: 100%;
+    }
 `
 const ServicoFixoCardIconArea = styled.div`
     height: 80px;

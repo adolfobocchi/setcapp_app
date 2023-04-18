@@ -14,7 +14,7 @@ import Legislacao from './pages/Legislacao';
 const ContentArea = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 1140px;
+  width: 90vw;
 `
 
 function App() {

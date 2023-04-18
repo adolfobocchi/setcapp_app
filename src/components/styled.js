@@ -9,6 +9,10 @@ export const HeaderArea = styled.header`
     padding-top: 12px;
     padding-bottom: 12px;
     width: 100%;
+    @media only screen and (max-width: 700px) {
+        height: 260px;
+    }
+    
 `
 
 export const HeaderBar = styled.div`
@@ -25,7 +29,12 @@ export const HeaderBar = styled.div`
     align-items: center;
     justify-content: center;
     font-weight: bold;
-
+    @media only screen and (max-width: 920px) {
+       font-size: 0.9em;
+    }
+    @media only screen and (max-width: 840px) {
+       font-size: 0.8em;
+    }
 `
 
 export const HeaderContent = styled.div`
@@ -36,17 +45,21 @@ export const HeaderContent = styled.div`
     height: 180px;
 `
 
-export const LogoArea = styled.div`
+export const LogoArea = styled.a`
     width: 30%;
     height: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
+    
+    cursor: pointer;
 `
 
 export const LogoImg = styled.img`
     height: 100%;
-    cursor: pointer;
+    @media only screen and (max-width: 700px) {
+        height: 80%;
+    }
 `
 
 export const SearchArea = styled.div`
@@ -55,6 +68,9 @@ export const SearchArea = styled.div`
     justify-content: center;
     align-items: center;
     height: 90%;
+    @media only screen and (max-width: 620px) {
+        display: none;
+    }
 `
 
 export const ContatoArea = styled.div`
@@ -128,6 +144,34 @@ export const LinkArea = styled.a`
     
 `
 
+
+export const FaleConosco = styled.a`
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    font-size: 1em;
+    font-weight: bold;
+    @media only screen and (max-width: 700px) {
+        display: none;
+    }
+`
+
+
+export const Menu = styled.div`
+    text-decoration: none;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    
+    cursor: pointer;
+    @media only screen and (max-width: 700px) {
+        display: flex;
+    }
+`
+
 export const LinkRedeSocial = styled.a`
     text-decoration: none;
     display: flex;
@@ -168,6 +212,13 @@ export const ServicoCard = styled.a`
     padding: 8px;
     text-decoration: none;
     color: #000;
+    @media only screen and (min-width: 700px) {
+        flex-basis: 30%;
+    }
+
+    @media only screen and (max-width: 699px) {
+        flex-basis: 100%;
+    }
 
 `
 export const SectionArea = styled.section`
@@ -175,6 +226,7 @@ export const SectionArea = styled.section`
     min-height: ${props => props.altura}px;
     height: auto;
     display: flex;
+    flex: 1;
     flex-direction: ${props => props.direcao};
     align-items: center;
     margin-top: 20px;
