@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FaPhone, FaEnvelope, FaWhatsapp, FaPaperPlane } from 'react-icons/fa';
 import { connect } from 'react-redux';
+import { whatsAppFormat } from '../utils/formats';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
@@ -83,6 +84,7 @@ const FooterIcon = styled.span`
 `;
 
 const Footer = ({ empresas }) => {
+  
   return (
     <FooterContainer>
       <FooterInfo>
@@ -113,7 +115,7 @@ const Footer = ({ empresas }) => {
       </FooterInfo>
 
       <FooterInfo>
-        <FooterLink href={`https://wa.me/55${empresas.whatsapp}`}>
+        <FooterLink href={`https://wa.me/55${whatsAppFormat(empresas.whatsapp)}`}>
           <FooterIcon>
             <FaWhatsapp />
           </FooterIcon>

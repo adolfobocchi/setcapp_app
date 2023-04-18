@@ -3,11 +3,13 @@ import {useNavigate} from 'react-router-dom';
 import { ContatoArea, FaleConosco, FormRow, HeaderArea, HeaderBar, HeaderContent, Input, LinkArea, LinkRedeSocial, LinkRedeSocialInstagram, LogoArea, LogoImg, Menu, SearchArea } from "./styled";
 import { FaInstagram, FaBars, FaSearch, FaWhatsapp } from 'react-icons/fa'
 import { connect } from "react-redux";
+import { whatsAppFormat } from "../utils/formats";
 
 const API_URL = process.env.REACT_APP_URL_API;
 
 const Header = ({ empresas }) => {
   const history = useNavigate();
+  
   function toHome() {
     history('/')
   }
@@ -27,7 +29,7 @@ const Header = ({ empresas }) => {
         </SearchArea>
         <ContatoArea>
           <FaleConosco href="contato">FALE CONOSCO</FaleConosco>
-          <LinkRedeSocial href={`https://wa.me/55${empresas.whatsapp}`} target='_blank'>
+          <LinkRedeSocial href={`https://wa.me/55${whatsAppFormat(empresas.whatsapp)}`} target='_blank'>
             <FaWhatsapp style={{ height: '2em', width: '2em' }} />
           </LinkRedeSocial>
           <LinkRedeSocialInstagram href={empresas.instagram} target='_blank'>
