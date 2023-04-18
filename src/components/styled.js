@@ -261,6 +261,14 @@ export const SectionArea = styled.section`
     z-index: 1;
 `
 
+export const PageAreaContent = styled.section`
+    background-color: ${props => props.background};
+    min-height: ${props => props.altura}px;
+    height: auto;
+    flex: 1;
+    z-index: 1;
+`
+
 export const NoticiaListArea = styled.ul`
     display: flex;
     flex-direction: column;
