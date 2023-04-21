@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Navbar from '../components/NavBar';
+import { PageAreaContent } from '../components/styled';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
@@ -15,7 +16,7 @@ const Home = ({loading, legislacaos, error}) => {
         <>
         <Header />
         <Navbar />
-        <div dangerouslySetInnerHTML={{ __html: legislacao.conteudo }}></div>
+        <PageAreaContent  background='rgba(254,254,254,0.7)'  altura={400} dangerouslySetInnerHTML={{ __html: legislacao.conteudo }}></PageAreaContent>
         <Footer />
         </>
     )
