@@ -62,7 +62,7 @@ export const LogoImg = styled.img`
         height: 70%;
     }
     
-    @media only (min-width: 699px) and (max-width: 500px) {
+    @media (min-width: 699px) and (max-width: 500px) {
         height: 60%;
     }
 
@@ -268,6 +268,9 @@ export const PageAreaContent = styled.section`
     flex: 1;
     z-index: 1;
     padding: 16px;
+    ul {
+        padding-left: 2em;
+    }
 `
 
 export const NoticiaListArea = styled.ul`

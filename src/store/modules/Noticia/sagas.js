@@ -39,7 +39,7 @@ export function* showNoticia(action) {
   try {
     
     const response = yield call(() => api.get(`/noticia/${action.payload}`));
-    const noticia = response.data.noticia;
+    const noticia = response.data;
     yield put({ type: SHOW_NOTICIA_SUCCESS, payload: noticia });
   } catch (error) {
     yield put({ type: SHOW_NOTICIA_FAILURE, payload: error.message });
@@ -83,7 +83,7 @@ export function* watchUpdateNoticia() {
 // delete empresa
 export function* deleteNoticia(action) {
   try {
-    yield call(() => axios.delete(`/noticia/${action.payload}`));
+    yield call(() => api.delete(`/noticia/${action.payload}`));
     yield put({ type: DELETE_NOTICIA_SUCCESS, payload: action.payload });
   } catch (error) {
     yield put({ type: DELETE_NOTICIA_FAILURE, payload: error.message });

@@ -10,6 +10,8 @@ import Diretoria from './pages/Diretoria';
 import Estrutura from './pages/Estrutura';
 import Territorio from './pages/Territorio';
 import Legislacao from './pages/Legislacao';
+import Noticia from './pages/Noticia';
+import Acordos from './pages/Acordos';
 
 const ContentArea = styled.div`
   display: flex;
@@ -52,6 +54,16 @@ function App() {
           <Route exact path="/legislacao" element={
             <ContentArea>
               <Legislacao />
+            </ContentArea>
+          } />
+          <Route path="/noticias/:id/:titulo"  element={
+            <ContentArea>
+              <Noticia />
+            </ContentArea>
+          } />
+          <Route exact path="/acordos" element={
+            <ContentArea>
+              <Acordos />
             </ContentArea>
           } />
         </Route>

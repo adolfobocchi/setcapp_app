@@ -81,12 +81,12 @@ export const updateNoticiaFailure = (error) => ({
 
 export const deleteNoticiaRequest = (id) => ({
   type: DELETE_NOTICIA_REQUEST,
-  payload: { id },
+  payload: id,
 });
 
 export const deleteNoticiaSuccess = (id) => ({
   type: DELETE_NOTICIA_SUCCESS,
-  payload: { id },
+  payload: {id},
 });
 
 export const deleteNoticiaFailure = (error) => ({

@@ -3,14 +3,13 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form';
-import { criarNoticiaRequest, listarNoticiaRequest, updateNoticiaRequest } from '../../store/modules/Noticia/actions'
+import { criarNoticiaRequest, deleteNoticiaRequest, listarNoticiaRequest, updateNoticiaRequest } from '../../store/modules/Noticia/actions'
 import { Button, Card, Container, Form, Input, Label } from './styled'
 import EditorHtml from '../EditorHtml';
 import DataPicker from '../DataPicker';
 
 const API_URL = process.env.REACT_APP_URL_API;
-
-const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, updateNoticia }) => {
+const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, updateNoticia, deleteNoticia}) => {
   const formEmpty = {
     id: '',
     titulo: '',
@@ -38,7 +37,7 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
   }, [noticias]);
 
   useEffect(() => {
-    reset(noticiaSelected);
+    reset({...noticiaSelected});
   }, [noticiaSelected])
 
   const handleSelectNoticia = (index) => {
@@ -47,6 +46,8 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
   }
 
   const handleDeleteNoticia = (index) => {
+    deleteNoticia(index);
+    setNoticiaSelected({...formEmpty});
   }
 
   const handleClearNoticia = () => {
@@ -96,7 +97,7 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
         {noticiasList?.map((noticia, index) => (
           <Card key={noticia.id} onClick={() => { handleSelectNoticia(index) }} >
             <h3>{noticia.titulo}</h3>
-            <button onClick={() => { handleDeleteNoticia(index) }}>Delete</button>
+            <button onClick={() => { handleDeleteNoticia(noticia.id) }}>Delete</button>
           </Card>
         ))}
       </Container>
@@ -117,7 +118,8 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchNoticia: () => dispatch(listarNoticiaRequest()),
     criarNoticia: (noticia) => dispatch(criarNoticiaRequest(noticia)),
-    updateNoticia: (id, noticia) => dispatch(updateNoticiaRequest(id, noticia))
+    updateNoticia: (id, noticia) => dispatch(updateNoticiaRequest(id, noticia)),
+    deleteNoticia: (id) => dispatch(deleteNoticiaRequest(id))
   };
 };
 

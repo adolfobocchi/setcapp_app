@@ -43,14 +43,14 @@ const DestaqueCardDescricaoArea = styled.div`
 
 const Destaque = () => {
     const destaqueItem = [
-        {key: 0, icone: 'FaBuffer', descricao: 'Contribuicao Sindical', link: 'acordos', background: '#F2791D' },
+        {key: 0, icone: 'FaBuffer', descricao: 'Contribuicao Sindical', link: 'sindical', background: '#F2791D' },
         {key: 1, icone: 'FaTruck', descricao: 'antt', link: 'antt', background: '#1DDAF2' },
-        {key: 2, icone: 'FaHandshake', descricao: 'Acordo Coletivo', link:'sindical', background: '#BA29F2' },
+        {key: 2, icone: 'FaHandshake', descricao: 'Acordo Coletivo', link:'acordos', background: '#BA29F2' },
     ]
     return (
         <SectionArea background='transparent' direcao={'row'} altura={200}>
         {destaqueItem.map(item => 
-            <DestaqueCard key={item.key} href='#' background={item.background}>
+            <DestaqueCard key={item.key} href={item.link} background={item.background}>
                 <DestaqueCardIconArea>
                     {item.icone.includes('Handshake') &&
                         <FaHandshake style={{width: '3em', height: '3em'}}/>

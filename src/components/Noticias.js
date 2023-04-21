@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { listarNoticiaRequest } from '../store/modules/Noticia/actions';
-import { dataTimeFormatada } from '../utils/formats';
+import { dataTimeFormatada, strSpaceToMinus } from '../utils/formats';
 import { NoticiaItemAnchor, NoticiaItemData, NoticiaItemlist, NoticiaListArea, SectionArea } from './styled';
 
 const API_URL = process.env.REACT_APP_URL_API;
@@ -21,7 +21,7 @@ const Home = ({ loadin, noticias }) => {
           noticia.map((item, index) => {
             return (
               <NoticiaItemlist key={item.id}>
-                <NoticiaItemAnchor href={`noticias/${item.id}`}>{item.titulo}</NoticiaItemAnchor>
+                <NoticiaItemAnchor href={`noticias/${item.id}/${strSpaceToMinus(item.titulo)}`}>{item.titulo}</NoticiaItemAnchor>
                 <NoticiaItemData>{dataTimeFormatada(item.data_hora)}</NoticiaItemData>
               </NoticiaItemlist>
             )
