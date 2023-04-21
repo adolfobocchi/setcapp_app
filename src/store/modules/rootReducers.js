@@ -9,6 +9,7 @@ import legislacaoReducer from './Legislacao/reducers';
 import noticiaReducer from './Noticia/reducers';
 import servicoReducer from './Servico/reducers';
 import sliderReducer from './SliderItem/reducers';
+import anttReducer from './Antt/reducers';
 
 const rootReducer = combineReducers({
 
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   servico: servicoReducer,
   confederado: confederadoReducer,
   acordo: acordoReducer,
+  antt: anttReducer,
   contato: contatoReducer,
 });
 

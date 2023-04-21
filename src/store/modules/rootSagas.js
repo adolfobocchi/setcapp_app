@@ -9,6 +9,7 @@ import { criarLegislacao, deleteLegislacao, listarLegislacao, showLegislacao, up
 import { criarNoticia, deleteNoticia, listarNoticia, showNoticia, updateNoticia, watchCriarNoticia, watchDeleteNoticia, watchListarNoticia, watchShowNoticia, watchUpdateNoticia } from "./Noticia/sagas";
 import { criarServico, deleteServico, listarServico, showServico, updateServico, watchCriarServico, watchDeleteServico, watchListarServico, watchShowServico, watchUpdateServico } from "./Servico/sagas";
 import { criarSlider, deleteSlider, listarSlider, showSlider, updateSlider, watchCriarSlider, watchDeleteSlider, watchListarSlider, watchShowSlider, watchUpdateSlider } from "./SliderItem/sagas";
+import { criarAntt, deleteAntt, listarAntt, showAntt, updateAntt, watchCriarAntt, watchDeleteAntt, watchListarAntt, watchShowAntt, watchUpdateAntt } from "./Antt/sagas";
 
 export default function* rootSaga() {
   yield all([
@@ -107,5 +108,16 @@ export default function* rootSaga() {
     call(watchListarContato),
     call(watchShowContato),
     call(watchUpdateContato),
+    call(criarAntt),
+    call(listarAntt),
+    call(showAntt),
+    call(updateAntt),
+    call(deleteAntt),
+    call(watchCriarAntt),
+    call(watchDeleteAntt),
+    call(watchListarAntt),
+    call(watchShowAntt),
+    call(watchUpdateAntt),
+    
   ]);
 }

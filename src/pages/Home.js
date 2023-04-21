@@ -27,6 +27,10 @@ const Home = ({loadin, empresas, fetchEmpresas, fetchLegislacao, fetchNoticia, f
         fetchConfederado();
         setEmpresa(empresas)
     }, [empresas])
+
+    useEffect(() => {
+      document.title = '::SETCAPP';
+    }, []);
     return(
         <>
         <Header />

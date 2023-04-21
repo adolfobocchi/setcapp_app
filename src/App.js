@@ -12,6 +12,7 @@ import Territorio from './pages/Territorio';
 import Legislacao from './pages/Legislacao';
 import Noticia from './pages/Noticia';
 import Acordos from './pages/Acordos';
+import Antt from './pages/Antt';
 
 const ContentArea = styled.div`
   display: flex;
@@ -64,6 +65,11 @@ function App() {
           <Route exact path="/acordos" element={
             <ContentArea>
               <Acordos />
+            </ContentArea>
+          } />
+          <Route exact path="/antt" element={
+            <ContentArea>
+              <Antt />
             </ContentArea>
           } />
         </Route>
