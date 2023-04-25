@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginRequest } from '../store/modules/Auth/actions';
-import { Button, Input, LoginContainer } from './styled';
+import { Button, Input, LoginContainer } from '../components/styled';
 
 const Login = ({isAuthenticated , fetchLogin}) => {
     const  history = useNavigate();

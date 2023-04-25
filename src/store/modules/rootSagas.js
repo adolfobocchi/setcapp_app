@@ -10,6 +10,7 @@ import { criarNoticia, deleteNoticia, listarNoticia, showNoticia, updateNoticia,
 import { criarServico, deleteServico, listarServico, showServico, updateServico, watchCriarServico, watchDeleteServico, watchListarServico, watchShowServico, watchUpdateServico } from "./Servico/sagas";
 import { criarSlider, deleteSlider, listarSlider, showSlider, updateSlider, watchCriarSlider, watchDeleteSlider, watchListarSlider, watchShowSlider, watchUpdateSlider } from "./SliderItem/sagas";
 import { criarAntt, deleteAntt, listarAntt, showAntt, updateAntt, watchCriarAntt, watchDeleteAntt, watchListarAntt, watchShowAntt, watchUpdateAntt } from "./Antt/sagas";
+import { deleteAssociado, showAssociado, updateAssociado, watchCriarAssociado, watchDeleteAssociado, watchListarAssociado, watchShowAssociado, watchUpdateAssociado } from "./Associado/sagas";
 
 export default function* rootSaga() {
   yield all([
@@ -108,6 +109,16 @@ export default function* rootSaga() {
     call(watchListarContato),
     call(watchShowContato),
     call(watchUpdateContato),
+    call(criarContato),
+    call(listarContato),
+    call(showAssociado),
+    call(updateAssociado),
+    call(deleteAssociado),
+    call(watchCriarAssociado),
+    call(watchDeleteAssociado),
+    call(watchListarAssociado),
+    call(watchShowAssociado),
+    call(watchUpdateAssociado),
     call(criarAntt),
     call(listarAntt),
     call(showAntt),

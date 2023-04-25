@@ -86,7 +86,7 @@ const Home = ({ loadin, confederados, fetchConfederado }) => {
 
 
         confederado.map((item, index) =>
-            <FederadoCard  key={item.id} href={`${item.link}`} >
+            <FederadoCard  key={item.id} href={`${item.link}`} target='_blank'  >
               <FederadoCardIconArea>
                 <FederadoCardImg src={`${API_URL}/images/${item.url}`} />
               </FederadoCardIconArea>

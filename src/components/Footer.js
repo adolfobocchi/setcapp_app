@@ -16,6 +16,7 @@ const FooterContainer = styled.footer`
   text-align: center;
   margin-top: 40px;
   width: 100%;
+  margin-bottom: 20px;
 `;
 
 const FooterInfo = styled.div`

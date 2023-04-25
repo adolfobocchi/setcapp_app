@@ -215,7 +215,7 @@ export const FormRow = styled.form`
   align-items: center;
 `;
 
-export const Input = styled.input`
+export const Input2 = styled.input`
   padding: 0.5rem;
   height: 40px;
   width: 100%;
@@ -239,11 +239,16 @@ export const ServicoCard = styled.a`
     padding: 8px;
     text-decoration: none;
     color: #000;
-    @media only screen and (min-width: 700px) {
-        flex-basis: 30%;
+    
+    @media only screen and (max-width: 700px) {
+        flex-basis: 50%;
+    }
+    
+    @media (min-width: 699px) and (max-width: 500px) {
+        flex-basis: 100%;
     }
 
-    @media only screen and (max-width: 699px) {
+    @media only screen and (max-width: 499px) {
         flex-basis: 100%;
     }
 
@@ -302,4 +307,44 @@ export const NoticiaItemData = styled.p`
     font-size: 0.8em;
     font-weight: bold;
 
+`
+
+
+export const LoginContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+`;
+
+export const Button = styled.button`
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+`;
+
+
+
+export const Input = styled.input`
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+`;
+
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+
+
+export const MapaArea = styled.div`
+    flex: 1;
+    margin: 10;
+    display: flex;
 `

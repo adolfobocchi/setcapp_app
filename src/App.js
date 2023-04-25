@@ -13,6 +13,8 @@ import Legislacao from './pages/Legislacao';
 import Noticia from './pages/Noticia';
 import Acordos from './pages/Acordos';
 import Antt from './pages/Antt';
+import Contato from './pages/Contato';
+import Associado from './pages/Associado';
 
 const ContentArea = styled.div`
   display: flex;
@@ -31,6 +33,19 @@ function App() {
             <ContentArea>
               <Home />
             </ContentArea>
+          } />
+          
+          <Route exact path="/contato" element={
+            <ContentArea>
+              <Contato />
+            </ContentArea>
+
+          } />
+          <Route exact path="/associado" element={
+            <ContentArea>
+              <Associado />
+            </ContentArea>
+
           } />
           <Route exact path="/institucional" element={
             <ContentArea>

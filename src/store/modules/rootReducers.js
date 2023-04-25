@@ -10,6 +10,7 @@ import noticiaReducer from './Noticia/reducers';
 import servicoReducer from './Servico/reducers';
 import sliderReducer from './SliderItem/reducers';
 import anttReducer from './Antt/reducers';
+import associadoReducer from './Associado/reducers';
 
 const rootReducer = combineReducers({
 
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   acordo: acordoReducer,
   antt: anttReducer,
   contato: contatoReducer,
+  associado: associadoReducer,
 });
 
 export default rootReducer;

@@ -55,7 +55,6 @@ export function* watchShowEmpresa() {
 export function* criarEmpresa(action) {
   try {
     const response = yield call(() => api.post('/empresa', action.payload.empresa));
-    const empresa = response.data.empresa;
     yield takeEvery(CRIAR_EMPRESA_SUCCESS, function*(action) {
       yield action.history('empresas')
     });
