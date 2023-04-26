@@ -53,8 +53,8 @@ const ServicoFixoCardDescricaoArea = styled.div`
 
 const ServicosFixo = () => {
     const destaqueItem = [
-        {key: 0, icone: 'FaBalanceScale', nome:'legislacao', descricao: 'Todo o tipo de regulamentação do setor de transporte que você precisa conhecer e consultar', link: 'legislacao', background: '#F2791D' },
-        {key: 1, icone: 'FaUsers',nome: 'eventos', descricao: 'Eventos relacionados ao setor de transporte organizados pelo Sindbru ou parceiros.', link: 'eventos', background: '#1DDAF2' },
+        {key: 0, icone: 'FaBalanceScale', nome:'legislação', descricao: 'Todo o tipo de regulamentação do setor de transporte que você precisa conhecer e consultar', link: 'legislacao', background: '#F2791D' },
+        {key: 1, icone: 'FaUsers',nome: 'eventos', descricao: 'Eventos relacionados ao setor de transporte organizados pelo Setcapp ou parceiros.', link: 'eventos', background: '#1DDAF2' },
         {key: 2, icone: 'FaFileUpload', nome: 'curriculum', descricao: 'Envie-nos seu currículo e candidate-se para possíveis vagas no setor de transporte.', link:'curriculo', background: '#BA29F2' },
     ]
     return (
