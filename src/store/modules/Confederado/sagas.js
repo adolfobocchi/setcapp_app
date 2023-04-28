@@ -1,5 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
-import axios from 'axios';
+import { call, put, takeLatest, all } from 'redux-saga/effects';
 
 import {
   LISTAR_CONFEDERADO_REQUEST,
@@ -21,7 +20,7 @@ import {
 
 import api from '../../../services/api';
 
-export function* listarConfederado() {
+function* listarConfederado() {
   try {
     const response = yield call(() => api.get('/confederado'));
     const confederado = response.data;
@@ -31,11 +30,7 @@ export function* listarConfederado() {
   }
 }
 
-export function* watchListarConfederado() {
-  yield takeEvery(LISTAR_CONFEDERADO_REQUEST, listarConfederado);
-}
-
-export function* showConfederado(action) {
+function* showConfederado(action) {
   try {
     
     const response = yield call(() => api.get(`/confederado/${action.payload}`));
@@ -46,12 +41,9 @@ export function* showConfederado(action) {
   }
 }
 
-export function* watchShowConfederado() {
-  yield takeEvery(SHOW_CONFEDERADO_REQUEST, showConfederado);
-}
 
 // add empresa
-export function* criarConfederado(action) {
+function* criarConfederado(action) {
   try {
     const response = yield call(() => api.post('/confederado', action.payload.confederado));
     const confederado = response.data.confederado;
@@ -61,12 +53,8 @@ export function* criarConfederado(action) {
   }
 }
 
-export function* watchCriarConfederado() {
-  yield takeEvery(CRIAR_CONFEDERADO_REQUEST, criarConfederado);
-}
-
 // update empresa
-export function* updateConfederado(action) {
+function* updateConfederado(action) {
   try {
     const response = yield call(() => api.put(`/confederado/${action.payload.id}`, action.payload.confederado));
     const confederado = response.data.confederado;
@@ -76,20 +64,21 @@ export function* updateConfederado(action) {
   }
 }
 
-export function* watchUpdateConfederado() {
-  yield takeEvery(UPDATE_CONFEDERADO_REQUEST, updateConfederado);
-}
-
 // delete empresa
-export function* deleteConfederado(action) {
+function* deleteConfederado(action) {
   try {
-    yield call(() => axios.delete(`/confederado/${action.payload}`));
+    yield call(() => api.delete(`/confederado/${action.payload}`));
     yield put({ type: DELETE_CONFEDERADO_SUCCESS, payload: action.payload });
   } catch (error) {
     yield put({ type: DELETE_CONFEDERADO_FAILURE, payload: error.message });
   }
 }
 
-export function* watchDeleteConfederado() {
-  yield takeEvery(DELETE_CONFEDERADO_REQUEST, deleteConfederado);
-}
+
+export default all([
+  takeLatest(DELETE_CONFEDERADO_REQUEST, deleteConfederado),
+  takeLatest(UPDATE_CONFEDERADO_REQUEST, updateConfederado),
+  takeLatest(CRIAR_CONFEDERADO_REQUEST, criarConfederado),
+  takeLatest(SHOW_CONFEDERADO_REQUEST, showConfederado),
+  takeLatest(LISTAR_CONFEDERADO_REQUEST, listarConfederado),
+])

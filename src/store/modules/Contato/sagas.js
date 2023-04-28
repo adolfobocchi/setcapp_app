@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { call, put, all, takeLatest } from 'redux-saga/effects';
 
 import {
   LISTAR_CONTATO_REQUEST,
@@ -20,7 +20,7 @@ import {
 
 import api from '../../../services/api';
 
-export function* listarContato() {
+function* listarContato() {
   try {
     const response = yield call(() => api.get('/contato'));
     const contato = response.data;
@@ -30,13 +30,11 @@ export function* listarContato() {
   }
 }
 
-export function* watchListarContato() {
-  yield takeEvery(LISTAR_CONTATO_REQUEST, listarContato);
-}
 
-export function* showContato(action) {
+
+function* showContato(action) {
   try {
-    
+
     const response = yield call(() => api.get(`/contato/${action.payload}`));
     const contato = response.data.contato;
     yield put({ type: SHOW_CONTATO_SUCCESS, payload: contato });
@@ -45,12 +43,9 @@ export function* showContato(action) {
   }
 }
 
-export function* watchShowContato() {
-  yield takeEvery(SHOW_CONTATO_REQUEST, showContato);
-}
 
 // add empresa
-export function* criarContato(action) {
+function* criarContato(action) {
   try {
     const response = yield call(() => api.post('/contato', action.payload.contato));
     const contato = response.data.contato;
@@ -60,12 +55,8 @@ export function* criarContato(action) {
   }
 }
 
-export function* watchCriarContato() {
-  yield takeEvery(CRIAR_CONTATO_REQUEST, criarContato);
-}
-
 // update empresa
-export function* updateContato(action) {
+function* updateContato(action) {
   try {
     const response = yield call(() => api.put(`/contato/${action.payload.id}`, action.payload.contato));
     const contato = response.data.contato;
@@ -75,12 +66,8 @@ export function* updateContato(action) {
   }
 }
 
-export function* watchUpdateContato() {
-  yield takeEvery(UPDATE_CONTATO_REQUEST, updateContato);
-}
-
 // delete empresa
-export function* deleteContato(action) {
+function* deleteContato(action) {
   try {
     yield call(() => api.delete(`/contato/${action.payload}`));
     yield put({ type: DELETE_CONTATO_SUCCESS, payload: action.payload });
@@ -89,6 +76,11 @@ export function* deleteContato(action) {
   }
 }
 
-export function* watchDeleteContato() {
-  yield takeEvery(DELETE_CONTATO_REQUEST, deleteContato);
-}
+
+export default all([
+  takeLatest(DELETE_CONTATO_REQUEST, deleteContato),
+  takeLatest(UPDATE_CONTATO_REQUEST, updateContato),
+  takeLatest(CRIAR_CONTATO_REQUEST, criarContato),
+  takeLatest(SHOW_CONTATO_REQUEST, showContato),
+  takeLatest(LISTAR_CONTATO_REQUEST, listarContato),
+])

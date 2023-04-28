@@ -1,47 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { criarEmpresaRequest, listarEmpresaRequest, updateEmpresaRequest } from '../../store/modules/Empresa/actions';
+import { criarEmpresaRequest, deleteImagemEmpresaRequest, listarEmpresaRequest, updateEmpresaRequest } from '../../store/modules/Empresa/actions';
 import { connect } from 'react-redux';
+import { FaTrash } from 'react-icons/fa'
 import { Button, Form, GaleriaArea, Image, Input, Label } from './styled';
 import EditorHtml from '../EditorHtml';
+import Modal from '../Modal';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
-
-const EmpresaForm = ({loading, empresas, error, fetchEmpresas, criarEmpresa, updateEmpresa}) => {
-  const [empresa, setEmpresa] = useState(empresas);
-  const { register, control, formState: { errors }, handleSubmit, reset } = useForm({
-    defaultValues: empresa
+const EmpresaForm = ({loading, error, empresas, fetchEmpresas, criarEmpresa, updateEmpresa, deleteImagemEmpresa}) => {
+  
+  const { register, control, formState: { errors }, handleSubmit } = useForm({
+    defaultValues: empresas
       ? {
-          id: empresa.id,
-          nome: empresa.nome,
-          endereco: empresa.endereco,
-          numero: empresa.numero,
-          bairro: empresa.bairro,
-          cidade: empresa.cidade,
-          estado: empresa.estado,
-          cep: empresa.cep,
-          telefone: empresa.telefone,
-          logo: empresa.logo,
-          whatsapp: empresa.whatsapp,
-          instagram: empresa.instagram,
-          facebook: empresa.facebook,
-          linkedin: empresa.linkedin,
-          email: empresa.email,
-          latitude: empresa.latitude,
-          longitude: empresa.longitude,
-          institucional: empresa.institucional,
-          diretoria: empresa.diretoria,
-          territorio: empresa.territorio,
+          id: empresas.id,
+          nome: empresas.nome,
+          endereco: empresas.endereco,
+          numero: empresas.numero,
+          bairro: empresas.bairro,
+          cidade: empresas.cidade,
+          estado: empresas.estado,
+          cep: empresas.cep,
+          telefone: empresas.telefone,
+          logo: empresas.logo,
+          whatsapp: empresas.whatsapp,
+          instagram: empresas.instagram,
+          facebook: empresas.facebook,
+          linkedin: empresas.linkedin,
+          email: empresas.email,
+          latitude: empresas.latitude,
+          longitude: empresas.longitude,
+          institucional: empresas.institucional,
+          diretoria: empresas.diretoria,
+          territorio: empresas.territorio,
 
         }
       : {},
   });
-  
+
   useEffect(() => {
     fetchEmpresas();
-    setEmpresa(empresas)
-  }, [empresas]);
+  }, [fetchEmpresas]);
+
+  const handleDeleteImagemEmpresa = (id) => {
+    deleteImagemEmpresa(id);
+  }
 
   const onSubmit = (data) => {
     
@@ -50,7 +54,6 @@ const EmpresaForm = ({loading, empresas, error, fetchEmpresas, criarEmpresa, upd
       formData.append('imagens', data.files[key])
     }
     formData.append("logoFile", data.logoFile[0]);
-    formData.append("territorioFile", data.territorioFile[0]);
     formData.append('empresa', JSON.stringify(data));
 
     
@@ -61,6 +64,12 @@ const EmpresaForm = ({loading, empresas, error, fetchEmpresas, criarEmpresa, upd
     }
     
   }
+
+  
+  if(loading) {
+    return <Modal />
+  }
+  
   return (
     <Form onSubmit={handleSubmit(onSubmit)} >
       <Input
@@ -106,8 +115,8 @@ const EmpresaForm = ({loading, empresas, error, fetchEmpresas, criarEmpresa, upd
       <Label>Logo</Label>
       <Input  type='file' name='logoFile' {...register('logoFile', { required: false })} />
       {errors.logo && <span>Campo obrigatório</span>}
-      {empresa?.logo && 
-        <Image src={`${API_URL}/images/${empresa?.logo || null}`} />
+      {empresas?.logo && 
+        <Image src={`${API_URL}/images/${empresas?.logo || null}`} />
       }
       
       
@@ -140,18 +149,13 @@ const EmpresaForm = ({loading, empresas, error, fetchEmpresas, criarEmpresa, upd
       {errors.longitude && <span>Campo obrigatório</span>}
 
       <Label>Institucional</Label>
-      <EditorHtml name="institucional" control={control} defaultValue={empresa?.institucional} />
+      <EditorHtml name="institucional" control={control} defaultValue={empresas?.institucional} />
 
       <Label>Diretoria</Label>
-      <EditorHtml name="diretoria" control={control} defaultValue={empresa?.diretoria} />
+      <EditorHtml name="diretoria" control={control} defaultValue={empresas?.diretoria} />
       
       <Label>Territorio</Label>
-      <Input  type='file' name='territorioFile' {...register('territorioFile', { required: false })} />
-      {errors.logo && <span>Campo obrigatório</span>}
-
-      {empresa?.territorio && 
-        <Image src={`${API_URL}/images/${empresa?.territorio || null}`} />
-      }
+      <EditorHtml name="territorio" control={control} defaultValue={empresas?.territorio} />
       
 
 
@@ -159,8 +163,14 @@ const EmpresaForm = ({loading, empresas, error, fetchEmpresas, criarEmpresa, upd
         <Input type='file' multiple name='files' {...register('files', { required: false })} />
         {errors.logo && <span>Campo obrigatório</span>}
         <GaleriaArea>
-        {empresa?.imagens?.map(imagem => {
-              return (<img key={imagem.id} src={`${API_URL}/images/${imagem.url}`} style={{ width: 40, height: 40 }} />)
+        {empresas?.imagens?.map(imagem => {
+              return (
+                <div key={imagem.id} style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                  <img  src={`${API_URL}/images/${imagem.url}`} style={{ width: 40, height: 40 }} alt='estrutura imagem' />
+                  <FaTrash onClick={() => handleDeleteImagemEmpresa(imagem.id)} style={{ height: '1em', width: '1em' }} />
+                </div>
+              
+              )
             })}
         </GaleriaArea>
       <Button type="submit">Salvar</Button>
@@ -169,6 +179,7 @@ const EmpresaForm = ({loading, empresas, error, fetchEmpresas, criarEmpresa, upd
 };
 
 const mapStateToProps = state => {
+ 
   return {
     loading: state.empresa.loading,
     empresas: state.empresa.empresa,
@@ -180,7 +191,8 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchEmpresas: () => dispatch(listarEmpresaRequest()),
     criarEmpresa: (empresa) => dispatch(criarEmpresaRequest(empresa)),
-    updateEmpresa: (id, empresa) => dispatch(updateEmpresaRequest(id, empresa))
+    updateEmpresa: (id, empresa) => dispatch(updateEmpresaRequest(id, empresa)),
+    deleteImagemEmpresa: (id, url) => dispatch(deleteImagemEmpresaRequest(id, url))
   };
 };
 

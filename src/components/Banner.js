@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { listarSliderRequest } from '../store/modules/SliderItem/actions';
 import { connect } from 'react-redux';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { BannerAnchor, BannerArea, BannerImage, BannerSlider, BannerText } from './styled';
+import Modal from './Modal';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
@@ -18,18 +19,18 @@ const BannerWrapper = ({ loading, sliders, fetchSlider }) => {
         autoplaySpeed: 4000,
     };
 
-    const [sliderList, setSliderList] = useState(sliders);
-
     useEffect(() => {
-        setSliderList(sliders);
-    }, [sliders]);
+        fetchSlider()
+    }, [fetchSlider]);
 
-
+    if(loading) {
+        return <Modal />
+    }
 
     return (
         <BannerArea >
             <BannerSlider  {...settings} >
-            {sliderList?.map((slider, index) =>
+            {sliders?.map((slider, index) =>
                 (
                     <BannerImage key={slider.id} imageUrl={`${API_URL}/images/${slider.url}`}>
                         {slider.link &&
@@ -62,7 +63,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        fetchSlider: () => {console.log('banner'); dispatch(listarSliderRequest())}
+        fetchSlider: () => dispatch(listarSliderRequest())
     };
 };
 

@@ -1,37 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { Button, Form, Input, Label } from './styled';
 import { criarLegislacaoRequest, listarLegislacaoRequest, updateLegislacaoRequest } from '../../store/modules/Legislacao/actions';
 import EditorHtml from '../EditorHtml';
+import Modal from '../Modal';
 
-const API_URL = process.env.REACT_APP_URL_API;
-
-const LegislacaoForm = ({loading, legislacaos, error, fetchLegislacao, criarLegislacao, updateLegislacao}) => {
-  const [legislacao, setLegislacao] = useState(legislacaos);
-  const { register, control, formState: { errors }, handleSubmit, reset } = useForm({
-    defaultValues: legislacao
+const LegislacaoForm = ({ loading, legislacaos, error, fetchLegislacao, criarLegislacao, updateLegislacao }) => {
+  const { register, control, formState: { errors }, handleSubmit } = useForm({
+    defaultValues: legislacaos
       ? {
-          id: legislacao.id,
-          conteudo: legislacao.conteudo,
-        }
+        id: legislacaos.id,
+        conteudo: legislacaos.conteudo,
+      }
       : {},
   });
 
+
   useEffect(() => {
     fetchLegislacao();
-    setLegislacao(legislacaos);
-  }, [legislacaos]);
+  }, [fetchLegislacao]);
 
-  const onSubmit = (data) => {    
-    if(data.id && data.id > 0) {
+
+  const onSubmit = (data) => {
+    if (data.id && data.id > 0) {
       updateLegislacao(data.id, data);
-      fetchLegislacao();
     } else {
       criarLegislacao(data);
-      fetchLegislacao();
+
     }
-    
+    fetchLegislacao();
+  }
+
+  if (loading) {
+    return <Modal />
   }
   return (
     <Form onSubmit={handleSubmit(onSubmit)} >
@@ -41,7 +43,8 @@ const LegislacaoForm = ({loading, legislacaos, error, fetchLegislacao, criarLegi
       />
 
       <Label>Legislacao</Label>
-      <EditorHtml name="conteudo" control={control} defaultValue={legislacao?.conteudo}/>
+      <EditorHtml name="conteudo" control={control} defaultValue={legislacaos?.conteudo} />
+      {errors.titulo && <span>Erro</span>}
 
       <Button type="submit">Salvar</Button>
     </Form>

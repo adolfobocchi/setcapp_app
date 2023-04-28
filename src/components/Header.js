@@ -1,14 +1,15 @@
 import React from "react";
 import {useNavigate} from 'react-router-dom';
-import { ContatoArea, FaleConosco, FormRow, HeaderArea, HeaderBar, HeaderContent, Input, LinkArea, LinkRedeSocial, LinkRedeSocialInstagram, LogoArea, LogoImg, Menu, SearchArea } from "./styled";
+import { ContatoArea, FaleConosco, FormRow, HeaderArea, HeaderBar, HeaderContent, Input, LinkRedeSocial, LinkRedeSocialInstagram, LogoArea, LogoImg, Menu, SearchArea } from "./styled";
 import { FaInstagram, FaBars, FaSearch, FaWhatsapp } from 'react-icons/fa'
 import { connect } from "react-redux";
 import { whatsAppFormat } from "../utils/formats";
 
 const API_URL = process.env.REACT_APP_URL_API;
 
-const Header = ({ empresas }) => {
+const Header = ({loading, empresas, error}) => {
   const history = useNavigate();
+  
   
   function toHome() {
     history('/')
@@ -52,4 +53,5 @@ const mapStateToProps = state => {
     error: state.empresa.error
   };
 };
+
 export default connect(mapStateToProps, null)(Header);

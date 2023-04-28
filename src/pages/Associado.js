@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
-import Navbar from '../components/NavBar';
 import { Button, Form, Input, MapaArea, SectionArea } from '../components/styled';
 import { criarAssociadoRequest } from '../store/modules/Associado/actions';
 import { Label } from '../components/contato/styled';
 import { useEffect } from 'react';
-
-const API_URL = process.env.REACT_APP_URL_API;
-
-
 
 const Home = ({ loading, criarAssociado, error }) => {
     const formEmpty = {
@@ -58,7 +51,7 @@ const Home = ({ loading, criarAssociado, error }) => {
 
     useEffect(() => {
         reset({ ...associado });
-    }, [associado])
+    }, [reset,associado])
 
     const onSubmit = (data) => {
 
@@ -69,8 +62,6 @@ const Home = ({ loading, criarAssociado, error }) => {
 
     return (
         <>
-            <Header />
-            <Navbar />
             <SectionArea background='rgba(254,254,254,0.7)' altura={400} direcao={'row'} >
                 <Form style={{ flex: 1, margin: 10 }} onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data' >
                     {
@@ -125,7 +116,6 @@ const Home = ({ loading, criarAssociado, error }) => {
                 </Form>
 
             </SectionArea>
-            <Footer />
         </>
     )
 }

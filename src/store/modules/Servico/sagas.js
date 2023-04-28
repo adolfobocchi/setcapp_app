@@ -1,5 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
-import axios from 'axios';
+import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import {
   LISTAR_SERVICO_REQUEST,
@@ -21,7 +20,7 @@ import {
 
 import api from '../../../services/api';
 
-export function* listarServico() {
+function* listarServico() {
   try {
     const response = yield call(() => api.get('/servico'));
     const servico = response.data;
@@ -31,11 +30,7 @@ export function* listarServico() {
   }
 }
 
-export function* watchListarServico() {
-  yield takeEvery(LISTAR_SERVICO_REQUEST, listarServico);
-}
-
-export function* showServico(action) {
+function* showServico(action) {
   try {
     
     const response = yield call(() => api.get(`/servico/${action.payload}`));
@@ -45,13 +40,8 @@ export function* showServico(action) {
     yield put({ type: SHOW_SERVICO_FAILURE, payload: error.message });
   }
 }
-
-export function* watchShowServico() {
-  yield takeEvery(SHOW_SERVICO_REQUEST, showServico);
-}
-
 // add empresa
-export function* criarServico(action) {
+function* criarServico(action) {
   try {
     const response = yield call(() => api.post('/servico', action.payload.servico));
     const servico = response.data.servico;
@@ -61,12 +51,8 @@ export function* criarServico(action) {
   }
 }
 
-export function* watchCriarServico() {
-  yield takeEvery(CRIAR_SERVICO_REQUEST, criarServico);
-}
-
 // update empresa
-export function* updateServico(action) {
+function* updateServico(action) {
   try {
     const response = yield call(() => api.put(`/servico/${action.payload.id}`, action.payload.servico));
     const servico = response.data.servico;
@@ -75,21 +61,20 @@ export function* updateServico(action) {
     yield put({ type: UPDATE_SERVICO_FAILURE, payload: error.message });
   }
 }
-
-export function* watchUpdateServico() {
-  yield takeEvery(UPDATE_SERVICO_REQUEST, updateServico);
-}
-
 // delete empresa
-export function* deleteServico(action) {
+function* deleteServico(action) {
   try {
-    yield call(() => axios.delete(`/servico/${action.payload}`));
+    yield call(() => api.delete(`/servico/${action.payload}`));
     yield put({ type: DELETE_SERVICO_SUCCESS, payload: action.payload });
   } catch (error) {
     yield put({ type: DELETE_SERVICO_FAILURE, payload: error.message });
   }
 }
 
-export function* watchDeleteServico() {
-  yield takeEvery(DELETE_SERVICO_REQUEST, deleteServico);
-}
+export default all([
+  takeLatest(DELETE_SERVICO_REQUEST, deleteServico),
+  takeLatest(UPDATE_SERVICO_REQUEST, updateServico),
+  takeLatest(CRIAR_SERVICO_REQUEST, criarServico),
+  takeLatest(SHOW_SERVICO_REQUEST, showServico),
+  takeLatest(LISTAR_SERVICO_REQUEST, listarServico),
+])

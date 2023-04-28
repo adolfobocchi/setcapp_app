@@ -1,5 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
-import axios from 'axios';
+import { call, put, all, takeLatest } from 'redux-saga/effects';
 
 import {
   LISTAR_EVENTO_REQUEST,
@@ -21,7 +20,7 @@ import {
 
 import api from '../../../services/api';
 
-export function* listarEvento() {
+function* listarEvento() {
   try {
     const response = yield call(() => api.get('/evento'));
     const evento = response.data;
@@ -31,11 +30,7 @@ export function* listarEvento() {
   }
 }
 
-export function* watchListarEvento() {
-  yield takeEvery(LISTAR_EVENTO_REQUEST, listarEvento);
-}
-
-export function* showEvento(action) {
+function* showEvento(action) {
   try {
     
     const response = yield call(() => api.get(`/evento/${action.payload}`));
@@ -46,12 +41,8 @@ export function* showEvento(action) {
   }
 }
 
-export function* watchShowEvento() {
-  yield takeEvery(SHOW_EVENTO_REQUEST, showEvento);
-}
-
 // add empresa
-export function* criarEvento(action) {
+function* criarEvento(action) {
   try {
     const response = yield call(() => api.post('/evento', action.payload.evento));
     const evento = response.data.evento;
@@ -61,12 +52,8 @@ export function* criarEvento(action) {
   }
 }
 
-export function* watchCriarEvento() {
-  yield takeEvery(CRIAR_EVENTO_REQUEST, criarEvento);
-}
-
 // update empresa
-export function* updateEvento(action) {
+function* updateEvento(action) {
   try {
     const response = yield call(() => api.put(`/evento/${action.payload.id}`, action.payload.evento));
     const evento = response.data.evento;
@@ -76,20 +63,20 @@ export function* updateEvento(action) {
   }
 }
 
-export function* watchUpdateEvento() {
-  yield takeEvery(UPDATE_EVENTO_REQUEST, updateEvento);
-}
-
 // delete empresa
-export function* deleteEvento(action) {
+function* deleteEvento(action) {
   try {
-    yield call(() => axios.delete(`/evento/${action.payload}`));
+    yield call(() => api.delete(`/evento/${action.payload}`));
     yield put({ type: DELETE_EVENTO_SUCCESS, payload: action.payload });
   } catch (error) {
     yield put({ type: DELETE_EVENTO_FAILURE, payload: error.message });
   }
 }
 
-export function* watchDeleteEvento() {
-  yield takeEvery(DELETE_EVENTO_REQUEST, deleteEvento);
-}
+export default all([
+  takeLatest(DELETE_EVENTO_REQUEST, deleteEvento),
+  takeLatest(UPDATE_EVENTO_REQUEST, updateEvento),
+  takeLatest(CRIAR_EVENTO_REQUEST, criarEvento),
+  takeLatest(SHOW_EVENTO_REQUEST, showEvento),
+  takeLatest(LISTAR_EVENTO_REQUEST, listarEvento),
+])

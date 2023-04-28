@@ -3,12 +3,13 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form';
-import { criarConfederadoRequest, listarConfederadoRequest, updateConfederadoRequest } from '../../store/modules/Confederado/actions'
+import { criarConfederadoRequest, deleteConfederadoRequest, listarConfederadoRequest, updateConfederadoRequest } from '../../store/modules/Confederado/actions'
 import { Button, Card, Container, Form, Image, Input, Label } from './styled'
+import Modal from '../Modal';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
-const ListarConfederado = ({ loading, confederados, error, fetchConfederado, criarConfederado, updateConfederado }) => {
+const ListarConfederado = ({ loading, confederados, error, fetchConfederado, criarConfederado, updateConfederado, deleteConfederado }) => {
   const formEmpty = {
     id: '',
     url: '',
@@ -16,7 +17,6 @@ const ListarConfederado = ({ loading, confederados, error, fetchConfederado, cri
     link: '',
   }
   const [confederadoSelected, setConfederadoSelected] = useState(formEmpty);
-  const [confederadosList, setConfederadosList] = useState([]);
   const { register, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: confederadoSelected
   });
@@ -24,12 +24,11 @@ const ListarConfederado = ({ loading, confederados, error, fetchConfederado, cri
 
   useEffect(() => {
     fetchConfederado()
-    setConfederadosList(confederados);
-  }, [confederados]);
+  }, [fetchConfederado]);
 
   useEffect(() => {
     reset({...confederadoSelected});
-  }, [confederadoSelected])
+  }, [reset, confederadoSelected])
 
 
   const handleSelectConfederado = (index) => {
@@ -42,6 +41,8 @@ const ListarConfederado = ({ loading, confederados, error, fetchConfederado, cri
   }
 
   const handleDeleteConfederado = (index) => {
+    deleteConfederado(index);
+    setConfederadoSelected({...formEmpty});
   }
 
   const onSubmit = (data) => {
@@ -51,12 +52,19 @@ const ListarConfederado = ({ loading, confederados, error, fetchConfederado, cri
 
     if (data.id && data.id > 0) {
       updateConfederado(data.id, formData);
+      
 
     } else {
       criarConfederado(formData);
     }
+    fetchConfederado();
+    handleClearConfederado();
 
   }
+  if(loading) {
+    return <Modal />
+  }
+
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data' >
@@ -89,12 +97,12 @@ const ListarConfederado = ({ loading, confederados, error, fetchConfederado, cri
         <Button type="button" onClick={handleClearConfederado}>Limpar</Button>
       </Form>
       <Container>
-        {confederadosList?.map((confederado, index) => (
+        {confederados?.length > 0 && confederados?.map((confederado, index) => (
           <Card key={confederado.id} onClick={() => { handleSelectConfederado(index) }} >
             <h3>{confederado.nome}</h3>
-            <img src={`${API_URL}/images/${confederado.url}`} style={{ width: 40, height: 40 }} />
+            <img src={`${API_URL}/images/${confederado.url}`} style={{ width: 40, height: 40 }} alt='imagem confederados'/>
             
-            <button onClick={() => { handleDeleteConfederado(index) }}>Delete</button>
+            <button onClick={() => { handleDeleteConfederado(confederado.id) }}>Delete</button>
           </Card>
         ))}
       </Container>
@@ -115,7 +123,8 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchConfederado: () => dispatch(listarConfederadoRequest()),
     criarConfederado: (confederado) => dispatch(criarConfederadoRequest(confederado)),
-    updateConfederado: (id, confederado) => dispatch(updateConfederadoRequest(id, confederado))
+    updateConfederado: (id, confederado) => dispatch(updateConfederadoRequest(id, confederado)),
+    deleteConfederado: (id) => dispatch(deleteConfederadoRequest(id))
   };
 };
 

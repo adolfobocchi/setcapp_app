@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import {  call, put, all, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
 import {
@@ -31,10 +31,6 @@ export function* listarAntt() {
   }
 }
 
-export function* watchListarAntt() {
-  yield takeEvery(LISTAR_ANTT_REQUEST, listarAntt);
-}
-
 export function* showAntt(action) {
   try {
     
@@ -46,9 +42,6 @@ export function* showAntt(action) {
   }
 }
 
-export function* watchShowAntt() {
-  yield takeEvery(SHOW_ANTT_REQUEST, showAntt);
-}
 
 // add empresa
 export function* criarAntt(action) {
@@ -61,9 +54,6 @@ export function* criarAntt(action) {
   }
 }
 
-export function* watchCriarAntt() {
-  yield takeEvery(CRIAR_ANTT_REQUEST, criarAntt);
-}
 
 // update empresa
 export function* updateAntt(action) {
@@ -76,9 +66,6 @@ export function* updateAntt(action) {
   }
 }
 
-export function* watchUpdateAntt() {
-  yield takeEvery(UPDATE_ANTT_REQUEST, updateAntt);
-}
 
 // delete empresa
 export function* deleteAntt(action) {
@@ -90,6 +77,11 @@ export function* deleteAntt(action) {
   }
 }
 
-export function* watchDeleteAntt() {
-  yield takeEvery(DELETE_ANTT_REQUEST, deleteAntt);
-}
+
+export default all([
+  takeLatest(DELETE_ANTT_REQUEST, deleteAntt),
+  takeLatest(UPDATE_ANTT_REQUEST, updateAntt),
+  takeLatest(CRIAR_ANTT_REQUEST, criarAntt),
+  takeLatest(SHOW_ANTT_REQUEST, showAntt),
+  takeLatest(LISTAR_ANTT_REQUEST, listarAntt),
+])

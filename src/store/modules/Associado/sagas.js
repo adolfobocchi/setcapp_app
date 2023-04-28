@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { call, put, all, takeLatest } from 'redux-saga/effects';
 
 import {
   LISTAR_ASSOCIADO_REQUEST,
@@ -30,9 +30,6 @@ export function* listarAssociado() {
   }
 }
 
-export function* watchListarAssociado() {
-  yield takeEvery(LISTAR_ASSOCIADO_REQUEST, listarAssociado);
-}
 
 export function* showAssociado(action) {
   try {
@@ -43,10 +40,6 @@ export function* showAssociado(action) {
   } catch (error) {
     yield put({ type: SHOW_ASSOCIADO_FAILURE, payload: error.message });
   }
-}
-
-export function* watchShowAssociado() {
-  yield takeEvery(SHOW_ASSOCIADO_REQUEST, showAssociado);
 }
 
 // add empresa
@@ -61,9 +54,6 @@ export function* criarAssociado(action) {
   }
 }
 
-export function* watchCriarAssociado() {
-  yield takeEvery(CRIAR_ASSOCIADO_REQUEST, criarAssociado);
-}
 
 // update empresa
 export function* updateAssociado(action) {
@@ -76,9 +66,6 @@ export function* updateAssociado(action) {
   }
 }
 
-export function* watchUpdateAssociado() {
-  yield takeEvery(UPDATE_ASSOCIADO_REQUEST, updateAssociado);
-}
 
 // delete empresa
 export function* deleteAssociado(action) {
@@ -90,6 +77,11 @@ export function* deleteAssociado(action) {
   }
 }
 
-export function* watchDeleteAssociado() {
-  yield takeEvery(DELETE_ASSOCIADO_REQUEST, deleteAssociado);
-}
+
+export default all([
+  takeLatest(DELETE_ASSOCIADO_REQUEST, deleteAssociado),
+  takeLatest(UPDATE_ASSOCIADO_REQUEST, updateAssociado),
+  takeLatest(CRIAR_ASSOCIADO_REQUEST, criarAssociado),
+  takeLatest(SHOW_ASSOCIADO_REQUEST, showAssociado),
+  takeLatest(LISTAR_ASSOCIADO_REQUEST, listarAssociado),
+])

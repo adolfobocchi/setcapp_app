@@ -1,5 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
-import axios from 'axios';
+import {call, put, all, takeLatest } from 'redux-saga/effects';
 
 import {
   LISTAR_NOTICIA_REQUEST,
@@ -21,7 +20,8 @@ import {
 
 import api from '../../../services/api';
 
-export function* listarNoticia() {
+
+function* listarNoticia() {
   try {
     const response = yield call(() => api.get('/noticia'));
     const noticia = response.data;
@@ -31,27 +31,20 @@ export function* listarNoticia() {
   }
 }
 
-export function* watchListarNoticia() {
-  yield takeEvery(LISTAR_NOTICIA_REQUEST, listarNoticia);
-}
-
-export function* showNoticia(action) {
+function* showNoticia(action) {
   try {
     
     const response = yield call(() => api.get(`/noticia/${action.payload}`));
     const noticia = response.data;
+    
     yield put({ type: SHOW_NOTICIA_SUCCESS, payload: noticia });
   } catch (error) {
     yield put({ type: SHOW_NOTICIA_FAILURE, payload: error.message });
   }
 }
-
-export function* watchShowNoticia() {
-  yield takeEvery(SHOW_NOTICIA_REQUEST, showNoticia);
-}
-
 // add empresa
-export function* criarNoticia(action) {
+
+function* criarNoticia(action) {
   try {
     const response = yield call(() => api.post('/noticia', action.payload.noticia));
     const noticia = response.data.noticia;
@@ -61,12 +54,9 @@ export function* criarNoticia(action) {
   }
 }
 
-export function* watchCriarNoticia() {
-  yield takeEvery(CRIAR_NOTICIA_REQUEST, criarNoticia);
-}
-
 // update empresa
-export function* updateNoticia(action) {
+
+function* updateNoticia(action) {
   try {
     const response = yield call(() => api.put(`/noticia/${action.payload.id}`, action.payload.noticia));
     const noticia = response.data.noticia;
@@ -76,12 +66,7 @@ export function* updateNoticia(action) {
   }
 }
 
-export function* watchUpdateNoticia() {
-  yield takeEvery(UPDATE_NOTICIA_REQUEST, updateNoticia);
-}
-
-// delete empresa
-export function* deleteNoticia(action) {
+function* deleteNoticia(action) {
   try {
     yield call(() => api.delete(`/noticia/${action.payload}`));
     yield put({ type: DELETE_NOTICIA_SUCCESS, payload: action.payload });
@@ -90,6 +75,11 @@ export function* deleteNoticia(action) {
   }
 }
 
-export function* watchDeleteNoticia() {
-  yield takeEvery(DELETE_NOTICIA_REQUEST, deleteNoticia);
-}
+
+export default all([
+  takeLatest(DELETE_NOTICIA_REQUEST, deleteNoticia),
+  takeLatest(UPDATE_NOTICIA_REQUEST, updateNoticia),
+  takeLatest(CRIAR_NOTICIA_REQUEST, criarNoticia),
+  takeLatest(SHOW_NOTICIA_REQUEST, showNoticia),
+  takeLatest(LISTAR_NOTICIA_REQUEST, listarNoticia),
+])

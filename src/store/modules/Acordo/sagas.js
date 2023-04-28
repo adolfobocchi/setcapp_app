@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { call, put, takeLatest, all } from 'redux-saga/effects';
 import axios from 'axios';
 
 import {
@@ -21,7 +21,7 @@ import {
 
 import api from '../../../services/api';
 
-export function* listarAcordo() {
+function* listarAcordo() {
   try {
     const response = yield call(() => api.get('/acordo'));
     const acordo = response.data;
@@ -31,11 +31,7 @@ export function* listarAcordo() {
   }
 }
 
-export function* watchListarAcordo() {
-  yield takeEvery(LISTAR_ACORDO_REQUEST, listarAcordo);
-}
-
-export function* showAcordo(action) {
+ function* showAcordo(action) {
   try {
     
     const response = yield call(() => api.get(`/acordo/${action.payload}`));
@@ -46,12 +42,8 @@ export function* showAcordo(action) {
   }
 }
 
-export function* watchShowAcordo() {
-  yield takeEvery(SHOW_ACORDO_REQUEST, showAcordo);
-}
-
 // add empresa
-export function* criarAcordo(action) {
+ function* criarAcordo(action) {
   try {
     const response = yield call(() => api.post('/acordo', action.payload.acordo));
     const acordo = response.data.acordo;
@@ -60,13 +52,8 @@ export function* criarAcordo(action) {
     yield put({ type: CRIAR_ACORDO_FAILURE, payload: error.message });
   }
 }
-
-export function* watchCriarAcordo() {
-  yield takeEvery(CRIAR_ACORDO_REQUEST, criarAcordo);
-}
-
 // update empresa
-export function* updateAcordo(action) {
+ function* updateAcordo(action) {
   try {
     const response = yield call(() => api.put(`/acordo/${action.payload.id}`, action.payload.acordo));
     const acordo = response.data.acordo;
@@ -76,12 +63,8 @@ export function* updateAcordo(action) {
   }
 }
 
-export function* watchUpdateAcordo() {
-  yield takeEvery(UPDATE_ACORDO_REQUEST, updateAcordo);
-}
-
 // delete empresa
-export function* deleteAcordo(action) {
+ function* deleteAcordo(action) {
   try {
     yield call(() => axios.delete(`/acordo/${action.payload}`));
     yield put({ type: DELETE_ACORDO_SUCCESS, payload: action.payload });
@@ -90,6 +73,11 @@ export function* deleteAcordo(action) {
   }
 }
 
-export function* watchDeleteAcordo() {
-  yield takeEvery(DELETE_ACORDO_REQUEST, deleteAcordo);
-}
+
+export default all([
+  takeLatest(DELETE_ACORDO_REQUEST, deleteAcordo),
+  takeLatest(UPDATE_ACORDO_REQUEST, updateAcordo),
+  takeLatest(CRIAR_ACORDO_REQUEST, criarAcordo),
+  takeLatest(SHOW_ACORDO_REQUEST, showAcordo),
+  takeLatest(LISTAR_ACORDO_REQUEST, listarAcordo),
+])

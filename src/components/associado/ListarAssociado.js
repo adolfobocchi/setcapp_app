@@ -4,9 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form';
 import { criarAssociadoRequest, deleteAssociadoRequest, listarAssociadoRequest, updateAssociadoRequest } from '../../store/modules/Associado/actions'
-import { Button, Card, Container, Form, Input, Label, TextArea } from './styled'
-
-const API_URL = process.env.REACT_APP_URL_API;
+import { Button, Card, Container, Form, Input, Label } from './styled'
+import Modal from '../Modal';
 
 const ListarAssociado = ({ loading, associados, error, fetchAssociado, criarAssociado, updateAssociado, deleteAssociado }) => {
   const formEmpty = {
@@ -44,7 +43,6 @@ const ListarAssociado = ({ loading, associados, error, fetchAssociado, criarAsso
     diversas: false,
   }
   const [associadoSelected, setAssociadoSelected] = useState(formEmpty);
-  const [associadosList, setAssociadosList] = useState([]);
   const { register, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: associadoSelected
   });
@@ -52,12 +50,11 @@ const ListarAssociado = ({ loading, associados, error, fetchAssociado, criarAsso
 
   useEffect(() => {
     fetchAssociado()
-    setAssociadosList(associados);
-  }, [associados]);
+  }, [fetchAssociado]);
 
   useEffect(() => {
     reset({...associadoSelected});
-  }, [associadoSelected])
+  }, [reset, associadoSelected])
 
 
   const handleSelectAssociado = (index) => {
@@ -84,6 +81,10 @@ const ListarAssociado = ({ loading, associados, error, fetchAssociado, criarAsso
     }
     setAssociadoSelected({...formEmpty});
 
+  }
+
+  if(loading) {
+    return <Modal />
   }
   return (
     <>
@@ -140,7 +141,7 @@ const ListarAssociado = ({ loading, associados, error, fetchAssociado, criarAsso
         <Button type="button" onClick={handleClearAssociado}>Limpar</Button>
                 </Form>
       <Container>
-        {associadosList?.length > 0 && associadosList?.map((associado, index) => (
+        {associados?.lenght > 0 && associados?.map((associado, index) => (
           <Card key={associado.id} onClick={() => { handleSelectAssociado(index) }} >
             <h3>{associado.razaoSocial}</h3>            
             <button onClick={() => {handleDeleteAssociado(associado.id)}}>Delete</button>

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { listarConfederadoRequest } from '../store/modules/Confederado/actions';
 import { FederadoSlider, SectionArea } from './styled';
 import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import Modal from './Modal';
 
 
 const API_URL = process.env.REACT_APP_URL_API;
@@ -37,11 +38,10 @@ const FederadoCardImg = styled.img`
     height: auto;
 `
 
-const Home = ({ loadin, confederados, fetchConfederado }) => {
-  const [confederado, setConfederado] = useState(confederados);
+const Home = ({ loading, confederados, fetchConfederado }) => {
   useEffect(() => {
-    setConfederado(confederados)
-  }, [confederados])
+    fetchConfederado();
+  }, [fetchConfederado])
 
   var settings = {
     dots: false,
@@ -79,22 +79,24 @@ const Home = ({ loadin, confederados, fetchConfederado }) => {
       }
     ]
   };
+
+  if(loading) {
+    return <Modal />
+  }
   return (
     <SectionArea background={'rgba(255,255,255,0.9)'} direcao={'row'} altura={200} >
-    <FederadoSlider {...settings}>
-      {
-
-
-        confederado.map((item, index) =>
-            <FederadoCard  key={item.id} href={`${item.link}`} target='_blank'  >
+      <FederadoSlider {...settings}>
+        {
+          confederados.map((item, index) =>
+            <FederadoCard key={item.id} href={`${item.link}`} target='_blank'  >
               <FederadoCardIconArea>
                 <FederadoCardImg src={`${API_URL}/images/${item.url}`} />
               </FederadoCardIconArea>
             </FederadoCard>
 
-        )
-      }
-      
+          )
+        }
+
       </FederadoSlider>
     </SectionArea>
   )
@@ -109,4 +111,10 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps, null)(Home)
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchConfederado: () => dispatch(listarConfederadoRequest())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

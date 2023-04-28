@@ -15,6 +15,10 @@ import {
     DELETE_EMPRESA_SUCCESS,
     DELETE_EMPRESA_FAILURE,
     
+    DELETE_IMAGEMEMPRESA_REQUEST,
+    DELETE_IMAGEMEMPRESA_SUCCESS,
+    DELETE_IMAGEMEMPRESA_FAILURE,
+    
   } from './actions'
   
   const initialState = {
@@ -46,6 +50,7 @@ import {
       case LISTAR_EMPRESA_REQUEST:
       case CRIAR_EMPRESA_REQUEST:
       case UPDATE_EMPRESA_REQUEST:
+      case DELETE_IMAGEMEMPRESA_REQUEST:
       case DELETE_EMPRESA_REQUEST:
         return {
           ...state,
@@ -70,15 +75,18 @@ import {
           empresa: action.payload,
           error: '',
         };
+      
+      case DELETE_IMAGEMEMPRESA_SUCCESS:  
       case DELETE_EMPRESA_SUCCESS:
         return {
           loading: false,
-          empresa: state.empresa.filter((user) => user.id !== action.payload),
+          empresa: action.payload,
           error: '',
         };
       case LISTAR_EMPRESA_FAILURE:
       case CRIAR_EMPRESA_FAILURE:
       case UPDATE_EMPRESA_FAILURE:
+      case DELETE_IMAGEMEMPRESA_FAILURE:
       case DELETE_EMPRESA_FAILURE:
         return {
           loading: false,

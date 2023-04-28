@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form';
 import { criarEventoRequest, listarEventoRequest, updateEventoRequest } from '../../store/modules/Evento/actions'
 import { Button, Card, Container, Form, Input, Label } from './styled'
+import Modal from '../Modal';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
@@ -19,7 +20,6 @@ const ListarEvento = ({ loading, eventos, error, fetchEvento, criarEvento, updat
     ativo: false,
   }
   const [eventoSelected, setEventoSelected] = useState(formEmpty);
-  const [eventosList, setEventosList] = useState([]);
   const { register, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: eventoSelected
       ? {
@@ -36,12 +36,12 @@ const ListarEvento = ({ loading, eventos, error, fetchEvento, criarEvento, updat
 
   useEffect(() => {
     fetchEvento();
-    setEventosList(eventos)
-  }, [eventos]);
+  }, [updateEvento, fetchEvento]);
+
 
   useEffect(() => {
     reset(eventoSelected);
-  }, [eventoSelected])
+  }, [reset, eventoSelected])
 
   const handleSelectEvento = (index) => {
     setEventoSelected(eventos[index]);
@@ -67,6 +67,12 @@ const ListarEvento = ({ loading, eventos, error, fetchEvento, criarEvento, updat
     } else {
       criarEvento(formData);
     }
+    fetchEvento();
+    handleClearEvento();
+    
+  }
+  if(loading) {
+    return <Modal />
   }
   return (
     <>
@@ -125,14 +131,14 @@ const ListarEvento = ({ loading, eventos, error, fetchEvento, criarEvento, updat
         <Button type="button" onClick={handleClearEvento}>Limpar</Button>
       </Form>
       <Container>
-        {eventosList?.map((event, index) => (
+        {eventos?.length > 0 && eventos?.map((event, index) => (
           <Card key={event.id} onClick={() => { handleSelectEvento(index) }} >
             <h3>{event.titulo}</h3>
             <p>{event.descricao}</p>
             {event.imagens.map(imagem => {
-              return (<img key={imagem.id} src={`${API_URL}/images/${imagem.url}`} style={{ width: 40, height: 40 }} />)
+              return (<img key={imagem.id} src={`${API_URL}/images/${imagem.url}`} style={{ width: 40, height: 40 }} alt='imagem eventos' />)
             })}
-            <button onClick={() => { handleDeleteEvento(index) }}>Delete</button>
+            <button onClick={() => { handleDeleteEvento(event.id) }}>Delete</button>
           </Card>
         ))}
       </Container>

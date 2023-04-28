@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { FaPhone, FaEnvelope, FaWhatsapp, FaPaperPlane } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { whatsAppFormat } from '../utils/formats';
+import Modal from './Modal';
 
-const API_URL = process.env.REACT_APP_URL_API;
 
 const FooterContainer = styled.footer`
   background-color: rgba(0,0,0,0.5);
@@ -58,12 +58,6 @@ const FooterInfo = styled.div`
     }
 `;
 
-const FooterTitle = styled.h3`
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-`;
-
 const FooterText = styled.p`
   font-size: 0.8rem;
   line-height: 1.5;
@@ -84,48 +78,59 @@ const FooterIcon = styled.span`
   margin-right: 0.5rem;
 `;
 
-const Footer = ({ empresas }) => {
-  
+const Footer = ({ loading, empresas, error }) => {
+
+  if(loading || !empresas) {
+    return <Modal />
+  }
+
   return (
+
     <FooterContainer>
-      <FooterInfo>
-      <FooterIcon>
-            <FaPaperPlane />
-          </FooterIcon>
-        <FooterText>{`${empresas.endereco} ${empresas.numero}`}</FooterText>
-        <FooterText>{`${empresas.bairro}`}</FooterText>
-        <FooterText>{`${empresas.cidade}`}</FooterText>
-        <FooterText>{`${empresas.estado}`}</FooterText>
-      </FooterInfo>
+      {empresas &&
+        <>
+          <FooterInfo>
+            <FooterIcon>
+              <FaPaperPlane />
+            </FooterIcon>
+            <FooterText>{`${empresas.endereco} ${empresas.numero}`}</FooterText>
+            <FooterText>{`${empresas.bairro}`}</FooterText>
+            <FooterText>{`${empresas.cidade}`}</FooterText>
+            <FooterText>{`${empresas.estado}`}</FooterText>
+          </FooterInfo>
 
-      <FooterInfo>
-      <FooterIcon>
-            <FaPhone />
-          </FooterIcon>
-        <FooterText>{`${empresas.telefone}`}</FooterText>
-        <FooterText>{`${empresas.whatsapp}`}</FooterText>
-      </FooterInfo>
+          <FooterInfo>
+            <FooterIcon>
+              <FaPhone />
+            </FooterIcon>
+            <FooterText>{`${empresas.telefone}`}</FooterText>
+            <FooterText>{`${empresas.whatsapp}`}</FooterText>
+          </FooterInfo>
 
-      <FooterInfo>
-        <FooterLink href={`mailto:${empresas.email}`}>
-          <FooterIcon>
-            <FaEnvelope />
-          </FooterIcon>
-          {`${empresas.email}`}
-        </FooterLink>
-      </FooterInfo>
+          <FooterInfo>
+            <FooterLink href={`mailto:${empresas.email}`}>
+              <FooterIcon>
+                <FaEnvelope />
+              </FooterIcon>
+              {`${empresas.email}`}
+            </FooterLink>
+          </FooterInfo>
 
-      <FooterInfo>
-        <FooterLink href={`https://wa.me/55${whatsAppFormat(empresas.whatsapp)}`}>
-          <FooterIcon>
-            <FaWhatsapp />
-          </FooterIcon>
-          {`${empresas.whatsapp}`}
-        </FooterLink>
-      </FooterInfo>
+          <FooterInfo>
+            <FooterLink href={`https://wa.me/55${whatsAppFormat(empresas.whatsapp)}`}>
+              <FooterIcon>
+                <FaWhatsapp />
+              </FooterIcon>
+              {`${empresas.whatsapp}`}
+            </FooterLink>
+          </FooterInfo>
+        </>
+      }
+
     </FooterContainer>
   );
 };
+
 
 
 const mapStateToProps = state => {
@@ -135,4 +140,6 @@ const mapStateToProps = state => {
     error: state.empresa.error
   };
 };
+
+
 export default connect(mapStateToProps, null)(Footer);

@@ -1,5 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
-import axios from 'axios';
+import { takeEvery, call, put, takeLatest, all } from 'redux-saga/effects';
 
 import {
   LISTAR_EMPRESA_REQUEST,
@@ -17,6 +16,9 @@ import {
   SHOW_EMPRESA_FAILURE,
   SHOW_EMPRESA_SUCCESS,
   SHOW_EMPRESA_REQUEST,
+  DELETE_IMAGEMEMPRESA_REQUEST,
+  DELETE_IMAGEMEMPRESA_SUCCESS,
+  DELETE_IMAGEMEMPRESA_FAILURE,
 } from './actions';
 
 import api from '../../../services/api';
@@ -32,10 +34,6 @@ export function* listarEmpresa() {
   }
 }
 
-export function* watchListarEmpresa() {
-  yield takeEvery(LISTAR_EMPRESA_REQUEST, listarEmpresa);
-}
-
 export function* showEmpresa(action) {
   try {
     
@@ -47,24 +45,17 @@ export function* showEmpresa(action) {
   }
 }
 
-export function* watchShowEmpresa() {
-  yield takeEvery(SHOW_EMPRESA_REQUEST, showEmpresa);
-}
 
 // add empresa
 export function* criarEmpresa(action) {
   try {
-    const response = yield call(() => api.post('/empresa', action.payload.empresa));
+    yield call(() => api.post('/empresa', action.payload.empresa));
     yield takeEvery(CRIAR_EMPRESA_SUCCESS, function*(action) {
       yield action.history('empresas')
     });
   } catch (error) {
     yield put({ type: CRIAR_EMPRESA_FAILURE, payload: error.message });
   }
-}
-
-export function* watchCriarEmpresa() {
-  yield takeEvery(CRIAR_EMPRESA_REQUEST, criarEmpresa);
 }
 
 // update empresa
@@ -78,20 +69,34 @@ export function* updateEmpresa(action) {
   }
 }
 
-export function* watchUpdateEmpresa() {
-  yield takeEvery(UPDATE_EMPRESA_REQUEST, updateEmpresa);
-}
 
 // delete empresa
 export function* deleteEmpresa(action) {
   try {
-    yield call(() => axios.delete(`/empresa/${action.payload}`));
+    yield call(() => api.delete(`/empresa/${action.payload}`));
     yield put({ type: DELETE_EMPRESA_SUCCESS, payload: action.payload });
   } catch (error) {
     yield put({ type: DELETE_EMPRESA_FAILURE, payload: error.message });
   }
 }
 
-export function* watchDeleteEmpresa() {
-  yield takeEvery(DELETE_EMPRESA_REQUEST, deleteEmpresa);
+
+
+export function* deleteImagemEmpresa(action) {
+  try {
+    yield call(() => api.delete(`/empresa/imagemempresa/${action.payload.id}`));
+    yield put({ type: DELETE_IMAGEMEMPRESA_SUCCESS, payload: action.payload });
+  } catch (error) {
+    yield put({ type: DELETE_IMAGEMEMPRESA_FAILURE, payload: error.message });
+  }
 }
+
+
+export default all([
+  takeLatest(DELETE_EMPRESA_REQUEST, deleteEmpresa),
+  takeLatest(UPDATE_EMPRESA_REQUEST, updateEmpresa),
+  takeLatest(CRIAR_EMPRESA_REQUEST, criarEmpresa),
+  takeLatest(SHOW_EMPRESA_REQUEST, showEmpresa),
+  takeLatest(LISTAR_EMPRESA_REQUEST, listarEmpresa),
+  takeLatest(DELETE_IMAGEMEMPRESA_REQUEST, deleteImagemEmpresa),
+])

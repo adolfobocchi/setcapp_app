@@ -6,8 +6,6 @@ import { useForm } from 'react-hook-form';
 import { criarContatoRequest, deleteContatoRequest, listarContatoRequest, updateContatoRequest } from '../../store/modules/Contato/actions'
 import { Button, Card, Container, Form, Input, Label, TextArea } from './styled'
 
-const API_URL = process.env.REACT_APP_URL_API;
-
 const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, updateContato, deleteContato }) => {
   const formEmpty = {
     id: '',
@@ -18,7 +16,6 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
     mensagem: ''
   }
   const [contatoSelected, setContatoSelected] = useState(formEmpty);
-  const [contatosList, setContatosList] = useState([]);
   const { register, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: contatoSelected
   });
@@ -26,12 +23,11 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
 
   useEffect(() => {
     fetchContato()
-    setContatosList(contatos);
-  }, [contatos]);
+  }, [fetchContato]);
 
   useEffect(() => {
     reset({...contatoSelected});
-  }, [contatoSelected])
+  }, [reset, contatoSelected])
 
 
   const handleSelectContato = (index) => {
@@ -56,7 +52,8 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
     } else {
       criarContato(data);
     }
-    setContatoSelected({...formEmpty});
+    fetchContato();
+    handleClearContato();
 
   }
   return (
@@ -98,10 +95,10 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
         <Button type="button" onClick={handleClearContato}>Limpar</Button>
       </Form>
       <Container>
-        {contatosList?.length > 0 && contatosList?.map((contato, index) => (
+        {contatos?.length > 0 && contatos?.map((contato, index) => (
           <Card key={contato.id} onClick={() => { handleSelectContato(index) }} >
             <h3>{contato.nome}</h3>            
-            <button onClick={() => {handleDeleteContato(contato.id)}}>Delete</button>
+            <button onClick={() => handleDeleteContato(contato.id)}>Delete</button>
           </Card>
         ))}
       </Container>

@@ -19,7 +19,6 @@ const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, u
     url: ''
   }
   const [servicoSelected, setServicoSelected] = useState({});
-  const [servicosList, setServicosList] = useState([]);
   const { register, control, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: servicoSelected
       ? {
@@ -36,12 +35,11 @@ const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, u
 
   useEffect(() => {
     fetchServico()
-    setServicosList(servicos);
-  }, [servicos]);
+  }, [fetchServico]);
 
   useEffect(() => {
     reset({...servicoSelected});
-  }, [servicoSelected])
+  }, [reset, servicoSelected])
 
 
   const handleSelectServico = (index) => {
@@ -111,10 +109,10 @@ const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, u
         <Button type="button" onClick={handleClearServico}>Limpar</Button>
       </Form>
       <Container>
-        {servicosList?.map((servico, index) => (
+        {servicos?.length > 0 && servicos?.map((servico, index) => (
           <Card key={servico.id} onClick={() => { handleSelectServico(index) }} >
             <h3>{servico.nome}</h3>
-            <img src={`${API_URL}/images/${servico.url}`} style={{ width: 40, height: 40 }} />
+            <img src={`${API_URL}/images/${servico.url}`} style={{ width: 40, height: 40 }} alt='imagem servico'/>
             
             <button onClick={() => { handleDeleteServico(index) }}>Delete</button>
           </Card>

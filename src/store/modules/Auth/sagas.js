@@ -1,6 +1,6 @@
 // sagas.js
 
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import { LOGIN_REQUEST, loginSuccess, loginFailure, TOKEN_REQUEST, tokenFailure } from './actions';
 import api from '../../../services/api';
 
@@ -13,9 +13,6 @@ export function* login(action) {
   }
 }
 
-export function* authSaga() {
-  yield takeLatest(LOGIN_REQUEST, login);
-}
 
 export function* verificaToken(action) {
   try {
@@ -28,8 +25,9 @@ export function* verificaToken(action) {
   }
 }
 
-export function* watchVerificaToken() {
-  yield takeLatest(TOKEN_REQUEST, verificaToken);
-}
 
 
+export default all([
+  takeLatest(TOKEN_REQUEST, verificaToken),
+  takeLatest(LOGIN_REQUEST, login)
+])

@@ -19,9 +19,12 @@ import {
   
   const initialState = {
     loading: false,
-    noticia: [],
+    noticias: [],
+    noticia: null,
     error: '',
   };
+
+  
   
   const noticiaReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -53,12 +56,14 @@ import {
         };
       case LISTAR_NOTICIA_SUCCESS:
         return {
+          ...state,
           loading: false,
-          noticia: action.payload,
+          noticias: action.payload,
           error: '',
         };
       case CRIAR_NOTICIA_SUCCESS:
         return {
+          ...state,
           loading: false,
           noticia:  action.payload,
           error: '',
@@ -72,8 +77,9 @@ import {
         };
       case DELETE_NOTICIA_SUCCESS:
         return {
+          ...state,
           loading: false,
-          noticia: state.noticia.filter((user) => user.id !== action.payload),
+          noticia: state.noticia.filter((noticia) => noticia.id !== action.payload),
           error: '',
         };
       case LISTAR_NOTICIA_FAILURE:
@@ -81,8 +87,9 @@ import {
       case UPDATE_NOTICIA_FAILURE:
       case DELETE_NOTICIA_FAILURE:
         return {
+          ...state,
           loading: false,
-          noticia: [],
+          noticia: null,
           error: action.payload,
         };
       default:

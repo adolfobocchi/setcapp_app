@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { FaChevronDown, FaChevronUp} from 'react-icons/fa'
 
-const API_URL = process.env.REACT_APP_URL_API;
-
 const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
@@ -86,11 +84,11 @@ const NavDropdown = ({descricao, links}) => {
 const Navbar = () => {
   const navItens = [
     {descricao: 'inicio', rota: '/' , linksSindicato: []},
-    {descricao: 'sindicato', rota: 'sindicato' , linksSindicato: [
-      {descricao: 'institucional', rota: 'institucional'},
-      {descricao: 'diretoria', rota: 'diretoria'},
-      {descricao: 'estrutura', rota: 'estrutura'},
-      {descricao: 'territorio', rota: 'territorio'},
+    {descricao: 'sindicato', rota: '/sindicato' , linksSindicato: [
+      {descricao: 'institucional', rota: '/institucional'},
+      {descricao: 'diretoria', rota: '/diretoria'},
+      {descricao: 'estrutura', rota: '/estrutura'},
+      {descricao: 'territorio', rota: '/territorio'},
     ]},
     {descricao: 'serviços', rota: 'servicos' , linksSindicato: []},
     {descricao: 'associado', rota: 'associado' , linksSindicato: []},

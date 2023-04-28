@@ -7,8 +7,8 @@ import { criarNoticiaRequest, deleteNoticiaRequest, listarNoticiaRequest, update
 import { Button, Card, Container, Form, Input, Label } from './styled'
 import EditorHtml from '../EditorHtml';
 import DataPicker from '../DataPicker';
+import Modal from '../Modal';
 
-const API_URL = process.env.REACT_APP_URL_API;
 const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, updateNoticia, deleteNoticia}) => {
   const formEmpty = {
     id: '',
@@ -18,7 +18,6 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
     ativo: false,
   }
   const [noticiaSelected, setNoticiaSelected] = useState(formEmpty);
-  const [noticiasList, setNoticiasList] = useState([]);
   const { register, control, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: noticiaSelected
       ? {
@@ -33,12 +32,11 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
 
   useEffect(() => {
     fetchNoticia()
-    setNoticiasList(noticias)
-  }, [noticias]);
+  }, [deleteNoticia, updateNoticia, fetchNoticia]);
 
   useEffect(() => {
     reset({...noticiaSelected});
-  }, [noticiaSelected])
+  }, [reset, noticiaSelected])
 
   const handleSelectNoticia = (index) => {
     setNoticiaSelected(noticias[index]);
@@ -61,6 +59,11 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
     } else {
       criarNoticia(data);
     }
+    handleClearNoticia();
+    fetchNoticia();
+  }
+  if(loading) {
+    return <Modal />
   }
   return (
     <>
@@ -94,7 +97,7 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
         <Button type="button" onClick={handleClearNoticia}>Limpar</Button>
       </Form>
       <Container>
-        {noticiasList?.map((noticia, index) => (
+        {noticias?.length > 0 && noticias?.map((noticia, index) => (
           <Card key={noticia.id} onClick={() => { handleSelectNoticia(index) }} >
             <h3>{noticia.titulo}</h3>
             <button onClick={() => { handleDeleteNoticia(noticia.id) }}>Delete</button>
@@ -109,7 +112,7 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
 const mapStateToProps = state => {
   return {
     loading: state.noticia.loading,
-    noticias: state.noticia.noticia,
+    noticias: state.noticia.noticias,
     error: state.noticia.error
   };
 };

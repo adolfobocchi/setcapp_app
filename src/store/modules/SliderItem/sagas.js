@@ -1,5 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
-import axios from 'axios';
+import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import {
   LISTAR_SLIDER_REQUEST,
@@ -21,7 +20,7 @@ import {
 
 import api from '../../../services/api';
 
-export function* listarSlider() {
+function* listarSlider() {
   try {
     const response = yield call(() => api.get('/slider'));
     const slider = response.data;
@@ -31,11 +30,7 @@ export function* listarSlider() {
   }
 }
 
-export function* watchListarSlider() {
-  yield takeEvery(LISTAR_SLIDER_REQUEST, listarSlider);
-}
-
-export function* showSlider(action) {
+function* showSlider(action) {
   try {
     
     const response = yield call(() => api.get(`/slider/${action.payload}`));
@@ -46,12 +41,8 @@ export function* showSlider(action) {
   }
 }
 
-export function* watchShowSlider() {
-  yield takeEvery(SHOW_SLIDER_REQUEST, showSlider);
-}
-
 // add empresa
-export function* criarSlider(action) {
+function* criarSlider(action) {
   try {
     const response = yield call(() => api.post('/slider', action.payload.slider));
     const slider = response.data.slider;
@@ -61,12 +52,8 @@ export function* criarSlider(action) {
   }
 }
 
-export function* watchCriarSlider() {
-  yield takeEvery(CRIAR_SLIDER_REQUEST, criarSlider);
-}
-
 // update empresa
-export function* updateSlider(action) {
+function* updateSlider(action) {
   try {
     const response = yield call(() => api.put(`/slider/${action.payload.id}`, action.payload.slider));
     const slider = response.data.slider;
@@ -76,20 +63,21 @@ export function* updateSlider(action) {
   }
 }
 
-export function* watchUpdateSlider() {
-  yield takeEvery(UPDATE_SLIDER_REQUEST, updateSlider);
-}
-
 // delete empresa
-export function* deleteSlider(action) {
+function* deleteSlider(action) {
   try {
-    yield call(() => axios.delete(`/slider/${action.payload}`));
+    yield call(() => api.delete(`/slider/${action.payload}`));
     yield put({ type: DELETE_SLIDER_SUCCESS, payload: action.payload });
   } catch (error) {
     yield put({ type: DELETE_SLIDER_FAILURE, payload: error.message });
   }
 }
 
-export function* watchDeleteSlider() {
-  yield takeEvery(DELETE_SLIDER_REQUEST, deleteSlider);
-}
+
+export default all([
+  takeLatest(DELETE_SLIDER_REQUEST, deleteSlider),
+  takeLatest(UPDATE_SLIDER_REQUEST, updateSlider),
+  takeLatest(CRIAR_SLIDER_REQUEST, criarSlider),
+  takeLatest(SHOW_SLIDER_REQUEST, showSlider),
+  takeLatest(LISTAR_SLIDER_REQUEST, listarSlider),
+])

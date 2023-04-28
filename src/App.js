@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PrivateRoute from './auth/PrivateRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import PainelPage from './pages/Painel';
-import styled from 'styled-components';
 import Institucional from './pages/Institucional';
 import Diretoria from './pages/Diretoria';
 import Estrutura from './pages/Estrutura';
@@ -15,12 +14,10 @@ import Acordos from './pages/Acordos';
 import Antt from './pages/Antt';
 import Contato from './pages/Contato';
 import Associado from './pages/Associado';
+import DefaultPage from './pages/DefaultPage';
+import Noticias from './components/Noticias';
 
-const ContentArea = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 90vw;
-`
+
 
 function App() {
   return (
@@ -30,68 +27,76 @@ function App() {
         <Route exact path="/">
 
           <Route index element={
-            <ContentArea>
+            <DefaultPage>
+
               <Home />
-            </ContentArea>
+            </DefaultPage>
           } />
-          
+
+          <Route exact path="/noticias">
+            <Route index element={
+              <DefaultPage>
+
+                <Noticias />
+              </DefaultPage>
+            } />
+            <Route exact path=":id/:titulo" element={
+              <DefaultPage>
+                <Noticia />
+              </DefaultPage>
+            } />
+          </Route>
           <Route exact path="/contato" element={
-            <ContentArea>
+            <DefaultPage>
               <Contato />
-            </ContentArea>
+            </DefaultPage>
 
           } />
           <Route exact path="/associado" element={
-            <ContentArea>
+            <DefaultPage>
               <Associado />
-            </ContentArea>
+            </DefaultPage>
 
           } />
           <Route exact path="/institucional" element={
-            <ContentArea>
+            <DefaultPage>
               <Institucional />
-            </ContentArea>
+            </DefaultPage>
 
           } />
           <Route exact path="/diretoria" element={
-            <ContentArea><Diretoria /></ContentArea>
+            <DefaultPage><Diretoria /></DefaultPage>
 
           } />
           <Route exact path="/estrutura" element={
-            <ContentArea>
+            <DefaultPage>
               <Estrutura />
-            </ContentArea>
+            </DefaultPage>
           } />
           <Route exact path="/territorio" element={
-            <ContentArea>
+            <DefaultPage>
               <Territorio />
-            </ContentArea>
+            </DefaultPage>
           } />
           <Route exact path="/legislacao" element={
-            <ContentArea>
+            <DefaultPage>
               <Legislacao />
-            </ContentArea>
+            </DefaultPage>
           } />
-          <Route path="/noticias/:id/:titulo"  element={
-            <ContentArea>
-              <Noticia />
-            </ContentArea>
-          } />
+
           <Route exact path="/acordos" element={
-            <ContentArea>
+            <DefaultPage>
               <Acordos />
-            </ContentArea>
+            </DefaultPage>
           } />
           <Route exact path="/antt" element={
-            <ContentArea>
+            <DefaultPage>
               <Antt />
-            </ContentArea>
+            </DefaultPage>
           } />
         </Route>
         <Route exact path="/login" element={
-          <ContentArea>
-            <Login />
-          </ContentArea>
+          <Login />
         } />
         <Route path='/painel' >
           <Route index element={

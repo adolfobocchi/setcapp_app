@@ -18,6 +18,10 @@ export const DELETE_EMPRESA_REQUEST = 'DELETE_EMPRESA_REQUEST';
 export const DELETE_EMPRESA_SUCCESS = 'DELETE_EMPRESA_SUCCESS';
 export const DELETE_EMPRESA_FAILURE = 'DELETE_EMPRESA_FAILURE';
 
+export const DELETE_IMAGEMEMPRESA_REQUEST = 'DELETE_IMAGEMEMPRESA_REQUEST';
+export const DELETE_IMAGEMEMPRESA_SUCCESS = 'DELETE_IMAGEMEMPRESA_SUCCESS';
+export const DELETE_IMAGEMEMPRESA_FAILURE = 'DELETE_IMAGEMEMPRESA_FAILURE';
+
 
 
 export const listarEmpresaRequest = () => ({
@@ -94,3 +98,17 @@ export const deleteEmpresaFailure = (error) => ({
   payload: { error },
 });
 
+export const deleteImagemEmpresaRequest = (id ) => ({
+  type: DELETE_IMAGEMEMPRESA_REQUEST,
+  payload: { id },
+});
+
+export const deleteImagemEmpresaSuccess = (id) => ({
+  type: DELETE_IMAGEMEMPRESA_SUCCESS,
+  payload: { id },
+});
+
+export const deleteImagemEmpresaFailure = (error) => ({
+  type: DELETE_IMAGEMEMPRESA_FAILURE,
+  payload: { error },
+});

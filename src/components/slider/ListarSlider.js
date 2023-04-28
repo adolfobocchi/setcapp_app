@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form';
 import { criarSliderRequest, listarSliderRequest, updateSliderRequest } from '../../store/modules/SliderItem/actions'
 import { Button, Card, Container, Form, Image, Input, Label } from './styled'
+import Modal from '../Modal';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
@@ -18,7 +19,6 @@ const ListarSlider = ({ loading, sliders, error, fetchSlider, criarSlider, updat
     link: '',
   }
   const [sliderSelected, setSliderSelected] = useState(formEmpty);
-  const [sliderList, setSliderList] = useState([]);
   const { register, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: sliderSelected
       ? {
@@ -34,13 +34,11 @@ const ListarSlider = ({ loading, sliders, error, fetchSlider, criarSlider, updat
 
   useEffect(() => {
     fetchSlider()
-    setSliderList(sliders)
-  }, [sliders]);
-
+  }, [updateSlider, fetchSlider]);
 
   useEffect(() => {
     reset(sliderSelected);
-  }, [sliderSelected])
+  }, [reset, sliderSelected])
 
   const handleSelectSlider = (index) => {
     setSliderSelected(sliders[index]);
@@ -66,6 +64,13 @@ const ListarSlider = ({ loading, sliders, error, fetchSlider, criarSlider, updat
       criarSlider(formData);
     }
 
+    fetchSlider();
+    handleClearSlider();
+
+  }
+
+  if(loading) {
+    return <Modal />
   }
   return (
     <>
@@ -113,7 +118,7 @@ const ListarSlider = ({ loading, sliders, error, fetchSlider, criarSlider, updat
         <Button type="button" onClick={handleClearSlider}>Limpar</Button>
       </Form>
       <Container>
-        {sliderList?.map((slider, index) => (
+        {sliders?.length > 0 && sliders?.map((slider, index) => (
           <Card key={slider.id} onClick={() => { handleSelectSlider(index) }} >
             <h3>{slider.order}</h3>
             <p>{slider.descricao}</p>
@@ -121,7 +126,7 @@ const ListarSlider = ({ loading, sliders, error, fetchSlider, criarSlider, updat
             <p>{slider.ativo}</p>
             <img src={`${API_URL}/images/${slider.url}`} style={{ width: 40, height: 40 }} />
 
-            <button onClick={() => { handleDeleteSlider(index) }}>Delete</button>
+            <button onClick={() => { handleDeleteSlider(slider.id) }}>Delete</button>
           </Card>
         ))}
       </Container>

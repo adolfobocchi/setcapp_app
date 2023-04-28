@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form';
 import { criarAnttRequest, listarAnttRequest, updateAnttRequest } from '../../store/modules/Antt/actions'
-import { Button, Card, Container, Form, Image, Input, Label } from './styled'
+import { Button, Card, Container, Form, Input, Label } from './styled'
+import Modal from '../Modal';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
@@ -15,20 +16,19 @@ const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt })
     nome: '',
   }
   const [anttSelected, setAnttSelected] = useState(formEmpty);
-  const [anttList, setAnttList] = useState([]);
   const { register, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: anttSelected
   });
 
 
-  useEffect(() => {
-    fetchAntt()
-    setAnttList(antts);
-  }, [antts]);
 
   useEffect(() => {
+    fetchAntt()
+  }, [fetchAntt]);
+  
+  useEffect(() => {
     reset({...anttSelected});
-  }, [anttSelected])
+  }, [reset, anttSelected])
 
 
   const handleSelectAntt = (index) => {
@@ -56,6 +56,10 @@ const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt })
     }
 
   }
+
+  if(loading) {
+    return <Modal />
+  }
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data' >
@@ -68,7 +72,7 @@ const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt })
         <Input type='file' name='anttFile' {...register('anttFile', { required: false })} />
         {errors.anttFile && <span>Campo obrigatório</span>}
         {anttSelected?.url &&
-          <a href={`${API_URL}/images/${anttSelected.url}`} target="_blank"> Arquivo </a>
+          <a href={`${API_URL}/images/${anttSelected.url}`} target="_blank" rel="noreferrer"> Arquivo </a>
         }
         
         <Label>Nome</Label>
@@ -81,10 +85,10 @@ const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt })
         <Button type="button" onClick={handleClearAntt}>Limpar</Button>
       </Form>
       <Container>
-        {anttList?.map((antt, index) => (
+        {antts?.map((antt, index) => (
           <Card key={antt.id} onClick={() => { handleSelectAntt(index) }} >
             <h3>{antt.nome}</h3>            
-            <button onClick={() => { handleDeleteAntt(index) }}>Delete</button>
+            <button onClick={() => { handleDeleteAntt(antt.id) }}>Delete</button>
           </Card>
         ))}
       </Container>

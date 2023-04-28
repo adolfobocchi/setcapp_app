@@ -1,9 +1,10 @@
-import { all, call } from "redux-saga/effects";
+import { all } from "redux-saga/effects";
+/*
 import { criarAcordo, deleteAcordo, listarAcordo, showAcordo, updateAcordo, watchCriarAcordo, watchDeleteAcordo, watchListarAcordo, watchShowAcordo, watchUpdateAcordo } from "./Acordo/sagas";
 import {authSaga, login, verificaToken, watchVerificaToken} from "./Auth/sagas";
 import { criarConfederado, deleteConfederado, listarConfederado, showConfederado, updateConfederado, watchCriarConfederado, watchDeleteConfederado, watchListarConfederado, watchShowConfederado, watchUpdateConfederado } from "./Confederado/sagas";
 import { criarContato, deleteContato, listarContato, showContato, updateContato, watchCriarContato, watchDeleteContato, watchListarContato, watchShowContato, watchUpdateContato } from "./Contato/sagas";
-import { criarEmpresa, listarEmpresa, showEmpresa, updateEmpresa, deleteEmpresa, watchCriarEmpresa, watchShowEmpresa, watchListarEmpresa, watchUpdateEmpresa, watchDeleteEmpresa } from "./Empresa/sagas";
+import { criarEmpresa, listarEmpresa, showEmpresa, updateEmpresa, deleteEmpresa, watchCriarEmpresa, watchShowEmpresa, watchListarEmpresa, watchUpdateEmpresa, watchDeleteEmpresa, watchDeleteImagemEmpresa, deleteImagemEmpresa } from "./Empresa/sagas";
 import { criarEvento, deleteEvento, listarEvento, showEvento, updateEvento, watchCriarEvento, watchDeleteEvento, watchListarEvento, watchShowEvento, watchUpdateEvento } from "./Evento/sagas";
 import { criarLegislacao, deleteLegislacao, listarLegislacao, showLegislacao, updateLegislacao, watchCriarLegislacao, watchDeleteLegislacao, watchListarLegislacao, watchShowLegislacao, watchUpdateLegislacao } from './Legislacao/sagas'
 import { criarNoticia, deleteNoticia, listarNoticia, showNoticia, updateNoticia, watchCriarNoticia, watchDeleteNoticia, watchListarNoticia, watchShowNoticia, watchUpdateNoticia } from "./Noticia/sagas";
@@ -11,124 +12,33 @@ import { criarServico, deleteServico, listarServico, showServico, updateServico,
 import { criarSlider, deleteSlider, listarSlider, showSlider, updateSlider, watchCriarSlider, watchDeleteSlider, watchListarSlider, watchShowSlider, watchUpdateSlider } from "./SliderItem/sagas";
 import { criarAntt, deleteAntt, listarAntt, showAntt, updateAntt, watchCriarAntt, watchDeleteAntt, watchListarAntt, watchShowAntt, watchUpdateAntt } from "./Antt/sagas";
 import { deleteAssociado, showAssociado, updateAssociado, watchCriarAssociado, watchDeleteAssociado, watchListarAssociado, watchShowAssociado, watchUpdateAssociado } from "./Associado/sagas";
+*/
+import acordo from './Acordo/sagas';
+import antt from './Antt/sagas';
+import associado from './Associado/sagas';
+import auth from './Auth/sagas';
+import confederado from './Confederado/sagas';
+import contato from './Contato/sagas';
+import empresa from './Empresa/sagas';
+import evento from './Evento/sagas';
+import legislacao from './Legislacao/sagas';
+import noticia from './Noticia/sagas';
+import servico from './Servico/sagas';
+import slider from './SliderItem/sagas';
 
 export default function* rootSaga() {
-  yield all([
-    call(criarEmpresa),
-    call(listarEmpresa),
-    call(showEmpresa),
-    call(updateEmpresa),
-    call(deleteEmpresa),
-    call(watchCriarEmpresa),
-    call(watchDeleteEmpresa),
-    call(watchListarEmpresa),
-    call(watchShowEmpresa),
-    call(watchUpdateEmpresa),
-    call(authSaga),
-    call(login),
-    call(watchVerificaToken),
-    call(verificaToken),
-    call(criarLegislacao),
-    call(listarLegislacao),
-    call(showLegislacao),
-    call(updateLegislacao),
-    call(deleteLegislacao),
-    call(watchCriarLegislacao),
-    call(watchDeleteLegislacao),
-    call(watchListarLegislacao),
-    call(watchShowLegislacao),
-    call(watchUpdateLegislacao),
-    call(criarEvento),
-    call(listarEvento),
-    call(showEvento),
-    call(updateEvento),
-    call(deleteEvento),
-    call(watchCriarEvento),
-    call(watchDeleteEvento),
-    call(watchListarEvento),
-    call(watchShowEvento),
-    call(watchUpdateEvento),
-    call(criarSlider),
-    call(listarSlider),
-    call(showSlider),
-    call(updateSlider),
-    call(deleteSlider),
-    call(watchCriarSlider),
-    call(watchDeleteSlider),
-    call(watchListarSlider),
-    call(watchShowSlider),
-    call(watchUpdateSlider),
-    call(criarNoticia),
-    call(listarNoticia),
-    call(showNoticia),
-    call(updateNoticia),
-    call(deleteNoticia),
-    call(watchCriarNoticia),
-    call(watchDeleteNoticia),
-    call(watchListarNoticia),
-    call(watchShowNoticia),
-    call(watchUpdateNoticia),
-    call(criarServico),
-    call(listarServico),
-    call(showServico),
-    call(updateServico),
-    call(deleteServico),
-    call(watchCriarServico),
-    call(watchDeleteServico),
-    call(watchListarServico),
-    call(watchShowServico),
-    call(watchUpdateServico),
-    call(criarConfederado),
-    call(listarConfederado),
-    call(showConfederado),
-    call(updateConfederado),
-    call(deleteConfederado),
-    call(watchCriarConfederado),
-    call(watchDeleteConfederado),
-    call(watchListarConfederado),
-    call(watchShowConfederado),
-    call(watchUpdateConfederado),
-    call(criarAcordo),
-    call(listarAcordo),
-    call(showAcordo),
-    call(updateAcordo),
-    call(deleteAcordo),
-    call(watchCriarAcordo),
-    call(watchDeleteAcordo),
-    call(watchListarAcordo),
-    call(watchShowAcordo),
-    call(watchUpdateAcordo),
-    call(watchUpdateConfederado),
-    call(criarContato),
-    call(listarContato),
-    call(showContato),
-    call(updateContato),
-    call(deleteContato),
-    call(watchCriarContato),
-    call(watchDeleteContato),
-    call(watchListarContato),
-    call(watchShowContato),
-    call(watchUpdateContato),
-    call(criarContato),
-    call(listarContato),
-    call(showAssociado),
-    call(updateAssociado),
-    call(deleteAssociado),
-    call(watchCriarAssociado),
-    call(watchDeleteAssociado),
-    call(watchListarAssociado),
-    call(watchShowAssociado),
-    call(watchUpdateAssociado),
-    call(criarAntt),
-    call(listarAntt),
-    call(showAntt),
-    call(updateAntt),
-    call(deleteAntt),
-    call(watchCriarAntt),
-    call(watchDeleteAntt),
-    call(watchListarAntt),
-    call(watchShowAntt),
-    call(watchUpdateAntt),
-    
+  return yield all([
+    acordo,
+    antt,
+    associado,
+    auth,
+    confederado,
+    contato,
+    empresa,
+    evento,
+    legislacao,
+    noticia,
+    servico,
+    slider
   ]);
 }

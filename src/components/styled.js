@@ -58,15 +58,18 @@ export const LogoArea = styled.a`
 export const LogoImg = styled.img`
     height: 100%;
     width: auto;
-    @media only screen and (max-width: 700px) {
-        height: 70%;
-    }
-    
-    @media (min-width: 699px) and (max-width: 500px) {
-        height: 60%;
+    @media (min-width: 992px) {
+        height: 100%;
     }
 
-    @media only screen and (max-width: 499px) {
+    @media (min-width: 768px) and (max-width: 991px) {
+        height: 80%;
+    }
+
+    @media (min-width: 381px) and (max-width: 767px) {
+        height: 60%;
+    }
+    @media (max-width: 380px) {
         height: 40%;
     }
     
@@ -297,10 +300,26 @@ export const NoticiaItemAnchor = styled.a`
     display: flex;
     text-transform: uppercase;
     color: #f00;
-    font-size: 1.4em;
+    font-size: 1.4rem;
     font-weight: bold;
     margin-bottom: 10px;
     text-decoration: none;
+
+    @media (min-width: 992px) {
+        font-size: 1.4rem;
+    }
+
+    @media (min-width: 768px) and (max-width: 991px) {
+        font-size: 1.2rem;
+    }
+
+    @media (min-width: 381px) and (max-width: 767px) {
+        font-size: 0.9rem;
+    }
+    @media (max-width: 380px) {
+        font-size: 0.7rem;
+    }
+    
 `
 
 export const NoticiaItemData = styled.p`
