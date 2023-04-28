@@ -36,12 +36,11 @@ const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, u
 
   useEffect(() => {
     fetchServico()
-    setServicosList(servicos);
-  }, [servicos]);
+  }, []);
 
   useEffect(() => {
     reset({...servicoSelected});
-  }, [servicoSelected])
+  }, [reset, servicoSelected])
 
 
   const handleSelectServico = (index) => {

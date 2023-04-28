@@ -41,7 +41,7 @@ const EmpresaForm = ({loading, error, empresas, fetchEmpresas, criarEmpresa, upd
 
   useEffect(() => {
     fetchEmpresas();
-  }, [fetchEmpresas]);
+  }, []);
 
   const handleDeleteImagemEmpresa = (id) => {
     deleteImagemEmpresa(id);

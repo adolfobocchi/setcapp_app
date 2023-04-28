@@ -24,7 +24,7 @@ const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt })
 
   useEffect(() => {
     fetchAntt()
-  }, [fetchAntt]);
+  }, []);
   
   useEffect(() => {
     reset({...anttSelected});

@@ -23,7 +23,7 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
 
   useEffect(() => {
     fetchContato()
-  }, [fetchContato]);
+  }, []);
 
   useEffect(() => {
     reset({...contatoSelected});

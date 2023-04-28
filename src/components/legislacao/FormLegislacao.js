@@ -19,7 +19,7 @@ const LegislacaoForm = ({ loading, legislacaos, error, fetchLegislacao, criarLeg
 
   useEffect(() => {
     fetchLegislacao();
-  }, [fetchLegislacao]);
+  }, []);
 
 
   const onSubmit = (data) => {

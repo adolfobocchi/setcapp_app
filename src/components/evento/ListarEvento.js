@@ -36,7 +36,7 @@ const ListarEvento = ({ loading, eventos, error, fetchEvento, criarEvento, updat
 
   useEffect(() => {
     fetchEvento();
-  }, [updateEvento, fetchEvento]);
+  }, []);
 
 
   useEffect(() => {

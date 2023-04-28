@@ -35,7 +35,7 @@ const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, u
 
   useEffect(() => {
     fetchServico()
-  }, [fetchServico]);
+  }, []);
 
   useEffect(() => {
     reset({...servicoSelected});

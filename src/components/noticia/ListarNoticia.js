@@ -32,7 +32,7 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
 
   useEffect(() => {
     fetchNoticia()
-  }, [deleteNoticia, updateNoticia, fetchNoticia]);
+  }, []);
 
   useEffect(() => {
     reset({...noticiaSelected});

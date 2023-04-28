@@ -24,7 +24,7 @@ const ListarConfederado = ({ loading, confederados, error, fetchConfederado, cri
 
   useEffect(() => {
     fetchConfederado()
-  }, [fetchConfederado]);
+  }, []);
 
   useEffect(() => {
     reset({...confederadoSelected});

@@ -50,7 +50,7 @@ const ListarAssociado = ({ loading, associados, error, fetchAssociado, criarAsso
 
   useEffect(() => {
     fetchAssociado()
-  }, [fetchAssociado]);
+  }, []);
 
   useEffect(() => {
     reset({...associadoSelected});

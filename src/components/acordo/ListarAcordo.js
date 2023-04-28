@@ -24,7 +24,7 @@ const ListarAcordo = ({ loading, acordos,error, fetchAcordo, criarAcordo, update
 
   useEffect(() => {
     fetchAcordo()
-  }, [fetchAcordo]);
+  }, []);
 
   useEffect(() => {
     reset({ ...acordoSelected });
