@@ -60,20 +60,26 @@ import {
       case CRIAR_SLIDER_SUCCESS:
         return {
           loading: false,
-          slider:  action.payload,
+          slider:  [...state.slider, action.payload],
           error: '',
         };
       case UPDATE_SLIDER_SUCCESS:
+        var index = state.slider.findIndex((slider) => slider.id === action.payload.id);
+        state.slider[index]= action.payload;
         return {
           ...state,
           loading: false,
-          slider: action.payload,
+          slider: [...state.slider],
           error: '',
         };
       case DELETE_SLIDER_SUCCESS:
+        var index = state.slider.findIndex((slider) => slider.id === action.payload);
         return {
           loading: false,
-          slider: state.slider.filter((user) => user.id !== action.payload),
+          slider: [
+            ...state.slider.slice(0, index),
+            ...state.slider.slice(index + 1)
+          ],
           error: '',
         };
       case LISTAR_SLIDER_FAILURE:

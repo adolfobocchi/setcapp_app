@@ -81,12 +81,12 @@ export const updateSliderFailure = (error) => ({
 
 export const deleteSliderRequest = (id) => ({
   type: DELETE_SLIDER_REQUEST,
-  payload: { id },
+  payload: id ,
 });
 
 export const deleteSliderSuccess = (id) => ({
   type: DELETE_SLIDER_SUCCESS,
-  payload: { id },
+  payload: id,
 });
 
 export const deleteSliderFailure = (error) => ({

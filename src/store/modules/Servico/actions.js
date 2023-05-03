@@ -81,12 +81,12 @@ export const updateServicoFailure = (error) => ({
 
 export const deleteServicoRequest = (id) => ({
   type: DELETE_SERVICO_REQUEST,
-  payload: { id },
+  payload: id,
 });
 
 export const deleteServicoSuccess = (id) => ({
   type: DELETE_SERVICO_SUCCESS,
-  payload: { id },
+  payload: id,
 });
 
 export const deleteServicoFailure = (error) => ({

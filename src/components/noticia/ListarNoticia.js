@@ -7,9 +7,12 @@ import { criarNoticiaRequest, deleteNoticiaRequest, listarNoticiaRequest, update
 import { Button, Card, Container, Form, Input, Label } from './styled'
 import EditorHtml from '../EditorHtml';
 import DataPicker from '../DataPicker';
+import { FaTrash } from 'react-icons/fa';
 import Modal from '../Modal';
+import { showConfirmation } from '../../store/modules/Confirmation/actions';
+import { dataTimeFormatada } from '../../utils/formats';
 
-const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, updateNoticia, deleteNoticia}) => {
+const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, updateNoticia, deleteNoticia, confirmacao}) => {
   const formEmpty = {
     id: '',
     titulo: '',
@@ -18,6 +21,7 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
     ativo: false,
   }
   const [noticiaSelected, setNoticiaSelected] = useState(formEmpty);
+  const [noticiasState, setEventosState] = useState([]);
   const { register, control, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: noticiaSelected
       ? {
@@ -38,14 +42,21 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
     reset({...noticiaSelected});
   }, [reset, noticiaSelected])
 
-  const handleSelectNoticia = (index) => {
+  useEffect(() => {
+    setEventosState(noticias)
+  }, [noticias]);
+
+  const handleSelectNoticia = (event, index) => {
+    event.preventDefault();
+    event.stopPropagation();
     setNoticiaSelected(noticias[index]);
 
   }
 
-  const handleDeleteNoticia = (index) => {
-    deleteNoticia(index);
-    setNoticiaSelected({...formEmpty});
+  const handleDeleteNoticia = (event, index) => {
+    event.preventDefault();
+    event.stopPropagation();
+    confirmacao('DELETAR REGISTRO', 'VOCE REALMENTE DESEJA EXCLUIR O EVENTO?', ()=>{ deleteNoticia(index)});
   }
 
   const handleClearNoticia = () => {
@@ -60,7 +71,6 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
       criarNoticia(data);
     }
     handleClearNoticia();
-    fetchNoticia();
   }
   if(loading) {
     return <Modal />
@@ -97,10 +107,17 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
         <Button type="button" onClick={handleClearNoticia}>Limpar</Button>
       </Form>
       <Container>
-        {noticias?.length > 0 && noticias?.map((noticia, index) => (
-          <Card key={noticia.id} onClick={() => { handleSelectNoticia(index) }} >
-            <h3>{noticia.titulo}</h3>
-            <button onClick={() => { handleDeleteNoticia(noticia.id) }}>Delete</button>
+        {noticiasState?.length > 0 && noticiasState?.map((noticia, index) => (
+          <Card key={noticia.id} onClick={(event) => { handleSelectNoticia(event, index) }} >
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <h5 style={{textAlign: 'justify', marginRight: 10, marginBottom: 10}}>{noticia.titulo}</h5>
+              <div style={{ cursor: 'pointer' }} >
+                <FaTrash onClick={(event) => handleDeleteNoticia(event, noticia.id)} style={{ height: '1em', width: '1em' }} />
+              </div>
+
+            </div>
+            
+            <p style={{fontSize: 12}}>{dataTimeFormatada(noticia.data_hora)}</p>
           </Card>
         ))}
       </Container>
@@ -122,7 +139,8 @@ const mapDispatchToProps = dispatch => {
     fetchNoticia: () => dispatch(listarNoticiaRequest()),
     criarNoticia: (noticia) => dispatch(criarNoticiaRequest(noticia)),
     updateNoticia: (id, noticia) => dispatch(updateNoticiaRequest(id, noticia)),
-    deleteNoticia: (id) => dispatch(deleteNoticiaRequest(id))
+    deleteNoticia: (id) => dispatch(deleteNoticiaRequest(id)),
+    confirmacao: (title,text,onConfirm) => dispatch(showConfirmation(title,text,onConfirm))
   };
 };
 

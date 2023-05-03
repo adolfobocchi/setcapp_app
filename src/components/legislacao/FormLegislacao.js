@@ -7,7 +7,7 @@ import EditorHtml from '../EditorHtml';
 import Modal from '../Modal';
 
 const LegislacaoForm = ({ loading, legislacaos, error, fetchLegislacao, criarLegislacao, updateLegislacao }) => {
-  const { register, control, formState: { errors }, handleSubmit } = useForm({
+  const { register, control, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: legislacaos
       ? {
         id: legislacaos.id,
@@ -19,7 +19,11 @@ const LegislacaoForm = ({ loading, legislacaos, error, fetchLegislacao, criarLeg
 
   useEffect(() => {
     fetchLegislacao();
-  }, []);
+  }, [fetchLegislacao]);
+
+  useEffect(() => {
+    reset({...legislacaos});
+  }, [reset, legislacaos]);
 
 
   const onSubmit = (data) => {

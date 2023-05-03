@@ -16,6 +16,9 @@ import {
   SHOW_EVENTO_FAILURE,
   SHOW_EVENTO_SUCCESS,
   SHOW_EVENTO_REQUEST,
+  DELETE_IMAGEMEVENTO_REQUEST,
+  DELETE_IMAGEMEVENTO_SUCCESS,
+  DELETE_IMAGEMEVENTO_FAILURE,
 } from './actions';
 
 import api from '../../../services/api';
@@ -45,7 +48,7 @@ function* showEvento(action) {
 function* criarEvento(action) {
   try {
     const response = yield call(() => api.post('/evento', action.payload.evento));
-    const evento = response.data.evento;
+    const evento = response.data;
     yield put({ type: CRIAR_EVENTO_SUCCESS, payload: evento });
   } catch (error) {
     yield put({ type: CRIAR_EVENTO_FAILURE, payload: error.message });
@@ -56,7 +59,7 @@ function* criarEvento(action) {
 function* updateEvento(action) {
   try {
     const response = yield call(() => api.put(`/evento/${action.payload.id}`, action.payload.evento));
-    const evento = response.data.evento;
+    const evento = response.data;
     yield put({ type: UPDATE_EVENTO_SUCCESS, payload: evento });
   } catch (error) {
     yield put({ type: UPDATE_EVENTO_FAILURE, payload: error.message });
@@ -73,10 +76,20 @@ function* deleteEvento(action) {
   }
 }
 
+export function* deleteImagemEvento(action) {
+  try {
+    yield call(() => api.delete(`/evento/imagemevento/${action.payload.idImagem}`));
+    yield put({ type: DELETE_IMAGEMEVENTO_SUCCESS, payload: action.payload });
+  } catch (error) {
+    yield put({ type: DELETE_IMAGEMEVENTO_FAILURE, payload: error.message });
+  }
+}
+
 export default all([
   takeLatest(DELETE_EVENTO_REQUEST, deleteEvento),
   takeLatest(UPDATE_EVENTO_REQUEST, updateEvento),
   takeLatest(CRIAR_EVENTO_REQUEST, criarEvento),
   takeLatest(SHOW_EVENTO_REQUEST, showEvento),
   takeLatest(LISTAR_EVENTO_REQUEST, listarEvento),
+  takeLatest(DELETE_IMAGEMEVENTO_REQUEST, deleteImagemEvento),
 ])

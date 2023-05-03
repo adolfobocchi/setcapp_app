@@ -11,6 +11,7 @@ import servicoReducer from './Servico/reducers';
 import sliderReducer from './SliderItem/reducers';
 import anttReducer from './Antt/reducers';
 import associadoReducer from './Associado/reducers';
+import confirmationReducer from './Confirmation/reducers';
 
 const rootReducer = combineReducers({
 
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   antt: anttReducer,
   contato: contatoReducer,
   associado: associadoReducer,
+  confirmation: confirmationReducer,
 });
 
 export default rootReducer;

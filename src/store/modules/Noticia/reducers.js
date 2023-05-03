@@ -65,21 +65,27 @@ import {
         return {
           ...state,
           loading: false,
-          noticia:  action.payload,
+          noticias:  [...state.noticias, action.payload],
           error: '',
         };
       case UPDATE_NOTICIA_SUCCESS:
+        var index = state.noticias.findIndex((noticia) => noticia.id === action.payload.id);
+        state.noticias[index]= action.payload;
         return {
           ...state,
           loading: false,
-          noticia: action.payload,
+          noticias: [...action.noticias],
           error: '',
         };
       case DELETE_NOTICIA_SUCCESS:
+        var index = state.noticias.findIndex((noticia) => noticia.id === action.payload);
         return {
           ...state,
           loading: false,
-          noticia: state.noticia.filter((noticia) => noticia.id !== action.payload),
+          noticias: [
+            ...state.noticias.slice(0, index),
+            ...state.noticias.slice(index + 1)
+          ],
           error: '',
         };
       case LISTAR_NOTICIA_FAILURE:

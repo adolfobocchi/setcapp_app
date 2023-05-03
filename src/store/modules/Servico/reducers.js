@@ -60,20 +60,26 @@ import {
       case CRIAR_SERVICO_SUCCESS:
         return {
           loading: false,
-          servico:  action.payload,
+          servico:  [...state.servico, action.payload],
           error: '',
         };
-      case UPDATE_SERVICO_SUCCESS:
+      case UPDATE_SERVICO_SUCCESS: 
+        var index = state.servico.findIndex((servico) => servico.id === action.payload.id);
+        state.servico[index]= action.payload;
         return {
           ...state,
           loading: false,
-          servico: action.payload,
+          servico: [...state.servico],
           error: '',
         };
       case DELETE_SERVICO_SUCCESS:
+        var index = state.servico.findIndex((servico) => servico.id === action.payload);
         return {
           loading: false,
-          servico: state.servico.filter((user) => user.id !== action.payload),
+          servico: [
+            ...state.servico.slice(0, index),
+            ...state.servico.slice(index + 1)
+          ],
           error: '',
         };
       case LISTAR_SERVICO_FAILURE:

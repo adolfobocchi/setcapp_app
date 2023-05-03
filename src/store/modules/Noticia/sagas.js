@@ -47,7 +47,7 @@ function* showNoticia(action) {
 function* criarNoticia(action) {
   try {
     const response = yield call(() => api.post('/noticia', action.payload.noticia));
-    const noticia = response.data.noticia;
+    const noticia = response.data;
     yield put({ type: CRIAR_NOTICIA_SUCCESS, payload: noticia });
   } catch (error) {
     yield put({ type: CRIAR_NOTICIA_FAILURE, payload: error.message });

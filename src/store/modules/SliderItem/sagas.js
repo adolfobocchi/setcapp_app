@@ -45,7 +45,7 @@ function* showSlider(action) {
 function* criarSlider(action) {
   try {
     const response = yield call(() => api.post('/slider', action.payload.slider));
-    const slider = response.data.slider;
+    const slider = response.data;
     yield put({ type: CRIAR_SLIDER_SUCCESS, payload: slider });
   } catch (error) {
     yield put({ type: CRIAR_SLIDER_FAILURE, payload: error.message });
@@ -56,7 +56,7 @@ function* criarSlider(action) {
 function* updateSlider(action) {
   try {
     const response = yield call(() => api.put(`/slider/${action.payload.id}`, action.payload.slider));
-    const slider = response.data.slider;
+    const slider = response.data;
     yield put({ type: UPDATE_SLIDER_SUCCESS, payload: slider });
   } catch (error) {
     yield put({ type: UPDATE_SLIDER_FAILURE, payload: error.message });

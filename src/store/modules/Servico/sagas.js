@@ -44,7 +44,7 @@ function* showServico(action) {
 function* criarServico(action) {
   try {
     const response = yield call(() => api.post('/servico', action.payload.servico));
-    const servico = response.data.servico;
+    const servico = response.data;
     yield put({ type: CRIAR_SERVICO_SUCCESS, payload: servico });
   } catch (error) {
     yield put({ type: CRIAR_SERVICO_FAILURE, payload: error.message });
@@ -55,7 +55,7 @@ function* criarServico(action) {
 function* updateServico(action) {
   try {
     const response = yield call(() => api.put(`/servico/${action.payload.id}`, action.payload.servico));
-    const servico = response.data.servico;
+    const servico = response.data;
     yield put({ type: UPDATE_SERVICO_SUCCESS, payload: servico });
   } catch (error) {
     yield put({ type: UPDATE_SERVICO_FAILURE, payload: error.message });

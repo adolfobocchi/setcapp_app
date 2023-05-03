@@ -6,10 +6,18 @@ import { useForm } from 'react-hook-form';
 import { criarConfederadoRequest, deleteConfederadoRequest, listarConfederadoRequest, updateConfederadoRequest } from '../../store/modules/Confederado/actions'
 import { Button, Card, Container, Form, Image, Input, Label } from './styled'
 import Modal from '../Modal';
+import { showConfirmation } from '../../store/modules/Confirmation/actions';
+import { FaTrash } from 'react-icons/fa';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
-const ListarConfederado = ({ loading, confederados, error, fetchConfederado, criarConfederado, updateConfederado, deleteConfederado }) => {
+const ListarConfederado = ({ loading,
+  confederados,
+  error,
+  fetchConfederado,
+  criarConfederado,
+  updateConfederado,
+  deleteConfederado, confirmacao }) => {
   const formEmpty = {
     id: '',
     url: '',
@@ -17,6 +25,7 @@ const ListarConfederado = ({ loading, confederados, error, fetchConfederado, cri
     link: '',
   }
   const [confederadoSelected, setConfederadoSelected] = useState(formEmpty);
+  const [confederadosState, setConfederadosState] = useState([]);
   const { register, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: confederadoSelected
   });
@@ -27,22 +36,30 @@ const ListarConfederado = ({ loading, confederados, error, fetchConfederado, cri
   }, []);
 
   useEffect(() => {
-    reset({...confederadoSelected});
+    reset({ ...confederadoSelected });
   }, [reset, confederadoSelected])
 
+  useEffect(() => {
+    setConfederadosState(confederados)
+  }, [confederados]);
 
-  const handleSelectConfederado = (index) => {
+  const handleSelectConfederado = (event, index) => {
+    event.preventDefault();
+    event.stopPropagation();
     setConfederadoSelected(confederados[index]);
+    return false;
 
   }
 
   const handleClearConfederado = () => {
-    setConfederadoSelected({...formEmpty})
+    setConfederadoSelected({ ...formEmpty })
   }
 
-  const handleDeleteConfederado = (index) => {
-    deleteConfederado(index);
-    setConfederadoSelected({...formEmpty});
+  const handleDeleteConfederado = (event, index) => {
+    event.preventDefault();
+    event.stopPropagation();
+    confirmacao('DELETAR REGISTRO', 'VOCE REALMENTE DESEJA EXCLUIR O FEDERADO?', () => { deleteConfederado(index) });
+    return false;
   }
 
   const onSubmit = (data) => {
@@ -52,16 +69,13 @@ const ListarConfederado = ({ loading, confederados, error, fetchConfederado, cri
 
     if (data.id && data.id > 0) {
       updateConfederado(data.id, formData);
-      
-
     } else {
       criarConfederado(formData);
     }
-    fetchConfederado();
     handleClearConfederado();
 
   }
-  if(loading) {
+  if (loading) {
     return <Modal />
   }
 
@@ -79,7 +93,7 @@ const ListarConfederado = ({ loading, confederados, error, fetchConfederado, cri
         {confederadoSelected?.url &&
           <Image src={`${API_URL}/images/${confederadoSelected?.url || null}`} />
         }
-        
+
 
         <Label>Nome</Label>
         <Input
@@ -97,12 +111,15 @@ const ListarConfederado = ({ loading, confederados, error, fetchConfederado, cri
         <Button type="button" onClick={handleClearConfederado}>Limpar</Button>
       </Form>
       <Container>
-        {confederados?.length > 0 && confederados?.map((confederado, index) => (
-          <Card key={confederado.id} onClick={() => { handleSelectConfederado(index) }} >
-            <h3>{confederado.nome}</h3>
-            <img src={`${API_URL}/images/${confederado.url}`} style={{ width: 40, height: 40 }} alt='imagem confederados'/>
-            
-            <button onClick={() => { handleDeleteConfederado(confederado.id) }}>Delete</button>
+        {confederadosState?.length > 0 && confederadosState?.map((confederado, index) => (
+          <Card key={confederado.id} onClick={(event) => { handleSelectConfederado(event, index) }} >
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <h3>{confederado.nome}</h3>
+              <div style={{ cursor: 'pointer' }} >
+                <FaTrash onClick={(event) => handleDeleteConfederado(event, confederado.id)} style={{ height: '1em', width: '1em' }} />
+              </div>
+            </div>
+            <img src={`${API_URL}/images/${confederado.url}`} style={{ width: 40, height: 40 }} alt='imagem confederados' />
           </Card>
         ))}
       </Container>
@@ -124,7 +141,8 @@ const mapDispatchToProps = dispatch => {
     fetchConfederado: () => dispatch(listarConfederadoRequest()),
     criarConfederado: (confederado) => dispatch(criarConfederadoRequest(confederado)),
     updateConfederado: (id, confederado) => dispatch(updateConfederadoRequest(id, confederado)),
-    deleteConfederado: (id) => dispatch(deleteConfederadoRequest(id))
+    deleteConfederado: (id) => dispatch(deleteConfederadoRequest(id)),
+    confirmacao: (title, text, onConfirm) => dispatch(showConfirmation(title, text, onConfirm))
   };
 };
 

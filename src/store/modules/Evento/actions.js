@@ -18,6 +18,9 @@ export const DELETE_EVENTO_REQUEST = 'DELETE_EVENTO_REQUEST';
 export const DELETE_EVENTO_SUCCESS = 'DELETE_EVENTO_SUCCESS';
 export const DELETE_EVENTO_FAILURE = 'DELETE_EVENTO_FAILURE';
 
+export const DELETE_IMAGEMEVENTO_REQUEST = 'DELETE_IMAGEMEVENTO_REQUEST';
+export const DELETE_IMAGEMEVENTO_SUCCESS = 'DELETE_IMAGEMEVENTO_SUCCESS';
+export const DELETE_IMAGEMEVENTO_FAILURE = 'DELETE_IMAGEMEVENTO_FAILURE';
 
 
 export const listarEventoRequest = () => ({
@@ -56,7 +59,7 @@ export const criarEventoRequest = (evento) => ({
 
 export const criarEventoSuccess = (evento) => ({
   type: CRIAR_EVENTO_SUCCESS,
-  payload: { evento },
+  payload: evento,
 });;
 
 export const criarEventoFailure = (error) => ({
@@ -71,7 +74,7 @@ export const updateEventoRequest = (id, evento) => ({
 
 export const updateEventoSuccess = (evento) => ({
   type: UPDATE_EVENTO_SUCCESS,
-  payload: { evento },
+  payload: evento,
 });
 
 export const updateEventoFailure = (error) => ({
@@ -81,16 +84,31 @@ export const updateEventoFailure = (error) => ({
 
 export const deleteEventoRequest = (id) => ({
   type: DELETE_EVENTO_REQUEST,
-  payload: { id },
+  payload: id,
 });
 
 export const deleteEventoSuccess = (id) => ({
   type: DELETE_EVENTO_SUCCESS,
-  payload: { id },
+  payload: id,
 });
 
 export const deleteEventoFailure = (error) => ({
   type: DELETE_EVENTO_FAILURE,
+  payload: { error },
+});
+
+export const deleteImagemEventoRequest = (idEvento, idImagem ) => ({
+  type: DELETE_IMAGEMEVENTO_REQUEST,
+  payload: { idEvento, idImagem},
+});
+
+export const deleteImagemEventoSuccess = (idEvento, idImagem) => ({
+  type: DELETE_IMAGEMEVENTO_SUCCESS,
+  payload: { idEvento, idImagem },
+});
+
+export const deleteImagemEventoFailure = (error) => ({
+  type: DELETE_IMAGEMEVENTO_FAILURE,
   payload: { error },
 });
 

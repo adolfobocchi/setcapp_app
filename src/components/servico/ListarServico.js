@@ -3,13 +3,16 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form';
-import { criarServicoRequest, listarServicoRequest, updateServicoRequest } from '../../store/modules/Servico/actions'
+import { criarServicoRequest, deleteServicoRequest, listarServicoRequest, updateServicoRequest } from '../../store/modules/Servico/actions'
 import { Button, Card, Container, Form, Image, Input, Label } from './styled'
 import EditorHtml from '../EditorHtml';
+import Modal from '../Modal';
+import { FaTrash } from 'react-icons/fa';
+import { showConfirmation } from '../../store/modules/Confirmation/actions';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
-const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, updateServico }) => {
+const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, updateServico, deleteServico, confirmacao }) => {
   const formEmpty = {
     id: '',
     nome: '',
@@ -19,6 +22,7 @@ const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, u
     url: ''
   }
   const [servicoSelected, setServicoSelected] = useState({});
+  const [servicosState, setServicosState] = useState([]);
   const { register, control, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: servicoSelected
       ? {
@@ -41,13 +45,21 @@ const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, u
     reset({...servicoSelected});
   }, [reset, servicoSelected])
 
+  useEffect(() => {
+    setServicosState(servicos)
+  }, [servicos]);
 
-  const handleSelectServico = (index) => {
+  const handleSelectServico = (event, index) => {
+    event.preventDefault();
+    event.stopPropagation();
     setServicoSelected(servicos[index]);
-
+    return false;
   }
 
-  const handleDeleteServico = (index) => {
+  const handleDeleteServico = (event, index) => {
+    event.preventDefault();
+    event.stopPropagation();
+    confirmacao('DELETAR REGISTRO', 'VOCE REALMENTE DESEJA EXCLUIR O EVENTO?', ()=>{ deleteServico(index)});
   }
 
   const handleClearServico = () => {
@@ -65,7 +77,10 @@ const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, u
     } else {
       criarServico(formData);
     }
-
+    handleClearServico();
+  }
+  if(loading) {
+    return <Modal />
   }
   return (
     <>
@@ -109,12 +124,17 @@ const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, u
         <Button type="button" onClick={handleClearServico}>Limpar</Button>
       </Form>
       <Container>
-        {servicos?.length > 0 && servicos?.map((servico, index) => (
-          <Card key={servico.id} onClick={() => { handleSelectServico(index) }} >
-            <h3>{servico.nome}</h3>
+        {servicosState?.length > 0 && servicosState?.map((servico, index) => (
+          <Card key={servico.id} onClick={(event) => { handleSelectServico(event,index) }} >
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <h5 style={{textAlign: 'justify', marginRight: 10, marginBottom: 10}}>{servico.nome}</h5>
+              <div style={{ cursor: 'pointer' }} >
+                <FaTrash onClick={(event) => handleDeleteServico(event, servico.id)} style={{ height: '1em', width: '1em' }} />
+              </div>
+
+            </div>
             <img src={`${API_URL}/images/${servico.url}`} style={{ width: 40, height: 40 }} alt='imagem servico'/>
             
-            <button onClick={() => { handleDeleteServico(index) }}>Delete</button>
           </Card>
         ))}
       </Container>
@@ -135,7 +155,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchServico: () => dispatch(listarServicoRequest()),
     criarServico: (servico) => dispatch(criarServicoRequest(servico)),
-    updateServico: (id, servico) => dispatch(updateServicoRequest(id, servico))
+    updateServico: (id, servico) => dispatch(updateServicoRequest(id, servico)),
+    deleteServico: (id) => dispatch(deleteServicoRequest(id)),
+    confirmacao: (title,text,onConfirm) => dispatch(showConfirmation(title,text,onConfirm))
   };
 };
 

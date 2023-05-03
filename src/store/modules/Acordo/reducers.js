@@ -60,20 +60,26 @@ import {
       case CRIAR_ACORDO_SUCCESS:
         return {
           loading: false,
-          acordo:  action.payload,
+          acordo:  [...state.acordo, action.payload],
           error: '',
         };
       case UPDATE_ACORDO_SUCCESS:
+        var index = state.acordo.findIndex((acordo) => acordo.id === action.payload.id);
+        state.acordo[index]= action.payload;
         return {
           ...state,
           loading: false,
-          acordo: action.payload,
+          acordo: [...state.acordo],
           error: '',
         };
       case DELETE_ACORDO_SUCCESS:
+        var index = state.acordo.findIndex((acordo) => acordo.id === action.payload);
         return {
           loading: false,
-          acordo: state.acordo.filter((user) => user.id !== action.payload),
+          acordo: [
+            ...state.acordo.slice(0, index),
+            ...state.acordo.slice(index + 1)
+          ],
           error: '',
         };
       case LISTAR_ACORDO_FAILURE:

@@ -10,8 +10,7 @@ import Modal from '../Modal';
 const API_URL = process.env.REACT_APP_URL_API;
 
 const EmpresaForm = ({loading, error, empresas, fetchEmpresas, criarEmpresa, updateEmpresa, deleteImagemEmpresa}) => {
-  
-  const { register, control, formState: { errors }, handleSubmit } = useForm({
+  const { register, control, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: empresas
       ? {
           id: empresas.id,
@@ -41,7 +40,11 @@ const EmpresaForm = ({loading, error, empresas, fetchEmpresas, criarEmpresa, upd
 
   useEffect(() => {
     fetchEmpresas();
-  }, []);
+  }, [fetchEmpresas]);
+
+  useEffect(() => {
+    reset({...empresas});
+  }, [reset, empresas]);
 
   const handleDeleteImagemEmpresa = (id) => {
     deleteImagemEmpresa(id);

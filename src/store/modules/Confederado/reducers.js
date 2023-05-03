@@ -60,20 +60,26 @@ import {
       case CRIAR_CONFEDERADO_SUCCESS:
         return {
           loading: false,
-          confederado:  action.payload,
+          confederado:  [...state.confederado, action.payload],
           error: '',
         };
       case UPDATE_CONFEDERADO_SUCCESS:
+        var index = state.confederado.findIndex((confederado) => confederado.id === action.payload.id);
+        state.confederado[index]= action.payload;
         return {
           ...state,
           loading: false,
-          confederado: action.payload,
+          confederado: [...state.confederado],
           error: '',
         };
       case DELETE_CONFEDERADO_SUCCESS:
+        var index = state.confederado.findIndex((confederado) => confederado.id === action.payload);
         return {
           loading: false,
-          confederado: state.confederado.filter((user) => user.id !== action.payload),
+          confederado: [
+            ...state.confederado.slice(0, index),
+            ...state.confederado.slice(index + 1)
+          ],
           error: '',
         };
       case LISTAR_CONFEDERADO_FAILURE:

@@ -81,12 +81,12 @@ export const updateAcordoFailure = (error) => ({
 
 export const deleteAcordoRequest = (id) => ({
   type: DELETE_ACORDO_REQUEST,
-  payload: { id },
+  payload: id,
 });
 
 export const deleteAcordoSuccess = (id) => ({
   type: DELETE_ACORDO_SUCCESS,
-  payload: { id },
+  payload: id,
 });
 
 export const deleteAcordoFailure = (error) => ({

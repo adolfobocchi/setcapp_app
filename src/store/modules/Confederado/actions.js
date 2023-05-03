@@ -81,12 +81,12 @@ export const updateConfederadoFailure = (error) => ({
 
 export const deleteConfederadoRequest = (id) => ({
   type: DELETE_CONFEDERADO_REQUEST,
-  payload: { id },
+  payload: id,
 });
 
 export const deleteConfederadoSuccess = (id) => ({
   type: DELETE_CONFEDERADO_SUCCESS,
-  payload: { id },
+  payload: id,
 });
 
 export const deleteConfederadoFailure = (error) => ({

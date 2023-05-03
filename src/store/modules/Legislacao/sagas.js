@@ -34,7 +34,7 @@ function* showLegislacao(action) {
   try {
     
     const response = yield call(() => api.get(`/legislacao/${action.payload}`));
-    const legislacao = response.data.legislacao;
+    const legislacao = response.data;
     yield put({ type: SHOW_LEGISLACAO_SUCCESS, payload: legislacao });
   } catch (error) {
     yield put({ type: SHOW_LEGISLACAO_FAILURE, payload: error.message });
@@ -56,7 +56,7 @@ function* criarLegislacao(action) {
 function* updateLegislacao(action) {
   try {
     const response = yield call(() => api.put(`/legislacao/${action.payload.id}`, action.payload.legislacao));
-    const legislacao = response.data.legislacao;
+    const legislacao = response.data;
     yield put({ type: UPDATE_LEGISLACAO_SUCCESS, payload: legislacao });
   } catch (error) {
     yield put({ type: UPDATE_LEGISLACAO_FAILURE, payload: error.message });

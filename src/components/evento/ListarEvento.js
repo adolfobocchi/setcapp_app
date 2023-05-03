@@ -3,13 +3,15 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form';
-import { criarEventoRequest, listarEventoRequest, updateEventoRequest } from '../../store/modules/Evento/actions'
+import { criarEventoRequest, deleteEventoRequest, deleteImagemEventoRequest, listarEventoRequest, updateEventoRequest } from '../../store/modules/Evento/actions'
 import { Button, Card, Container, Form, Input, Label } from './styled'
 import Modal from '../Modal';
+import { FaTrash } from 'react-icons/fa';
+import { showConfirmation } from '../../store/modules/Confirmation/actions';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
-const ListarEvento = ({ loading, eventos, error, fetchEvento, criarEvento, updateEvento }) => {
+const ListarEvento = ({ loading, eventos, error, deleteImagemEvento, deleteEvento, fetchEvento, criarEvento, updateEvento, confirmacao }) => {
   const formEmpty = {
     id: '',
     titulo: '',
@@ -20,6 +22,7 @@ const ListarEvento = ({ loading, eventos, error, fetchEvento, criarEvento, updat
     ativo: false,
   }
   const [eventoSelected, setEventoSelected] = useState(formEmpty);
+  const [eventosState, setEventosState] = useState([]);
   const { register, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: eventoSelected
       ? {
@@ -33,7 +36,6 @@ const ListarEvento = ({ loading, eventos, error, fetchEvento, criarEvento, updat
       }
       : {},
   });
-
   useEffect(() => {
     fetchEvento();
   }, []);
@@ -41,19 +43,41 @@ const ListarEvento = ({ loading, eventos, error, fetchEvento, criarEvento, updat
 
   useEffect(() => {
     reset(eventoSelected);
-  }, [reset, eventoSelected])
+  }, [reset, eventoSelected]);
 
-  const handleSelectEvento = (index) => {
+  useEffect(() => {
+    setEventosState(eventos)
+  }, [eventos]);
+
+  const handleSelectEvento = (event, index) => {
+    event.preventDefault();
+    event.stopPropagation();
     setEventoSelected(eventos[index]);
+    return false;
 
   }
 
-  const handleDeleteEvento = (index) => {
+  const handleDeleteEvento = (event, index) => {
+    event.preventDefault();
+    event.stopPropagation();
+    confirmacao('DELETAR REGISTRO', 'VOCE REALMENTE DESEJA EXCLUIR O EVENTO?', ()=>{ deleteEvento(index)});
+    //deleteEvento(index);
+    return false;
+  }
+
+  const handleDeleteImagemEvento = (event, idEvento, idImagem) => {
+    event.preventDefault();
+    event.stopPropagation();
+    confirmacao('DELETAR REGISTRO', 'VOCE REALMENTE DESEJA EXCLUIR A IMAGEM DO EVENTO?', ()=>{ deleteImagemEvento(idEvento, idImagem)});
+    
+    return false;
   }
 
   const handleClearEvento = () => {
-    setEventoSelected({...formEmpty})
+    setEventoSelected({ ...formEmpty })
+    return false;
   }
+
 
   const onSubmit = (data) => {
     const formData = new FormData();
@@ -67,11 +91,10 @@ const ListarEvento = ({ loading, eventos, error, fetchEvento, criarEvento, updat
     } else {
       criarEvento(formData);
     }
-    fetchEvento();
     handleClearEvento();
-    
+
   }
-  if(loading) {
+  if (loading) {
     return <Modal />
   }
   return (
@@ -131,14 +154,31 @@ const ListarEvento = ({ loading, eventos, error, fetchEvento, criarEvento, updat
         <Button type="button" onClick={handleClearEvento}>Limpar</Button>
       </Form>
       <Container>
-        {eventos?.length > 0 && eventos?.map((event, index) => (
-          <Card key={event.id} onClick={() => { handleSelectEvento(index) }} >
-            <h3>{event.titulo}</h3>
-            <p>{event.descricao}</p>
-            {event.imagens.map(imagem => {
-              return (<img key={imagem.id} src={`${API_URL}/images/${imagem.url}`} style={{ width: 40, height: 40 }} alt='imagem eventos' />)
-            })}
-            <button onClick={() => { handleDeleteEvento(event.id) }}>Delete</button>
+        {eventosState?.length > 0 && eventosState?.map((evento, index) => (
+          <Card key={evento.id} onClick={(event) => { handleSelectEvento(event, index) }} >
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <h3>{evento.titulo}</h3>
+              <div style={{ cursor: 'pointer' }} >
+                <FaTrash onClick={(event) => handleDeleteEvento(event, evento.id)} style={{ height: '1em', width: '1em' }} />
+              </div>
+
+            </div>
+
+            <p>{evento.descricao}</p>
+            <div style={{ display: 'flex', flex: 1, flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center' }}>
+              {evento.imagens?.map(imagem => {
+                return (
+                  <div key={imagem.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 10 }}>
+                    <img src={`${API_URL}/images/${imagem.url}`} style={{ width: 40, height: 40 }} alt='imagem eventos' />
+                    <div style={{ cursor: 'pointer' }} >
+                      <FaTrash onClick={(event) => handleDeleteImagemEvento(event, evento.id, imagem.id)} style={{ height: '1em', width: '1em' }} />
+                    </div>
+
+                  </div>
+
+                )
+              })}
+            </div>
           </Card>
         ))}
       </Container>
@@ -159,7 +199,10 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchEvento: () => dispatch(listarEventoRequest()),
     criarEvento: (evento) => dispatch(criarEventoRequest(evento)),
-    updateEvento: (id, evento) => dispatch(updateEventoRequest(id, evento))
+    updateEvento: (id, evento) => dispatch(updateEventoRequest(id, evento)),
+    deleteEvento: (id) => dispatch(deleteEventoRequest(id)),
+    deleteImagemEvento: (idEvento, idImagem) => dispatch(deleteImagemEventoRequest(idEvento, idImagem)),
+    confirmacao: (title,text,onConfirm) => dispatch(showConfirmation(title,text,onConfirm))
   };
 };
 

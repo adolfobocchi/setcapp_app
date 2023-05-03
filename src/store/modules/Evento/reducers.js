@@ -14,7 +14,9 @@ import {
     DELETE_EVENTO_REQUEST,
     DELETE_EVENTO_SUCCESS,
     DELETE_EVENTO_FAILURE,
-    
+    DELETE_IMAGEMEVENTO_REQUEST,
+    DELETE_IMAGEMEVENTO_SUCCESS,
+    DELETE_IMAGEMEVENTO_FAILURE,
   } from './actions'
   
   const initialState = {
@@ -46,6 +48,7 @@ import {
       case LISTAR_EVENTO_REQUEST:
       case CRIAR_EVENTO_REQUEST:
       case UPDATE_EVENTO_REQUEST:
+      case DELETE_IMAGEMEVENTO_REQUEST:
       case DELETE_EVENTO_REQUEST:
         return {
           ...state,
@@ -60,25 +63,44 @@ import {
       case CRIAR_EVENTO_SUCCESS:
         return {
           loading: false,
-          evento:  action.payload,
+          evento: [...state.evento, action.payload],
           error: '',
         };
       case UPDATE_EVENTO_SUCCESS:
+        var index = state.evento.findIndex((evento) => evento.id === action.payload.id);
+        state.evento[index]= action.payload;
         return {
           ...state,
           loading: false,
-          evento: action.payload,
+          evento: [...state.evento],
+          error: '',
+        };
+      case DELETE_IMAGEMEVENTO_SUCCESS: 
+        var index = state.evento.findIndex((evento) => evento.id === action.payload.idEvento); 
+        var indexImagem = state.evento[index].imagens.findIndex((imagem) => imagem.id === action.payload.idImagem); 
+        state.evento[index].imagens = [
+          ...state.evento[index].imagens.slice(0, indexImagem),
+          ...state.evento[index].imagens.slice(indexImagem+1),
+        ]
+        return {
+          loading: false,
+          evento: [...state.evento],
           error: '',
         };
       case DELETE_EVENTO_SUCCESS:
+        var index = state.evento.findIndex((evento) => evento.id === action.payload);
         return {
           loading: false,
-          evento: state.evento.filter((user) => user.id !== action.payload),
+          evento: [
+            ...state.evento.slice(0, index),
+            ...state.evento.slice(index + 1)
+          ],
           error: '',
         };
       case LISTAR_EVENTO_FAILURE:
       case CRIAR_EVENTO_FAILURE:
       case UPDATE_EVENTO_FAILURE:
+      case DELETE_IMAGEMEVENTO_FAILURE:
       case DELETE_EVENTO_FAILURE:
         return {
           loading: false,

@@ -1,5 +1,4 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects';
-import axios from 'axios';
 
 import {
   LISTAR_ACORDO_REQUEST,
@@ -35,7 +34,7 @@ function* listarAcordo() {
   try {
     
     const response = yield call(() => api.get(`/acordo/${action.payload}`));
-    const acordo = response.data.acordo;
+    const acordo = response.data;
     yield put({ type: SHOW_ACORDO_SUCCESS, payload: acordo });
   } catch (error) {
     yield put({ type: SHOW_ACORDO_FAILURE, payload: error.message });
@@ -46,7 +45,7 @@ function* listarAcordo() {
  function* criarAcordo(action) {
   try {
     const response = yield call(() => api.post('/acordo', action.payload.acordo));
-    const acordo = response.data.acordo;
+    const acordo = response.data;
     yield put({ type: CRIAR_ACORDO_SUCCESS, payload: acordo });
   } catch (error) {
     yield put({ type: CRIAR_ACORDO_FAILURE, payload: error.message });
@@ -56,7 +55,7 @@ function* listarAcordo() {
  function* updateAcordo(action) {
   try {
     const response = yield call(() => api.put(`/acordo/${action.payload.id}`, action.payload.acordo));
-    const acordo = response.data.acordo;
+    const acordo = response.data;
     yield put({ type: UPDATE_ACORDO_SUCCESS, payload: acordo });
   } catch (error) {
     yield put({ type: UPDATE_ACORDO_FAILURE, payload: error.message });
@@ -66,7 +65,7 @@ function* listarAcordo() {
 // delete empresa
  function* deleteAcordo(action) {
   try {
-    yield call(() => axios.delete(`/acordo/${action.payload}`));
+    yield call(() => api.delete(`/acordo/${action.payload}`));
     yield put({ type: DELETE_ACORDO_SUCCESS, payload: action.payload });
   } catch (error) {
     yield put({ type: DELETE_ACORDO_FAILURE, payload: error.message });

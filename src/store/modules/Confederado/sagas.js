@@ -46,7 +46,7 @@ function* showConfederado(action) {
 function* criarConfederado(action) {
   try {
     const response = yield call(() => api.post('/confederado', action.payload.confederado));
-    const confederado = response.data.confederado;
+    const confederado = response.data;
     yield put({ type: CRIAR_CONFEDERADO_SUCCESS, payload: confederado });
   } catch (error) {
     yield put({ type: CRIAR_CONFEDERADO_FAILURE, payload: error.message });
@@ -57,7 +57,7 @@ function* criarConfederado(action) {
 function* updateConfederado(action) {
   try {
     const response = yield call(() => api.put(`/confederado/${action.payload.id}`, action.payload.confederado));
-    const confederado = response.data.confederado;
+    const confederado = response.data;
     yield put({ type: UPDATE_CONFEDERADO_SUCCESS, payload: confederado });
   } catch (error) {
     yield put({ type: UPDATE_CONFEDERADO_FAILURE, payload: error.message });
