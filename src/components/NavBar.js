@@ -90,10 +90,10 @@ const Navbar = () => {
       {descricao: 'estrutura', rota: '/estrutura'},
       {descricao: 'territorio', rota: '/territorio'},
     ]},
-    {descricao: 'serviços', rota: 'servicos' , linksSindicato: []},
-    {descricao: 'noticias', rota: 'noticias' , linksSindicato: []},
-    {descricao: 'associado', rota: 'associado' , linksSindicato: []},
-    {descricao: 'contato', rota: 'contato' , linksSindicato: []},
+    {descricao: 'serviços', rota: '/servicos' , linksSindicato: []},
+    {descricao: 'noticias', rota: '/noticias' , linksSindicato: []},
+    {descricao: 'associado', rota: '/associado' , linksSindicato: []},
+    {descricao: 'contato', rota: '/contato' , linksSindicato: []},
   ]
   return (
     <Nav>
