@@ -20,13 +20,14 @@ export const DELETE_NOTICIA_FAILURE = 'DELETE_NOTICIA_FAILURE';
 
 
 
-export const listarNoticiaRequest = () => ({
+export const listarNoticiaRequest = (page, ativo) => ({
   type: LISTAR_NOTICIA_REQUEST,
+  payload: {page, ativo}
 });
 
 export const listarNoticiaSuccess = (noticia) => ({
   type: LISTAR_NOTICIA_SUCCESS,
-  payload: { noticia },
+  payload: {noticia },
 });
 
 export const listarNoticiaFailure = (error) => ({

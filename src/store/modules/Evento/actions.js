@@ -23,8 +23,9 @@ export const DELETE_IMAGEMEVENTO_SUCCESS = 'DELETE_IMAGEMEVENTO_SUCCESS';
 export const DELETE_IMAGEMEVENTO_FAILURE = 'DELETE_IMAGEMEVENTO_FAILURE';
 
 
-export const listarEventoRequest = () => ({
+export const listarEventoRequest = (page, ativo) => ({
   type: LISTAR_EVENTO_REQUEST,
+  payload: {page, ativo}
 });
 
 export const listarEventoSuccess = (evento) => ({

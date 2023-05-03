@@ -7,12 +7,13 @@ import { criarNoticiaRequest, deleteNoticiaRequest, listarNoticiaRequest, update
 import { Button, Card, Container, Form, Input, Label } from './styled'
 import EditorHtml from '../EditorHtml';
 import DataPicker from '../DataPicker';
-import { FaTrash } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaTrash } from 'react-icons/fa';
 import Modal from '../Modal';
 import { showConfirmation } from '../../store/modules/Confirmation/actions';
 import { dataTimeFormatada } from '../../utils/formats';
 
-const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, updateNoticia, deleteNoticia, confirmacao}) => {
+const ListarNoticia = ({ loading, noticias, error, page, fetchNoticia, criarNoticia, updateNoticia, deleteNoticia, confirmacao}) => {
+  const ativo = 0;
   const formEmpty = {
     id: '',
     titulo: '',
@@ -35,7 +36,7 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
   });
 
   useEffect(() => {
-    fetchNoticia()
+    fetchNoticia(page, ativo)
   }, []);
 
   useEffect(() => {
@@ -106,6 +107,21 @@ const ListarNoticia = ({ loading, noticias, error, fetchNoticia, criarNoticia, u
         <Button type="submit">Salvar</Button>
         <Button type="button" onClick={handleClearNoticia}>Limpar</Button>
       </Form>
+      
+      <div style={{ flex: 1, display: 'flex', alignItems: 'flex-end', width: '100%' }}>
+          {page > 1 && 
+            <button 
+              style={{ backgroundColor: 'transparent', border: 0, cursor: 'pointer', margin: 10 }} 
+              onClick={() => fetchNoticia(page - 1, ativo)}>
+                <FaChevronLeft size={20} />
+            </button>
+          }
+          <button 
+            style={{ backgroundColor: 'transparent', border: 0, cursor: 'pointer', margin: 10 }} 
+            onClick={() => fetchNoticia(page + 1, ativo)}>
+              <FaChevronRight size={20} />
+            </button>
+        </div>
       <Container>
         {noticiasState?.length > 0 && noticiasState?.map((noticia, index) => (
           <Card key={noticia.id} onClick={(event) => { handleSelectNoticia(event, index) }} >
@@ -130,13 +146,14 @@ const mapStateToProps = state => {
   return {
     loading: state.noticia.loading,
     noticias: state.noticia.noticias,
+    page: state.noticia.page,
     error: state.noticia.error
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchNoticia: () => dispatch(listarNoticiaRequest()),
+    fetchNoticia: (page, ativo) => dispatch(listarNoticiaRequest(page, ativo)),
     criarNoticia: (noticia) => dispatch(criarNoticiaRequest(noticia)),
     updateNoticia: (id, noticia) => dispatch(updateNoticiaRequest(id, noticia)),
     deleteNoticia: (id) => dispatch(deleteNoticiaRequest(id)),

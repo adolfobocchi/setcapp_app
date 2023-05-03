@@ -81,12 +81,12 @@ export const updateAnttFailure = (error) => ({
 
 export const deleteAnttRequest = (id) => ({
   type: DELETE_ANTT_REQUEST,
-  payload: { id },
+  payload: id,
 });
 
 export const deleteAnttSuccess = (id) => ({
   type: DELETE_ANTT_SUCCESS,
-  payload: { id },
+  payload: id,
 });
 
 export const deleteAnttFailure = (error) => ({

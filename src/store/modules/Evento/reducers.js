@@ -21,8 +21,10 @@ import {
   
   const initialState = {
     loading: false,
-    evento: [],
+    eventos: [],
+    evento: null,
     error: '',
+    page: 1
   };
   
   const eventoReducer = (state = initialState, action) => {
@@ -46,6 +48,11 @@ import {
           error: action.payload,
         };
       case LISTAR_EVENTO_REQUEST:
+        return {
+          ...state,
+          page: action.payload.page,
+          loading: true,
+        };
       case CRIAR_EVENTO_REQUEST:
       case UPDATE_EVENTO_REQUEST:
       case DELETE_IMAGEMEVENTO_REQUEST:
@@ -56,44 +63,47 @@ import {
         };
       case LISTAR_EVENTO_SUCCESS:
         return {
+          ...state,
           loading: false,
-          evento: action.payload,
+          eventos: action.payload,
           error: '',
         };
       case CRIAR_EVENTO_SUCCESS:
         return {
+          ...state,
           loading: false,
-          evento: [...state.evento, action.payload],
+          eventos: [...state.eventos, action.payload],
           error: '',
         };
       case UPDATE_EVENTO_SUCCESS:
-        var index = state.evento.findIndex((evento) => evento.id === action.payload.id);
-        state.evento[index]= action.payload;
+        var index = state.eventos.findIndex((evento) => evento.id === action.payload.id);
+        state.eventos[index]= action.payload;
         return {
           ...state,
           loading: false,
-          evento: [...state.evento],
+          eventos: [...state.eventos],
           error: '',
         };
       case DELETE_IMAGEMEVENTO_SUCCESS: 
-        var index = state.evento.findIndex((evento) => evento.id === action.payload.idEvento); 
-        var indexImagem = state.evento[index].imagens.findIndex((imagem) => imagem.id === action.payload.idImagem); 
-        state.evento[index].imagens = [
-          ...state.evento[index].imagens.slice(0, indexImagem),
-          ...state.evento[index].imagens.slice(indexImagem+1),
+        var index = state.eventos.findIndex((evento) => evento.id === action.payload.idEvento); 
+        var indexImagem = state.eventos[index].imagens.findIndex((imagem) => imagem.id === action.payload.idImagem); 
+        state.eventos[index].imagens = [
+          ...state.eventos[index].imagens.slice(0, indexImagem),
+          ...state.eventos[index].imagens.slice(indexImagem+1),
         ]
         return {
           loading: false,
-          evento: [...state.evento],
+          eventos: [...state.eventos],
           error: '',
         };
       case DELETE_EVENTO_SUCCESS:
-        var index = state.evento.findIndex((evento) => evento.id === action.payload);
+        var index = state.eventos.findIndex((evento) => evento.id === action.payload);
         return {
+          ...state,
           loading: false,
-          evento: [
-            ...state.evento.slice(0, index),
-            ...state.evento.slice(index + 1)
+          eventos: [
+            ...state.eventos.slice(0, index),
+            ...state.eventos.slice(index + 1)
           ],
           error: '',
         };
@@ -104,7 +114,7 @@ import {
       case DELETE_EVENTO_FAILURE:
         return {
           loading: false,
-          evento: [],
+          noticia: null,
           error: action.payload,
         };
       default:

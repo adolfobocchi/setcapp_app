@@ -21,11 +21,11 @@ import {
 import api from '../../../services/api';
 
 
-function* listarNoticia() {
+function* listarNoticia(action) {
   try {
-    const response = yield call(() => api.get('/noticia'));
+    const response = yield call(() => api.get(`/noticia/page/${action.payload.page}/${action.payload.ativo}`));
     const noticia = response.data;
-    yield put({ type: LISTAR_NOTICIA_SUCCESS, payload: noticia });
+    yield put({ type: LISTAR_NOTICIA_SUCCESS, payload: noticia});
   } catch (error) {
     yield put({ type: LISTAR_NOTICIA_FAILURE, payload: error.message });
   }
@@ -59,7 +59,7 @@ function* criarNoticia(action) {
 function* updateNoticia(action) {
   try {
     const response = yield call(() => api.put(`/noticia/${action.payload.id}`, action.payload.noticia));
-    const noticia = response.data.noticia;
+    const noticia = response.data;
     yield put({ type: UPDATE_NOTICIA_SUCCESS, payload: noticia });
   } catch (error) {
     yield put({ type: UPDATE_NOTICIA_FAILURE, payload: error.message });

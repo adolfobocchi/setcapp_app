@@ -15,7 +15,10 @@ import Antt from './pages/Antt';
 import Contato from './pages/Contato';
 import Associado from './pages/Associado';
 import DefaultPage from './pages/DefaultPage';
-import Noticias from './components/Noticias';
+import NoticiasPage from './pages/NoticiasPage';
+import EventosPage from './pages/EventosPage';
+import ServicosPage from './pages/ServicosPage';
+import Evento from './pages/Evento';
 
 
 
@@ -37,7 +40,7 @@ function App() {
             <Route index element={
               <DefaultPage>
 
-                <Noticias />
+                <NoticiasPage />
               </DefaultPage>
             } />
             <Route exact path=":id/:titulo" element={
@@ -55,6 +58,25 @@ function App() {
           <Route exact path="/associado" element={
             <DefaultPage>
               <Associado />
+            </DefaultPage>
+
+          } />
+          <Route exact path="/eventos">
+            <Route index element={
+              <DefaultPage>
+
+                <EventosPage />
+              </DefaultPage>
+            } />
+            <Route exact path=":id/:titulo" element={
+              <DefaultPage>
+                <Evento />
+              </DefaultPage>
+            } />
+          </Route>
+           <Route exact path="/servicos" element={
+            <DefaultPage>
+              <ServicosPage />
             </DefaultPage>
 
           } />

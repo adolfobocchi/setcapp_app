@@ -6,12 +6,13 @@ import { useForm } from 'react-hook-form';
 import { criarEventoRequest, deleteEventoRequest, deleteImagemEventoRequest, listarEventoRequest, updateEventoRequest } from '../../store/modules/Evento/actions'
 import { Button, Card, Container, Form, Input, Label } from './styled'
 import Modal from '../Modal';
-import { FaTrash } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaTrash } from 'react-icons/fa';
 import { showConfirmation } from '../../store/modules/Confirmation/actions';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
-const ListarEvento = ({ loading, eventos, error, deleteImagemEvento, deleteEvento, fetchEvento, criarEvento, updateEvento, confirmacao }) => {
+const ListarEvento = ({ loading, eventos, error, page, deleteImagemEvento, deleteEvento, fetchEvento, criarEvento, updateEvento, confirmacao }) => {
+  const ativo = 0;
   const formEmpty = {
     id: '',
     titulo: '',
@@ -37,7 +38,7 @@ const ListarEvento = ({ loading, eventos, error, deleteImagemEvento, deleteEvent
       : {},
   });
   useEffect(() => {
-    fetchEvento();
+    fetchEvento(page,ativo);
   }, []);
 
 
@@ -153,6 +154,20 @@ const ListarEvento = ({ loading, eventos, error, deleteImagemEvento, deleteEvent
         <Button type="submit">Salvar</Button>
         <Button type="button" onClick={handleClearEvento}>Limpar</Button>
       </Form>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'flex-end', width: '100%' }}>
+          {page > 1 && 
+            <button 
+              style={{ backgroundColor: 'transparent', border: 0, cursor: 'pointer', margin: 10 }} 
+              onClick={() => fetchEvento(page - 1, ativo)}>
+                <FaChevronLeft size={20} />
+            </button>
+          }
+          <button 
+            style={{ backgroundColor: 'transparent', border: 0, cursor: 'pointer', margin: 10 }} 
+            onClick={() => fetchEvento(page + 1, ativo)}>
+              <FaChevronRight size={20} />
+            </button>
+        </div>
       <Container>
         {eventosState?.length > 0 && eventosState?.map((evento, index) => (
           <Card key={evento.id} onClick={(event) => { handleSelectEvento(event, index) }} >
@@ -190,14 +205,15 @@ const ListarEvento = ({ loading, eventos, error, deleteImagemEvento, deleteEvent
 const mapStateToProps = state => {
   return {
     loading: state.evento.loading,
-    eventos: state.evento.evento,
+    eventos: state.evento.eventos,
+    page: state.evento.page,
     error: state.evento.error
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchEvento: () => dispatch(listarEventoRequest()),
+    fetchEvento: (page,ativo) => dispatch(listarEventoRequest(page,ativo)),
     criarEvento: (evento) => dispatch(criarEventoRequest(evento)),
     updateEvento: (id, evento) => dispatch(updateEventoRequest(id, evento)),
     deleteEvento: (id) => dispatch(deleteEventoRequest(id)),

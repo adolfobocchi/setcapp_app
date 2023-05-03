@@ -22,9 +22,8 @@ import {
     noticias: [],
     noticia: null,
     error: '',
+    page: 1
   };
-
-  
   
   const noticiaReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -47,6 +46,11 @@ import {
           error: action.payload,
         };
       case LISTAR_NOTICIA_REQUEST:
+        return {
+          ...state,
+          page: action.payload.page,
+          loading: true,
+        };
       case CRIAR_NOTICIA_REQUEST:
       case UPDATE_NOTICIA_REQUEST:
       case DELETE_NOTICIA_REQUEST:

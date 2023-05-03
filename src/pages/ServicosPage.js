@@ -1,21 +1,19 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import {ServicoCardIconArea,ServicoCardImg, ServicoCardContent, ServicoCardTitulo, SectionArea, ServicoCard} from './styled';
 import { listarServicoRequest } from '../store/modules/Servico/actions';
-import Modal from './Modal';
+import {  ServicoCardIconArea,ServicoCardImg, ServicoCardContent, ServicoCardTitulo, SectionArea, ServicoCard } from '../components/styled';
+import Modal from '../components/Modal';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
-
 const Home = ({ loading, servicos, fetchServicos, error }) => {
   useEffect(() => {
-    fetchServicos();
-  }, [fetchServicos])
+    fetchServicos()
+  }, []);
 
   if (loading) {
     return <Modal />
   }
-
   return (
     <SectionArea background='rgba(200,200,200,0.7)'  direcao={'row'} altura={200} >
       
@@ -43,10 +41,14 @@ const mapStateToProps = state => {
     error: state.servico.error
   };
 };
+
+
 const mapDispatchToProps = dispatch => {
   return {
     fetchServicos: () => dispatch(listarServicoRequest()),
   };
 };
 
-export default connect(mapStateToProps,  mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
+
+

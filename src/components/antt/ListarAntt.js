@@ -3,24 +3,25 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form';
-import { criarAnttRequest, listarAnttRequest, updateAnttRequest } from '../../store/modules/Antt/actions'
+import { criarAnttRequest, deleteAnttRequest, listarAnttRequest, updateAnttRequest } from '../../store/modules/Antt/actions'
 import { Button, Card, Container, Form, Input, Label } from './styled'
 import Modal from '../Modal';
+import { FaTrash } from 'react-icons/fa';
+import { showConfirmation } from '../../store/modules/Confirmation/actions';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
-const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt }) => {
+const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt, confirmacao, deleteAntt }) => {
   const formEmpty = {
     id: '',
     url: '',
     nome: '',
   }
   const [anttSelected, setAnttSelected] = useState(formEmpty);
+  const [anttsState, setAnttsState] = useState([]);
   const { register, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: anttSelected
   });
-
-
 
   useEffect(() => {
     fetchAntt()
@@ -30,17 +31,26 @@ const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt })
     reset({...anttSelected});
   }, [reset, anttSelected])
 
+  useEffect(() => {
+    setAnttsState(antts)
+  }, [antts]);
 
-  const handleSelectAntt = (index) => {
+  const handleSelectAntt = (event, index) => {
+    event.preventDefault();
+    event.stopPropagation();
     setAnttSelected(antts[index]);
-
+    return false;
   }
 
   const handleClearAntt = () => {
     setAnttSelected({...formEmpty})
   }
 
-  const handleDeleteAntt = (index) => {
+  const handleDeleteAntt = (event, index) => {
+    event.preventDefault();
+    event.stopPropagation();
+    confirmacao('DELETAR REGISTRO', 'VOCE REALMENTE DESEJA EXCLUIR O ACORDO?', () => { deleteAntt(index) });
+    return false;
   }
 
   const onSubmit = (data) => {
@@ -54,7 +64,7 @@ const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt })
     } else {
       criarAntt(formData);
     }
-
+    handleClearAntt();
   }
 
   if(loading) {
@@ -85,10 +95,15 @@ const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt })
         <Button type="button" onClick={handleClearAntt}>Limpar</Button>
       </Form>
       <Container>
-        {antts?.map((antt, index) => (
-          <Card key={antt.id} onClick={() => { handleSelectAntt(index) }} >
-            <h3>{antt.nome}</h3>            
-            <button onClick={() => { handleDeleteAntt(antt.id) }}>Delete</button>
+        {anttsState?.length > 0 && anttsState?.map((antt, index) => (
+          <Card key={antt.id} onClick={(event) => { handleSelectAntt(event, index) }} >
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <h3>{antt.nome}</h3>
+              <div style={{ cursor: 'pointer' }} >
+                <FaTrash onClick={(event) => handleDeleteAntt(event, antt.id)} style={{ height: '1em', width: '1em' }} />
+              </div>
+            </div>          
+            
           </Card>
         ))}
       </Container>
@@ -109,7 +124,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchAntt: () => dispatch(listarAnttRequest()),
     criarAntt: (antt) => dispatch(criarAnttRequest(antt)),
-    updateAntt: (id, antt) => dispatch(updateAnttRequest(id, antt))
+    updateAntt: (id, antt) => dispatch(updateAnttRequest(id, antt)),
+    deleteAntt: (id) => dispatch(deleteAnttRequest(id)),
+    confirmacao: (title, text, onConfirm) => dispatch(showConfirmation(title, text, onConfirm))
   };
 };
 

@@ -1,5 +1,4 @@
 import {  call, put, all, takeLatest } from 'redux-saga/effects';
-import axios from 'axios';
 
 import {
   LISTAR_ANTT_REQUEST,
@@ -47,7 +46,7 @@ export function* showAntt(action) {
 export function* criarAntt(action) {
   try {
     const response = yield call(() => api.post('/antt', action.payload.antt));
-    const antt = response.data.antt;
+    const antt = response.data;
     yield put({ type: CRIAR_ANTT_SUCCESS, payload: antt });
   } catch (error) {
     yield put({ type: CRIAR_ANTT_FAILURE, payload: error.message });
@@ -59,7 +58,7 @@ export function* criarAntt(action) {
 export function* updateAntt(action) {
   try {
     const response = yield call(() => api.put(`/antt/${action.payload.id}`, action.payload.antt));
-    const antt = response.data.antt;
+    const antt = response.data;
     yield put({ type: UPDATE_ANTT_SUCCESS, payload: antt });
   } catch (error) {
     yield put({ type: UPDATE_ANTT_FAILURE, payload: error.message });
@@ -70,7 +69,7 @@ export function* updateAntt(action) {
 // delete empresa
 export function* deleteAntt(action) {
   try {
-    yield call(() => axios.delete(`/antt/${action.payload}`));
+    yield call(() => api.delete(`/antt/${action.payload}`));
     yield put({ type: DELETE_ANTT_SUCCESS, payload: action.payload });
   } catch (error) {
     yield put({ type: DELETE_ANTT_FAILURE, payload: error.message });

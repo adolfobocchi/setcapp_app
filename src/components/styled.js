@@ -300,17 +300,17 @@ export const NoticiaItemAnchor = styled.a`
     display: flex;
     text-transform: uppercase;
     color: #f00;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 10px;
     text-decoration: none;
 
     @media (min-width: 992px) {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
     }
 
     @media (min-width: 768px) and (max-width: 991px) {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     @media (min-width: 381px) and (max-width: 767px) {
@@ -366,4 +366,35 @@ export const MapaArea = styled.div`
     flex: 1;
     margin: 10;
     display: flex;
+`
+
+
+
+export const ServicoCardIconArea = styled.div`
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
+export const ServicoCardImg = styled.img`
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+`
+
+export const ServicoCardContent = styled.div`
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+export const ServicoCardTitulo = styled.div`
+    height: 40px;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    font-weight: bold;
 `

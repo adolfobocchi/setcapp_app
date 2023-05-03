@@ -36,8 +36,6 @@ const Home = ({ loading, criarContato, error }) => {
 
     return (
         <>
-            <Header />
-            <Navbar />
             <SectionArea background='rgba(254,254,254,0.7)' altura={400} direcao={'row'} >
                 <Form style={{flex: 1, margin: 10}} onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data' >
                     <Input
@@ -79,7 +77,6 @@ const Home = ({ loading, criarContato, error }) => {
                 </MapaArea>
 
             </SectionArea>
-            <Footer />
         </>
     )
 }

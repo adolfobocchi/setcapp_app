@@ -2,15 +2,16 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { listarNoticiaRequest } from '../store/modules/Noticia/actions';
 import { dataTimeFormatada, strSpaceToMinus } from '../utils/formats';
-import { NoticiaItemAnchor, NoticiaItemData, NoticiaItemlist, NoticiaListArea, SectionArea } from './styled';
-import Modal from './Modal';
+import { NoticiaItemAnchor, NoticiaItemData, NoticiaItemlist, NoticiaListArea, SectionArea } from '../components/styled';
+import Modal from '../components/Modal';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
 const Home = ({ loading, noticias, fetchNoticias, error, page }) => {
   const ativo = 1;
   useEffect(() => {
     fetchNoticias(page, ativo)
   }, []);
-  
+
   if (loading) {
     return <Modal />
   }
@@ -18,7 +19,7 @@ const Home = ({ loading, noticias, fetchNoticias, error, page }) => {
     <SectionArea background='rgba(200,200,200,0.7)' direcao={'column'} altura={500}>
       {noticias && <>
 
-        <h3 style={{ marginTop: 20 }}>ULTIMAS NOTICIAS</h3>
+        <h3 style={{ marginTop: 20 }}>NOTICIAS</h3>
         <NoticiaListArea>
           {
 
@@ -32,9 +33,20 @@ const Home = ({ loading, noticias, fetchNoticias, error, page }) => {
             })
           }
         </NoticiaListArea>
-        
-        <div style={{flex: 1, display: 'flex', alignItems: 'flex-end'}}>
-          <a style={{marginBottom: 20}} href='noticias'>MAIS NOTICIAS</a>
+
+        <div style={{ flex: 1, display: 'flex', alignItems: 'flex-end' }}>
+          {page > 1 && 
+            <button 
+              style={{ backgroundColor: 'transparent', border: 0, cursor: 'pointer', margin: 10 }} 
+              onClick={() => fetchNoticias(page - 1, ativo)}>
+                <FaChevronLeft size={20} />
+            </button>
+          }
+          <button 
+            style={{ backgroundColor: 'transparent', border: 0, cursor: 'pointer', margin: 10 }} 
+            onClick={() => fetchNoticias(page + 1, ativo)}>
+              <FaChevronRight size={20} />
+            </button>
         </div>
       </>}
 

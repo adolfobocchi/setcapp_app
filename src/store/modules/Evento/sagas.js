@@ -23,9 +23,9 @@ import {
 
 import api from '../../../services/api';
 
-function* listarEvento() {
+function* listarEvento(action) {
   try {
-    const response = yield call(() => api.get('/evento'));
+    const response = yield call(() => api.get(`/evento/page/${action.payload.page}/${action.payload.ativo}`));
     const evento = response.data;
     yield put({ type: LISTAR_EVENTO_SUCCESS, payload: evento });
   } catch (error) {
@@ -37,7 +37,7 @@ function* showEvento(action) {
   try {
     
     const response = yield call(() => api.get(`/evento/${action.payload}`));
-    const evento = response.data.evento;
+    const evento = response.data;
     yield put({ type: SHOW_EVENTO_SUCCESS, payload: evento });
   } catch (error) {
     yield put({ type: SHOW_EVENTO_FAILURE, payload: error.message });

@@ -91,6 +91,7 @@ const Navbar = () => {
       {descricao: 'territorio', rota: '/territorio'},
     ]},
     {descricao: 'serviços', rota: 'servicos' , linksSindicato: []},
+    {descricao: 'noticias', rota: 'noticias' , linksSindicato: []},
     {descricao: 'associado', rota: 'associado' , linksSindicato: []},
     {descricao: 'contato', rota: 'contato' , linksSindicato: []},
   ]

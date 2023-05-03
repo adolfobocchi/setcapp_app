@@ -22,9 +22,7 @@ const ListarAcordo = ({ loading, acordos, error, fetchAcordo, criarAcordo, updat
   const { register, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: acordoSelected
   });
-
-
-
+  
   useEffect(() => {
     fetchAcordo()
   }, []);

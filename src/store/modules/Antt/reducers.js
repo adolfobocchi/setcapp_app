@@ -60,20 +60,26 @@ import {
       case CRIAR_ANTT_SUCCESS:
         return {
           loading: false,
-          antt:  action.payload,
+          antt:  [...state.antt, action.payload],
           error: '',
         };
       case UPDATE_ANTT_SUCCESS:
+        var index = state.antt.findIndex((antt) => antt.id === action.payload.id);
+        state.antt[index]= action.payload;
         return {
           ...state,
           loading: false,
-          antt: action.payload,
+          antt: [...state.antt],
           error: '',
         };
       case DELETE_ANTT_SUCCESS:
+        var index = state.antt.findIndex((antt) => antt.id === action.payload);
         return {
           loading: false,
-          antt: state.antt.filter((user) => user.id !== action.payload),
+          antt: [
+            ...state.antt.slice(0, index),
+            ...state.antt.slice(index + 1)
+          ],
           error: '',
         };
       case LISTAR_ANTT_FAILURE:
