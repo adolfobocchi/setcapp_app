@@ -78,7 +78,7 @@ import {
         return {
           ...state,
           loading: false,
-          noticias: [...action.noticias],
+          noticias: [...state.noticias],
           error: '',
         };
       case DELETE_NOTICIA_SUCCESS:

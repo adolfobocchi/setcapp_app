@@ -36,7 +36,7 @@ function* showContato(action) {
   try {
 
     const response = yield call(() => api.get(`/contato/${action.payload}`));
-    const contato = response.data.contato;
+    const contato = response.data;
     yield put({ type: SHOW_CONTATO_SUCCESS, payload: contato });
   } catch (error) {
     yield put({ type: SHOW_CONTATO_FAILURE, payload: error.message });
@@ -48,7 +48,7 @@ function* showContato(action) {
 function* criarContato(action) {
   try {
     const response = yield call(() => api.post('/contato', action.payload.contato));
-    const contato = response.data.contato;
+    const contato = response.data;
     yield put({ type: CRIAR_CONTATO_SUCCESS, payload: contato });
   } catch (error) {
     yield put({ type: CRIAR_CONTATO_FAILURE, payload: error.message });
@@ -59,7 +59,7 @@ function* criarContato(action) {
 function* updateContato(action) {
   try {
     const response = yield call(() => api.put(`/contato/${action.payload.id}`, action.payload.contato));
-    const contato = response.data.contato;
+    const contato = response.data;
     yield put({ type: UPDATE_CONTATO_SUCCESS, payload: contato });
   } catch (error) {
     yield put({ type: UPDATE_CONTATO_FAILURE, payload: error.message });

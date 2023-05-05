@@ -12,6 +12,7 @@ import sliderReducer from './SliderItem/reducers';
 import anttReducer from './Antt/reducers';
 import associadoReducer from './Associado/reducers';
 import confirmationReducer from './Confirmation/reducers';
+import navbarReducer from './NavBar/reducers';
 
 const rootReducer = combineReducers({
 
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   contato: contatoReducer,
   associado: associadoReducer,
   confirmation: confirmationReducer,
+  navbar: navbarReducer,
 });
 
 export default rootReducer;

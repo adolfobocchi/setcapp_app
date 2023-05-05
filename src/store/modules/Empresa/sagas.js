@@ -38,7 +38,7 @@ export function* showEmpresa(action) {
   try {
     
     const response = yield call(() => api.get(`/empresa/${action.payload}`));
-    const empresas = response.data.empresas;
+    const empresas = response.data;
     yield put({ type: SHOW_EMPRESA_SUCCESS, payload: empresas });
   } catch (error) {
     yield put({ type: SHOW_EMPRESA_FAILURE, payload: error.message });
@@ -62,7 +62,7 @@ export function* criarEmpresa(action) {
 export function* updateEmpresa(action) {
   try {
     const response = yield call(() => api.put(`/empresa/${action.payload.id}`, action.payload.empresa));
-    const empresa = response.data.empresa;
+    const empresa = response.data[0];
     yield put({ type: UPDATE_EMPRESA_SUCCESS, payload: empresa });
   } catch (error) {
     yield put({ type: UPDATE_EMPRESA_FAILURE, payload: error.message });

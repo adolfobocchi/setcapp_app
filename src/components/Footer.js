@@ -93,6 +93,7 @@ const Footer = ({ loading, empresas, error }) => {
             <FooterIcon>
               <FaPaperPlane />
             </FooterIcon>
+            <FooterText>ENDEREÇO</FooterText>
             <FooterText>{`${empresas.endereco} ${empresas.numero}`}</FooterText>
             <FooterText>{`${empresas.bairro}`}</FooterText>
             <FooterText>{`${empresas.cidade}`}</FooterText>
@@ -103,6 +104,7 @@ const Footer = ({ loading, empresas, error }) => {
             <FooterIcon>
               <FaPhone />
             </FooterIcon>
+            <FooterText>TELEFONE</FooterText>
             <FooterText>{`${empresas.telefone}`}</FooterText>
             <FooterText>{`${empresas.whatsapp}`}</FooterText>
           </FooterInfo>
@@ -112,6 +114,7 @@ const Footer = ({ loading, empresas, error }) => {
               <FooterIcon>
                 <FaEnvelope />
               </FooterIcon>
+              <FooterText>E-MAIL</FooterText>
               {`${empresas.email}`}
             </FooterLink>
           </FooterInfo>
@@ -121,6 +124,7 @@ const Footer = ({ loading, empresas, error }) => {
               <FooterIcon>
                 <FaWhatsapp />
               </FooterIcon>
+              <FooterText>WHATSAPP</FooterText>
               {`${empresas.whatsapp}`}
             </FooterLink>
           </FooterInfo>

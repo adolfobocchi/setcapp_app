@@ -81,7 +81,7 @@ export const SearchArea = styled.div`
     justify-content: center;
     align-items: center;
     height: 90%;
-    @media only screen and (max-width: 620px) {
+    @media only screen and (max-width: 768px) {
         display: none;
     }
     
@@ -172,7 +172,7 @@ export const FaleConosco = styled.a`
     color: #000;
     font-size: 1em;
     font-weight: bold;
-    @media only screen and (max-width: 700px) {
+    @media only screen and (max-width: 768px) {
         display: none;
     }
 `
@@ -186,7 +186,7 @@ export const Menu = styled.div`
     color: #000;
     
     cursor: pointer;
-    @media only screen and (max-width: 700px) {
+    @media only screen and (max-width: 768px) {
         display: flex;
     }
 `
@@ -364,8 +364,10 @@ export const Form = styled.form`
 
 export const MapaArea = styled.div`
     flex: 1;
-    margin: 10;
     display: flex;
+    height: 100%;
+    padding: 10px;
+    align-items: center;
 `
 
 

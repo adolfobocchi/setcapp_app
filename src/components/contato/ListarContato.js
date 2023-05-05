@@ -5,8 +5,10 @@ import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form';
 import { criarContatoRequest, deleteContatoRequest, listarContatoRequest, updateContatoRequest } from '../../store/modules/Contato/actions'
 import { Button, Card, Container, Form, Input, Label, TextArea } from './styled'
+import { FaTrash } from 'react-icons/fa';
+import { showConfirmation } from '../../store/modules/Confirmation/actions';
 
-const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, updateContato, deleteContato }) => {
+const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, updateContato, deleteContato, confirmacao }) => {
   const formEmpty = {
     id: '',
     nome: '',
@@ -16,6 +18,7 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
     mensagem: ''
   }
   const [contatoSelected, setContatoSelected] = useState(formEmpty);
+  const [contatosState, setContatosState] = useState([]);
   const { register, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: contatoSelected
   });
@@ -26,22 +29,29 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
   }, []);
 
   useEffect(() => {
-    reset({...contatoSelected});
+    reset({ ...contatoSelected });
   }, [reset, contatoSelected])
 
+  useEffect(() => {
+    setContatosState(contatos)
+  }, [contatos]);
 
-  const handleSelectContato = (index) => {
+  const handleSelectContato = (event, index) => {
+    event.preventDefault();
+    event.stopPropagation();
     setContatoSelected(contatos[index]);
-
+    return false;
   }
 
   const handleClearContato = () => {
-    setContatoSelected({...formEmpty})
+    setContatoSelected({ ...formEmpty })
   }
 
-  const handleDeleteContato = (index) => {
-    deleteContato(index);
-    setContatoSelected({...formEmpty})
+  const handleDeleteContato = (event, index) => {
+    event.preventDefault();
+    event.stopPropagation();
+    confirmacao('DELETAR REGISTRO', 'VOCE REALMENTE DESEJA EXCLUIR O CONTATO?', () => { deleteContato(index) });
+    handleClearContato();
   }
 
   const onSubmit = (data) => {
@@ -52,7 +62,6 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
     } else {
       criarContato(data);
     }
-    fetchContato();
     handleClearContato();
 
   }
@@ -63,7 +72,7 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
           hidden
           {...register('id')}
         />
-        
+
         <Label>Nome</Label>
         <Input
           {...register('nome', { required: true })}
@@ -95,10 +104,17 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
         <Button type="button" onClick={handleClearContato}>Limpar</Button>
       </Form>
       <Container>
-        {contatos?.length > 0 && contatos?.map((contato, index) => (
-          <Card key={contato.id} onClick={() => { handleSelectContato(index) }} >
-            <h3>{contato.nome}</h3>            
-            <button onClick={() => handleDeleteContato(contato.id)}>Delete</button>
+        {contatosState?.length > 0 && contatosState?.map((contato, index) => (
+          <Card key={contato.id} onClick={(event) => { handleSelectContato(event, index) }} >
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <h5 style={{ textAlign: 'justify', marginRight: 10, marginBottom: 10 }}>{contato.nome}</h5>
+              
+              <div style={{ cursor: 'pointer' }} >
+                <FaTrash onClick={(event) => handleDeleteContato(event, contato.id)} style={{ height: '1em', width: '1em' }} />
+              </div>
+
+            </div>
+            <h6 style={{ textAlign: 'justify', marginRight: 10, marginBottom: 10 }}>{contato.email}</h6>
           </Card>
         ))}
       </Container>
@@ -120,7 +136,8 @@ const mapDispatchToProps = dispatch => {
     fetchContato: () => dispatch(listarContatoRequest()),
     criarContato: (contato) => dispatch(criarContatoRequest(contato)),
     updateContato: (id, contato) => dispatch(updateContatoRequest(id, contato)),
-    deleteContato: (id) => dispatch(deleteContatoRequest(id))
+    deleteContato: (id) => dispatch(deleteContatoRequest(id)),
+    confirmacao: (title,text,onConfirm) => dispatch(showConfirmation(title,text,onConfirm))
   };
 };
 

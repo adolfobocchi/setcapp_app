@@ -19,10 +19,15 @@ import NoticiasPage from './pages/NoticiasPage';
 import EventosPage from './pages/EventosPage';
 import ServicosPage from './pages/ServicosPage';
 import Evento from './pages/Evento';
+import { useEffect } from 'react';
 
 
 
 function App() {
+  
+  useEffect(() => {
+    document.title = '::SETCAPP';
+  }, []);
   return (
     
     <Router>

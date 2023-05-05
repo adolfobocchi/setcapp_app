@@ -8,6 +8,7 @@ import { Button, Card, Container, Form, Input, Label } from './styled'
 import Modal from '../Modal';
 import { FaTrash } from 'react-icons/fa';
 import { showConfirmation } from '../../store/modules/Confirmation/actions';
+import EditorHtml from '../EditorHtml';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
@@ -19,16 +20,16 @@ const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt, c
   }
   const [anttSelected, setAnttSelected] = useState(formEmpty);
   const [anttsState, setAnttsState] = useState([]);
-  const { register, formState: { errors }, handleSubmit, reset } = useForm({
+  const { register, control, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: anttSelected
   });
 
   useEffect(() => {
     fetchAntt()
   }, []);
-  
+
   useEffect(() => {
-    reset({...anttSelected});
+    reset({ ...anttSelected });
   }, [reset, anttSelected])
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt, c
   }
 
   const handleClearAntt = () => {
-    setAnttSelected({...formEmpty})
+    setAnttSelected({ ...formEmpty })
   }
 
   const handleDeleteAntt = (event, index) => {
@@ -67,7 +68,7 @@ const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt, c
     handleClearAntt();
   }
 
-  if(loading) {
+  if (loading) {
     return <Modal />
   }
   return (
@@ -78,18 +79,16 @@ const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt, c
           {...register('id')}
         />
 
-        <Label>Imagem</Label>
+        <Label>Arquivo</Label>
         <Input type='file' name='anttFile' {...register('anttFile', { required: false })} />
         {errors.anttFile && <span>Campo obrigatório</span>}
         {anttSelected?.url &&
           <a href={`${API_URL}/images/${anttSelected.url}`} target="_blank" rel="noreferrer"> Arquivo </a>
         }
-        
-        <Label>Nome</Label>
-        <Input
-          {...register('nome', { required: true })}
-        />
-        {errors.nome && <span>Campo obrigatório</span>}
+
+        <Label>Conteudo</Label>
+        <EditorHtml name="conteudo" control={control} defaultValue={anttSelected?.conteudo} />
+        {errors.conteudo && <span>Erro</span>}
 
         <Button type="submit">Salvar</Button>
         <Button type="button" onClick={handleClearAntt}>Limpar</Button>
@@ -98,12 +97,12 @@ const ListarAntt = ({ loading, antts, error, fetchAntt, criarAntt, updateAntt, c
         {anttsState?.length > 0 && anttsState?.map((antt, index) => (
           <Card key={antt.id} onClick={(event) => { handleSelectAntt(event, index) }} >
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <h3>{antt.nome}</h3>
+              <h3>{antt.id}</h3>
               <div style={{ cursor: 'pointer' }} >
                 <FaTrash onClick={(event) => handleDeleteAntt(event, antt.id)} style={{ height: '1em', width: '1em' }} />
               </div>
-            </div>          
-            
+            </div>
+
           </Card>
         ))}
       </Container>

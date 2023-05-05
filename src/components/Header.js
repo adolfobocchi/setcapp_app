@@ -1,19 +1,33 @@
 import React from "react";
 import {useNavigate} from 'react-router-dom';
 import { ContatoArea, FaleConosco, FormRow, HeaderArea, HeaderBar, HeaderContent, Input, LinkRedeSocial, LinkRedeSocialInstagram, LogoArea, LogoImg, Menu, SearchArea } from "./styled";
-import { FaInstagram, FaBars, FaSearch, FaWhatsapp } from 'react-icons/fa'
-import { connect } from "react-redux";
+import { FaInstagram, FaBars, FaSearch, FaWhatsapp, FaTimes } from 'react-icons/fa'
+import { connect, useDispatch } from "react-redux";
 import { whatsAppFormat } from "../utils/formats";
+import { toggleNavbar } from "../store/modules/NavBar/actions";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const API_URL = process.env.REACT_APP_URL_API;
 
-const Header = ({loading, empresas, error}) => {
+const Header = ({loading, empresas, error, toggleMenu}) => {
   const history = useNavigate();
+  const dispatch = useDispatch();
+  const [toggleMenuState, setToggleMenuState] = useState(false);
   
-  
+  useEffect(()=> {
+    setToggleMenuState(toggleMenu);
+  },[toggleMenu])
+
   function toHome() {
     history('/')
   }
+
+  const handleToggleMenu = () => {
+    dispatch(toggleNavbar());
+  };
+
+
   return (
     <HeaderArea>
       <HeaderBar>
@@ -36,8 +50,8 @@ const Header = ({loading, empresas, error}) => {
           <LinkRedeSocialInstagram href={empresas.instagram} target='_blank'>
             <FaInstagram style={{ height: '2em', width: '2em' }} />
           </LinkRedeSocialInstagram>
-          <Menu>
-            <FaBars style={{ height: '2em', width: '2em' }} />
+          <Menu onClick={handleToggleMenu}>
+          {toggleMenuState ? <FaTimes style={{ height: '2em', width: '2em' }} /> : <FaBars style={{ height: '2em', width: '2em' }} /> }
           </Menu>
         </ContatoArea>
       </HeaderContent>
@@ -50,7 +64,8 @@ const mapStateToProps = state => {
   return {
     loading: state.empresa.loading,
     empresas: state.empresa.empresa,
-    error: state.empresa.error
+    error: state.empresa.error,
+    toggleMenu: state.navbar.visible
   };
 };
 

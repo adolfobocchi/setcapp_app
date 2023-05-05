@@ -40,7 +40,7 @@ const EmpresaForm = ({loading, error, empresas, fetchEmpresas, criarEmpresa, upd
 
   useEffect(() => {
     fetchEmpresas();
-  }, [fetchEmpresas]);
+  }, []);
 
   useEffect(() => {
     reset({...empresas});

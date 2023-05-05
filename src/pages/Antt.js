@@ -36,8 +36,9 @@ const Home = ({ loading, antss, fetchAntt, error }) => {
                     {
                         antss.map((antt, index) => (
                             <li>
-                                <h3>{antt.nome}</h3>
                                 <p>Atualizado em: {dataTimeFormatada(antt.updatedAt)}</p>
+                                
+                                <div dangerouslySetInnerHTML={{ __html: antt.conteudo }}></div>
                                 {antt?.url &&
                                     <a href={`${API_URL}/images/${antt.url}`} target="_blank" rel="noreferrer"> Arquivo </a>
                                 }

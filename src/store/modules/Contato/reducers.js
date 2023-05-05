@@ -60,20 +60,27 @@ import {
       case CRIAR_CONTATO_SUCCESS:
         return {
           loading: false,
-          contato:  action.payload,
+          contato: [...state.contato, action.payload],
           error: '',
         };
       case UPDATE_CONTATO_SUCCESS:
+        console.log(action.payload);
+        var index = state.contato.findIndex((contato) => contato.id === action.payload.id);
+        state.contato[index]= action.payload;
         return {
           ...state,
           loading: false,
-          contato: action.payload,
+          contato: [...state.contato],
           error: '',
         };
       case DELETE_CONTATO_SUCCESS:
+        var index = state.contato.findIndex((contato) => contato.id === action.payload);
         return {
           loading: false,
-          contato: action.payload,
+          contato: [
+            ...state.contato.slice(0, index),
+            ...state.contato.slice(index + 1)
+          ],
           error: '',
         };
       case LISTAR_CONTATO_FAILURE:

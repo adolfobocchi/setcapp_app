@@ -48,7 +48,7 @@ const LegislacaoForm = ({ loading, legislacaos, error, fetchLegislacao, criarLeg
 
       <Label>Legislacao</Label>
       <EditorHtml name="conteudo" control={control} defaultValue={legislacaos?.conteudo} />
-      {errors.titulo && <span>Erro</span>}
+      {errors.conteudo && <span>Erro</span>}
 
       <Button type="submit">Salvar</Button>
     </Form>
