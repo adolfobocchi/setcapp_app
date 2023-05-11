@@ -101,7 +101,7 @@ const Home = ({ loading, criarContato, error, empresas }) => {
                             />
                             {geoData.lat && geoData.lng && <Marker position={[geoData.lat, geoData.lng]}>
                                 <Popup>
-                                    A pretty CSS3 popup. <br /> Easily customizable.
+                                    Setcapp
                                 </Popup>
                             </Marker>}
                         </MapContainer>}

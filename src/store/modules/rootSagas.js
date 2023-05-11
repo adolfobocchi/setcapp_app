@@ -11,6 +11,7 @@ import legislacao from './Legislacao/sagas';
 import noticia from './Noticia/sagas';
 import servico from './Servico/sagas';
 import slider from './SliderItem/sagas';
+import curriculum from './Curriculum/sagas';
 
 export default function* rootSaga() {
   return yield all([
@@ -25,6 +26,7 @@ export default function* rootSaga() {
     legislacao,
     noticia,
     servico,
-    slider
+    slider,
+    curriculum,
   ]);
 }

@@ -20,6 +20,7 @@ import EventosPage from './pages/EventosPage';
 import ServicosPage from './pages/ServicosPage';
 import Evento from './pages/Evento';
 import { useEffect } from 'react';
+import Curriculum from './pages/Curriculum';
 
 
 
@@ -57,6 +58,12 @@ function App() {
           <Route exact path="/contato" element={
             <DefaultPage>
               <Contato />
+            </DefaultPage>
+
+          } />
+          <Route exact path="/curriculo" element={
+            <DefaultPage>
+              <Curriculum />
             </DefaultPage>
 
           } />

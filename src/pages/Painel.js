@@ -13,6 +13,7 @@ import ListarSlider from '../components/slider/ListarSlider';
 import Titulo from '../components/Titulo';
 import ListarAntt from '../components/antt/ListarAntt';
 import ListarAssociado from '../components/associado/ListarAssociado';
+import ListarCurriculo from '../components/curriculum/ListarCurriculo';
 
 const Container = styled.div`
   background: #FFF;
@@ -57,7 +58,8 @@ const Painel = () => {
     { key: 9, label: "Contatos", component: <ListarContato /> },
     { key: 10, label: "Antt", component: <ListarAntt /> },
     { key: 11, label: "Associado", component: <ListarAssociado /> },
-    { key: 12, label: "Sair", component: <Logout /> },
+    { key: 12, label: "Curriculum", component: <ListarCurriculo /> },
+    { key: 13, label: "Sair", component: <Logout /> },
   ]
   const [selectedMenuItem, setSelectedMenuItem] = useState(menuItems[0]);
 

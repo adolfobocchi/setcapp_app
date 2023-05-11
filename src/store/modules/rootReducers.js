@@ -13,6 +13,7 @@ import anttReducer from './Antt/reducers';
 import associadoReducer from './Associado/reducers';
 import confirmationReducer from './Confirmation/reducers';
 import navbarReducer from './NavBar/reducers';
+import curriculumReducer from './Curriculum/reducers';
 
 const rootReducer = combineReducers({
 
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   associado: associadoReducer,
   confirmation: confirmationReducer,
   navbar: navbarReducer,
+  curriculum: curriculumReducer,
 });
 
 export default rootReducer;

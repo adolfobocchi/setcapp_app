@@ -78,9 +78,6 @@ const DropdownContent = styled.div`
   z-index: 2;
   @media only screen and (min-width: 769px) {
     position: absolute;
-    font-weight: 700;
-    font-size: 0.8em;
-    padding: 7px 15px;
     }
     @media only screen and (max-width: 768px) { 
       flex-direction: column;
