@@ -21,6 +21,7 @@ import ServicosPage from './pages/ServicosPage';
 import Evento from './pages/Evento';
 import { useEffect } from 'react';
 import Curriculum from './pages/Curriculum';
+import Sindical from './pages/Sindical';
 
 
 
@@ -70,6 +71,12 @@ function App() {
           <Route exact path="/associado" element={
             <DefaultPage>
               <Associado />
+            </DefaultPage>
+
+          } />
+          <Route exact path="/sindical" element={
+            <DefaultPage>
+              <Sindical />
             </DefaultPage>
 
           } />

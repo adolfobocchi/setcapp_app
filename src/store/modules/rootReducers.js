@@ -10,6 +10,7 @@ import noticiaReducer from './Noticia/reducers';
 import servicoReducer from './Servico/reducers';
 import sliderReducer from './SliderItem/reducers';
 import anttReducer from './Antt/reducers';
+import sindicalReducer from './Sindical/reducers';
 import associadoReducer from './Associado/reducers';
 import confirmationReducer from './Confirmation/reducers';
 import navbarReducer from './NavBar/reducers';
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   confirmation: confirmationReducer,
   navbar: navbarReducer,
   curriculum: curriculumReducer,
+  sindical: sindicalReducer,
 });
 
 export default rootReducer;

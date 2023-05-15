@@ -19,8 +19,10 @@ import {
   
   const initialState = {
     loading: false,
-    associado: [],
+    associados: [],
+    associado: null,
     error: '',
+    page: 1
   };
   
   const associadoReducer = (state = initialState, action) => {
@@ -44,6 +46,11 @@ import {
           error: action.payload,
         };
       case LISTAR_ASSOCIADO_REQUEST:
+        return {
+          ...state,
+          page: action.payload.page,
+          loading: true,
+        };
       case CRIAR_ASSOCIADO_REQUEST:
       case UPDATE_ASSOCIADO_REQUEST:
       case DELETE_ASSOCIADO_REQUEST:
@@ -53,27 +60,36 @@ import {
         };
       case LISTAR_ASSOCIADO_SUCCESS:
         return {
+          ...state,
           loading: false,
-          associado: action.payload,
+          associados: action.payload,
           error: '',
         };
       case CRIAR_ASSOCIADO_SUCCESS:
         return {
+          ...state,
           loading: false,
-          associado:  action.payload,
+          associados:  [...state.associados, action.payload],
           error: '',
         };
       case UPDATE_ASSOCIADO_SUCCESS:
+        var index = state.associados.findIndex((associado) => associado.id === action.payload.id);
+        state.associados[index]= action.payload;
         return {
           ...state,
           loading: false,
-          associado: action.payload,
+          associados: [...state.associados],
           error: '',
         };
       case DELETE_ASSOCIADO_SUCCESS:
+        var index = state.associados.findIndex((associado) => associado.id === action.payload);
         return {
+          ...state,
           loading: false,
-          associado: action.payload,
+          associados: [
+            ...state.associados.slice(0, index),
+            ...state.associados.slice(index + 1)
+          ],
           error: '',
         };
       case LISTAR_ASSOCIADO_FAILURE:
@@ -81,8 +97,9 @@ import {
       case UPDATE_ASSOCIADO_FAILURE:
       case DELETE_ASSOCIADO_FAILURE:
         return {
+          ...state,
           loading: false,
-          associado: [],
+          associado: null,
           error: action.payload,
         };
       default:

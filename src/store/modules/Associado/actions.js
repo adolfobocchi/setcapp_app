@@ -20,8 +20,9 @@ export const DELETE_ASSOCIADO_FAILURE = 'DELETE_ASSOCIADO_FAILURE';
 
 
 
-export const listarAssociadoRequest = () => ({
+export const listarAssociadoRequest = (page, ativo) => ({
   type: LISTAR_ASSOCIADO_REQUEST,
+  payload: {page, ativo}
 });
 
 export const listarAssociadoSuccess = (associado) => ({

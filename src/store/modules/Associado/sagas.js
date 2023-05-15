@@ -20,9 +20,9 @@ import {
 
 import api from '../../../services/api';
 
-export function* listarAssociado() {
+export function* listarAssociado(action) {
   try {
-    const response = yield call(() => api.get('/associado'));
+    const response = yield call(() => api.get(`/associado/page/${action.payload.page}/${action.payload.ativo}`));
     const associado = response.data;
     yield put({ type: LISTAR_ASSOCIADO_SUCCESS, payload: associado });
   } catch (error) {
@@ -33,7 +33,6 @@ export function* listarAssociado() {
 
 export function* showAssociado(action) {
   try {
-    
     const response = yield call(() => api.get(`/associado/${action.payload}`));
     const associado = response.data.associado;
     yield put({ type: SHOW_ASSOCIADO_SUCCESS, payload: associado });
@@ -45,9 +44,8 @@ export function* showAssociado(action) {
 // add empresa
 export function* criarAssociado(action) {
   try {
-    console.log(action);
     const response = yield call(() => api.post('/associado', action.payload.associado));
-    const associado = response.data.associado;
+    const associado = response.data;
     yield put({ type: CRIAR_ASSOCIADO_SUCCESS, payload: associado });
   } catch (error) {
     yield put({ type: CRIAR_ASSOCIADO_FAILURE, payload: error.message });
@@ -59,7 +57,7 @@ export function* criarAssociado(action) {
 export function* updateAssociado(action) {
   try {
     const response = yield call(() => api.put(`/associado/${action.payload.id}`, action.payload.associado));
-    const associado = response.data.associado;
+    const associado = response.data;
     yield put({ type: UPDATE_ASSOCIADO_SUCCESS, payload: associado });
   } catch (error) {
     yield put({ type: UPDATE_ASSOCIADO_FAILURE, payload: error.message });

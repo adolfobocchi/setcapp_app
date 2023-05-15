@@ -33,10 +33,8 @@ function* listarNoticia(action) {
 
 function* showNoticia(action) {
   try {
-    
     const response = yield call(() => api.get(`/noticia/${action.payload}`));
     const noticia = response.data;
-    
     yield put({ type: SHOW_NOTICIA_SUCCESS, payload: noticia });
   } catch (error) {
     yield put({ type: SHOW_NOTICIA_FAILURE, payload: error.message });

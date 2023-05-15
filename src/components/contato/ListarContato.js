@@ -7,6 +7,7 @@ import { criarContatoRequest, deleteContatoRequest, listarContatoRequest, update
 import { Button, Card, Container, Form, Input, Label, TextArea } from './styled'
 import { FaTrash } from 'react-icons/fa';
 import { showConfirmation } from '../../store/modules/Confirmation/actions';
+import Modal from '../Modal';
 
 const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, updateContato, deleteContato, confirmacao }) => {
   const formEmpty = {
@@ -64,6 +65,10 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
     }
     handleClearContato();
 
+  }
+
+  if(loading) {
+    return <Modal />
   }
   return (
     <>

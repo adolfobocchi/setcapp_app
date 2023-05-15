@@ -1,6 +1,7 @@
 import { all } from "redux-saga/effects";
 import acordo from './Acordo/sagas';
 import antt from './Antt/sagas';
+import sindical from './Sindical/sagas';
 import associado from './Associado/sagas';
 import auth from './Auth/sagas';
 import confederado from './Confederado/sagas';
@@ -28,5 +29,6 @@ export default function* rootSaga() {
     servico,
     slider,
     curriculum,
+    sindical,
   ]);
 }

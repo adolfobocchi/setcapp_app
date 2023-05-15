@@ -33,6 +33,7 @@ const EmpresaForm = ({loading, error, empresas, fetchEmpresas, criarEmpresa, upd
           institucional: empresas.institucional,
           diretoria: empresas.diretoria,
           territorio: empresas.territorio,
+          associadoPage: empresas.associadoPage,
 
         }
       : {},
@@ -160,6 +161,8 @@ const EmpresaForm = ({loading, error, empresas, fetchEmpresas, criarEmpresa, upd
       <Label>Territorio</Label>
       <EditorHtml name="territorio" control={control} defaultValue={empresas?.territorio} />
       
+      <Label>Pagina Associado</Label>
+      <EditorHtml name="associadoPage" control={control} defaultValue={empresas?.associadoPage} />
 
 
       <Label>Fotos</Label>
