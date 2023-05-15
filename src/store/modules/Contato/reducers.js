@@ -21,6 +21,7 @@ import {
     loading: false,
     contato: [],
     error: '',
+    page: 1,
   };
   
   const contatoReducer = (state = initialState, action) => {
@@ -44,6 +45,11 @@ import {
           error: action.payload,
         };
       case LISTAR_CONTATO_REQUEST:
+        return {
+          ...state,
+          page: action.payload.page,
+          loading: true,
+        };
       case CRIAR_CONTATO_REQUEST:
       case UPDATE_CONTATO_REQUEST:
       case DELETE_CONTATO_REQUEST:
@@ -53,18 +59,19 @@ import {
         };
       case LISTAR_CONTATO_SUCCESS:
         return {
+          ...state,
           loading: false,
           contato: action.payload,
           error: '',
         };
       case CRIAR_CONTATO_SUCCESS:
         return {
+          ...state,
           loading: false,
           contato: [...state.contato, action.payload],
           error: '',
         };
       case UPDATE_CONTATO_SUCCESS:
-        console.log(action.payload);
         var index = state.contato.findIndex((contato) => contato.id === action.payload.id);
         state.contato[index]= action.payload;
         return {
@@ -88,6 +95,7 @@ import {
       case UPDATE_CONTATO_FAILURE:
       case DELETE_CONTATO_FAILURE:
         return {
+          ...state,
           loading: false,
           contato: [],
           error: action.payload,

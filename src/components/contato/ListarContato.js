@@ -5,11 +5,12 @@ import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form';
 import { criarContatoRequest, deleteContatoRequest, listarContatoRequest, updateContatoRequest } from '../../store/modules/Contato/actions'
 import { Button, Card, Container, Form, Input, Label, TextArea } from './styled'
-import { FaTrash } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaTrash } from 'react-icons/fa';
 import { showConfirmation } from '../../store/modules/Confirmation/actions';
 import Modal from '../Modal';
 
-const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, updateContato, deleteContato, confirmacao }) => {
+const ListarContato = ({ loading, contatos, error, page, fetchContato, criarContato, updateContato, deleteContato, confirmacao }) => {
+  const ativo = 0;
   const formEmpty = {
     id: '',
     nome: '',
@@ -26,7 +27,7 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
 
 
   useEffect(() => {
-    fetchContato()
+    fetchContato(page, ativo)
   }, []);
 
   useEffect(() => {
@@ -108,6 +109,20 @@ const ListarContato = ({ loading, contatos, error, fetchContato, criarContato, u
         <Button type="submit">Salvar</Button>
         <Button type="button" onClick={handleClearContato}>Limpar</Button>
       </Form>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'flex-end', width: '100%' }}>
+        {page > 1 &&
+          <button
+            style={{ backgroundColor: 'transparent', border: 0, cursor: 'pointer', margin: 10 }}
+            onClick={() => fetchContato(page - 1, ativo)}>
+            <FaChevronLeft size={20} />
+          </button>
+        }
+        <button
+          style={{ backgroundColor: 'transparent', border: 0, cursor: 'pointer', margin: 10 }}
+          onClick={() => fetchContato(page + 1, ativo)}>
+          <FaChevronRight size={20} />
+        </button>
+      </div>
       <Container>
         {contatosState?.length > 0 && contatosState?.map((contato, index) => (
           <Card key={contato.id} onClick={(event) => { handleSelectContato(event, index) }} >
@@ -132,13 +147,14 @@ const mapStateToProps = state => {
   return {
     loading: state.contato.loading,
     contatos: state.contato.contato,
+    page: state.contato.page,
     error: state.contato.error
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchContato: () => dispatch(listarContatoRequest()),
+    fetchContato: (page,ativo) => dispatch(listarContatoRequest(page,ativo)),
     criarContato: (contato) => dispatch(criarContatoRequest(contato)),
     updateContato: (id, contato) => dispatch(updateContatoRequest(id, contato)),
     deleteContato: (id) => dispatch(deleteContatoRequest(id)),

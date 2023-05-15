@@ -20,8 +20,9 @@ export const DELETE_CONTATO_FAILURE = 'DELETE_CONTATO_FAILURE';
 
 
 
-export const listarContatoRequest = () => ({
+export const listarContatoRequest = (page, ativo) => ({
   type: LISTAR_CONTATO_REQUEST,
+  payload: {page, ativo}
 });
 
 export const listarContatoSuccess = (contato) => ({
