@@ -6,7 +6,7 @@ import { criarAssociadoRequest } from '../store/modules/Associado/actions';
 import { Label } from '../components/contato/styled';
 import { useEffect } from 'react';
 
-const Home = ({ loading, criarAssociado, error }) => {
+const Home = ({ loading, criarAssociado, error, empresas }) => {
     const formOptions = {
         id: { label: 'id', value: '', tipo: 'text', hidden: true },
         razaoSocial: { label: 'Razão Social', value: '', tipo: 'text', required: true },
@@ -101,8 +101,10 @@ const Home = ({ loading, criarAssociado, error }) => {
 
     return (
         <>
-            <SectionArea background='rgba(254,254,254,0.7)' altura={400} direcao={'row'} >
-                <Form style={{ flex: 1, margin: 10 }} onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data' >
+            <SectionArea background='rgba(254,254,254,0.7)' altura={400} direcao={'column'} >
+                <h3 style={{flex:1, textAlign: 'center', marginTop: 20 }}>SEJA UM ASSOCIADO</h3>
+                <div style={{marginTop: 20, marginBottom: 20}} dangerouslySetInnerHTML={{ __html: empresas.associadoPage }}></div>
+                <Form style={{ flex: 1, margin: 10, width: '90%' }} onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data' >
                     {
                         Object.keys(formEmpty).map((field, index) => {
                             const { label, tipo, required, hidden } = formOptions[field];
@@ -130,7 +132,8 @@ const mapStateToProps = state => {
     return {
         loading: state.associado.loading,
         associados: state.associado.associados,
-        error: state.associado.error
+        error: state.associado.error,
+        empresas: state.empresa.empresa,
     };
 };
 

@@ -399,7 +399,40 @@ export const MapaArea = styled.div`
     align-items: center;
 `
 
+export const ContatoConteudoArea = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    @media (min-width: 381px) and (max-width: 767px) {
+        flex-direction: column-reverse;
+        
+    }
+    @media (max-width: 380px) {
+        flex-direction: column-reverse;
+    }
+`
 
+export const ContatoInfoArea = styled.div`
+    justify-content: center;
+    margin: 20;
+    padding: 20; 
+    flex: 1; 
+    display: flex;
+    color: #F38735; 
+    @media (min-width: 381px) and (max-width: 767px) {
+        flex-direction: column;
+        align-items: center;
+    }
+    @media (max-width: 380px) {
+        flex-direction: column;
+        align-items: center;
+    }
+`
+
+export const ContatoInfo = styled.div`
+    display: flex;
+    margin-top: 20px;
+`
 
 export const ServicoCardIconArea = styled.div`
     width: 30%;

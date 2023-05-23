@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { Button, Form, Input, MapaArea } from '../components/styled';
+import { Button, ContatoConteudoArea, ContatoInfo, ContatoInfoArea, Form, Input, MapaArea } from '../components/styled';
 import { criarContatoRequest } from '../store/modules/Contato/actions';
 import { Label, TextArea } from '../components/contato/styled';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
@@ -43,21 +43,27 @@ const Home = ({ loading, criarContato, error, empresas }) => {
 
     return (
         <>
-            <div style={{ height: 700, alignItems:'center',  backgroundColor:'rgba(254,254,254,0.7)', flexDirection: 'column' }} >
+            <div style={{ minHeight: 700, height: 'auto', alignItems:'center',  backgroundColor:'rgba(254,254,254,0.7)', flexDirection: 'column' }} >
                 
                 <h3 style={{flex:1, textAlign: 'center', marginTop: 20 }}>ENTRE EM CONTATO</h3>
                 {empresas &&
-                    <div style={{ justifyContent: 'center', margin:20, padding: 20, flex: 1, display: 'flex', flexDirection: 'row',  color: '#F38735' }}>
+                    <ContatoInfoArea>
+                        <ContatoInfo>
                         <FaMapPin /> 
                         <p> &nbsp;{` ${empresas.endereco} `} &nbsp;</p>
                         <p>{` ${empresas.numero} `} &nbsp;</p>
+                        </ContatoInfo>
+                        <ContatoInfo>
                         <FaPhone />
                         <p> &nbsp;{` ${empresas.telefone} `} &nbsp;</p>
+                        </ContatoInfo>
+                        <ContatoInfo>
                         <FaEnvelope />
                         <p> &nbsp;{` ${empresas.email} `} &nbsp;</p>
-                    </div>
+                        </ContatoInfo>
+                    </ContatoInfoArea>
                 }
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'row' }}>
+                <ContatoConteudoArea >
                     <Form style={{ flex: 1, margin: 10 }} onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data' >
                         <Input
                             hidden
@@ -106,7 +112,7 @@ const Home = ({ loading, criarContato, error, empresas }) => {
                             </Marker>}
                         </MapContainer>}
                     </MapaArea>
-                </div>
+                </ContatoConteudoArea>
             </div>
         </>
     )
