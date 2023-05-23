@@ -59,7 +59,7 @@ const ListarServico = ({ loading, servicos, error, fetchServico, criarServico, u
   const handleDeleteServico = (event, index) => {
     event.preventDefault();
     event.stopPropagation();
-    confirmacao('DELETAR REGISTRO', 'VOCE REALMENTE DESEJA EXCLUIR O EVENTO?', ()=>{ deleteServico(index)});
+    confirmacao('DELETAR REGISTRO', 'VOCE REALMENTE DESEJA EXCLUIR O SERVICO?', ()=>{ deleteServico(index)});
   }
 
   const handleClearServico = () => {

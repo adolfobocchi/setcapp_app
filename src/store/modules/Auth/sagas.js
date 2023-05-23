@@ -14,20 +14,7 @@ export function* login(action) {
 }
 
 
-export function* verificaToken(action) {
-  try {
-    const token = yield select(state => state.auth.token);
-    const response = yield call(() => api.post('/token', token));
-    if (!response.data)
-      yield put(tokenFailure(action.payload.history));
-  } catch (error) {
-    yield put(loginFailure(error));
-  }
-}
-
-
 
 export default all([
-  takeLatest(TOKEN_REQUEST, verificaToken),
   takeLatest(LOGIN_REQUEST, login)
 ])

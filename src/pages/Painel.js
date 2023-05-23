@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ListarAcordo from '../components/acordo/ListarAcordo';
 import ListarConfederado from '../components/confederado/ListarConfederado';
@@ -15,6 +15,8 @@ import ListarAntt from '../components/antt/ListarAntt';
 import ListarAssociado from '../components/associado/ListarAssociado';
 import ListarCurriculo from '../components/curriculum/ListarCurriculo';
 import ListarSindical from '../components/sindical/ListarSindical';
+import { connect } from 'react-redux';
+import { tokenIsExpired } from '../store/modules/Auth/actions';
 
 const Container = styled.div`
   background: #FFF;
@@ -45,7 +47,7 @@ const HomePainel = () => {
   )
 }
 
-const Painel = () => {
+const Painel = ({tokenIsExpired}) => {
   const menuItems = [
     { key: 0, label: "Painel", component: <HomePainel /> },
     { key: 1, label: "Empresa", component: <FormEmpresa /> },
@@ -64,6 +66,13 @@ const Painel = () => {
     { key: 14, label: "Sair", component: <Logout /> },
   ]
   const [selectedMenuItem, setSelectedMenuItem] = useState(menuItems[0]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      tokenIsExpired()
+    }, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
 
   const handleMenuItemClick = (menuItem) => {
@@ -92,4 +101,10 @@ const Painel = () => {
     </Container>
   );
 };
-export default Painel;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    tokenIsExpired: () => dispatch(tokenIsExpired()),
+  };
+};
+export default connect(null,mapDispatchToProps)(Painel);

@@ -4,6 +4,7 @@ export const TOKEN_REQUEST = 'TOKEN_REQUEST';
 export const TOKEN_SUCCESS = 'TOKEN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const TOKEN_FAILURE = 'TOKEN_FAILURE';
+export const TOKEN_EXPIRED = 'TOKEN_EXPIRED';
 
 export const LOGOUT = 'LOGOUT';
 
@@ -39,4 +40,9 @@ export const tokenFailure = (history) => ({
 
 export const logout = () => ({
     type: LOGOUT,
+});
+
+
+export const tokenIsExpired = () => ({
+    type: TOKEN_EXPIRED,
 });

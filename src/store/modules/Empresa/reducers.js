@@ -18,6 +18,9 @@ import {
     DELETE_IMAGEMEMPRESA_REQUEST,
     DELETE_IMAGEMEMPRESA_SUCCESS,
     DELETE_IMAGEMEMPRESA_FAILURE,
+    GRAVAR_IMAGEMEMPRESA_FAILURE,
+    GRAVAR_IMAGEMEMPRESA_SUCCESS,
+    GRAVAR_IMAGEMEMPRESA_REQUEST,
     
   } from './actions'
   
@@ -51,6 +54,11 @@ import {
       case CRIAR_EMPRESA_REQUEST:
       case UPDATE_EMPRESA_REQUEST:
       case DELETE_IMAGEMEMPRESA_REQUEST:
+      case GRAVAR_IMAGEMEMPRESA_REQUEST:
+        return {
+          ...state,
+          loading: true,
+        };
       case DELETE_EMPRESA_REQUEST:
         return {
           ...state,
@@ -69,14 +77,32 @@ import {
           error: '',
         };
       case UPDATE_EMPRESA_SUCCESS:
+        state.empresa = action.payload;
         return {
           ...state,
           loading: false,
-          empresa: action.payload,
+          empresa: {...state.empresa},
           error: '',
         };
-      
-      case DELETE_IMAGEMEMPRESA_SUCCESS:  
+        case GRAVAR_IMAGEMEMPRESA_SUCCESS:
+          state.empresa = action.payload;
+          return {
+            ...state,
+            loading: false,
+            empresa: {...state.empresa},
+            error: '',
+          };
+      case DELETE_IMAGEMEMPRESA_SUCCESS:
+        var indexImagem = state.empresa.imagens.findIndex((imagem) => imagem.id === action.payload.id); 
+        state.empresa.imagens = [
+          ...state.empresa.imagens.slice(0, indexImagem),
+          ...state.empresa.imagens.slice(indexImagem+1),
+        ]
+        return {
+          loading: false,
+          empresa: {...state.empresa},
+          error: '',
+        };
       case DELETE_EMPRESA_SUCCESS:
         return {
           loading: false,
@@ -87,10 +113,11 @@ import {
       case CRIAR_EMPRESA_FAILURE:
       case UPDATE_EMPRESA_FAILURE:
       case DELETE_IMAGEMEMPRESA_FAILURE:
+      case GRAVAR_IMAGEMEMPRESA_FAILURE:
       case DELETE_EMPRESA_FAILURE:
         return {
           loading: false,
-          empresa: [],
+          empresa: {},
           error: action.payload,
         };
       default:

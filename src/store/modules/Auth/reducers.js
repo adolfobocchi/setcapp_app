@@ -1,11 +1,12 @@
 // reducers.js
 
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, TOKEN_SUCCESS, TOKEN_FAILURE } from './actions';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, TOKEN_SUCCESS, TOKEN_FAILURE, TOKEN_EXPIRED } from './actions';
+import jwtDecode from 'jwt-decode';
 
 const initialState = {
   isAuthenticated: false,
   token: null,
-  error: null,
+  error: null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -47,6 +48,24 @@ const authReducer = (state = initialState, action) => {
         token: null,
         error: null,
       };
+    case TOKEN_EXPIRED:
+      if(state.token) {
+        const decodedToken = jwtDecode(state.token);
+        const currentTime = Date.now() / 1000;
+        if (decodedToken.exp > currentTime) {
+          return {
+            ...state,
+            isAuthenticated: true,
+          };
+        }
+      }
+      return {
+        ...state,
+        isAuthenticated: false,
+        token: null,
+        error: null,
+      };
+      
     default:
       return state;
   }

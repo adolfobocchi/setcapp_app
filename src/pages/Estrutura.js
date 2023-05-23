@@ -10,7 +10,14 @@ const Home = ({loading, empresas, error}) => {
         <h3>Estrutura</h3>
         <GaleriaArea >
         {empresas?.imagens?.map(imagem => {
-              return (<img key={imagem.id} src={`${API_URL}/images/${imagem.url}`} style={{margin: 8, width: 'auto', height: 200 }} alt='imagem estrutura'/>)
+              return (
+                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                  <img key={imagem.id} src={`${API_URL}/images/${imagem.url}`} style={{margin: 8, width: 'auto', height: 200 }} alt='imagem estrutura'/>
+                  <span>{imagem.legenda}</span>
+                </div>
+              )
+
+
             })}
             </GaleriaArea>
         </>

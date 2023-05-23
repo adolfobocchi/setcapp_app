@@ -22,7 +22,9 @@ export const DELETE_IMAGEMEMPRESA_REQUEST = 'DELETE_IMAGEMEMPRESA_REQUEST';
 export const DELETE_IMAGEMEMPRESA_SUCCESS = 'DELETE_IMAGEMEMPRESA_SUCCESS';
 export const DELETE_IMAGEMEMPRESA_FAILURE = 'DELETE_IMAGEMEMPRESA_FAILURE';
 
-
+export const GRAVAR_IMAGEMEMPRESA_REQUEST = 'GRAVAR_IMAGEMEMPRESA_REQUEST';
+export const GRAVAR_IMAGEMEMPRESA_SUCCESS = 'GRAVAR_IMAGEMEMPRESA_SUCCESS';
+export const GRAVAR_IMAGEMEMPRESA_FAILURE = 'GRAVAR_IMAGEMEMPRESA_FAILURE';
 
 export const listarEmpresaRequest = () => ({
   type: LISTAR_EMPRESA_REQUEST,
@@ -110,5 +112,21 @@ export const deleteImagemEmpresaSuccess = (id) => ({
 
 export const deleteImagemEmpresaFailure = (error) => ({
   type: DELETE_IMAGEMEMPRESA_FAILURE,
+  payload: { error },
+});
+
+
+export const gravarImagemEmpresaRequest = (id, imagemEmpresa ) => ({
+  type: GRAVAR_IMAGEMEMPRESA_REQUEST,
+  payload: { id, imagemEmpresa },
+});
+
+export const gravarImagemEmpresaSuccess = (empresa) => ({
+  type: GRAVAR_IMAGEMEMPRESA_SUCCESS,
+  payload: { empresa },
+});
+
+export const gravarImagemEmpresaFailure = (error) => ({
+  type: GRAVAR_IMAGEMEMPRESA_FAILURE,
   payload: { error },
 });

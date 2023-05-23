@@ -15,6 +15,7 @@ import associadoReducer from './Associado/reducers';
 import confirmationReducer from './Confirmation/reducers';
 import navbarReducer from './NavBar/reducers';
 import curriculumReducer from './Curriculum/reducers';
+import searchReducer from './Search/reducers';
 
 const rootReducer = combineReducers({
 
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   navbar: navbarReducer,
   curriculum: curriculumReducer,
   sindical: sindicalReducer,
+  search: searchReducer,
 });
 
 export default rootReducer;

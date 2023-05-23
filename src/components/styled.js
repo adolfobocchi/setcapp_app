@@ -78,6 +78,7 @@ export const LogoImg = styled.img`
 export const SearchArea = styled.div`
     flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 90%;
@@ -94,7 +95,28 @@ export const ContatoArea = styled.div`
     align-items: center;
     margin-left: 30px;
 
-`
+`;
+
+export const Dropdown = styled.div`
+  position:absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: auto;
+  background-color: #F38735;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+  height: auto;
+`;
+
+export const DropdownItem = styled.div`
+  padding: 10px;
+  cursor: pointer;
+  font-size: 0.7em;
+  &:hover {
+    background-color: #C2F24E;
+  }
+`;
 
 
 export const BannerArea = styled.section`
@@ -236,24 +258,31 @@ export const IconArea = styled.div`
 
 export const ServicoCard = styled.a`
     display: flex;
-    height: 300px;
+    height: auto;
+    min-height: 200px;
     width: calc(50% - 10px);
     background-color: ${props => props.background};
     padding: 8px;
     text-decoration: none;
     color: #000;
-    
-    @media only screen and (max-width: 700px) {
-        flex-basis: 50%;
-    }
-    
-    @media (min-width: 699px) and (max-width: 500px) {
-        flex-basis: 100%;
+
+    @media (min-width: 992px) {
+        font-size: 1rem;
     }
 
-    @media only screen and (max-width: 499px) {
-        flex-basis: 100%;
+    @media (min-width: 768px) and (max-width: 991px) {
+        font-size: 0.8rem;
     }
+
+    @media (min-width: 381px) and (max-width: 767px) {
+        font-size: 0.7rem;
+        width: calc(100% - 10px);
+    }
+    @media (max-width: 380px) {
+        font-size: 0.6rem;
+        width: calc(100% - 10px);
+    }
+    
 
 `
 export const SectionArea = styled.section`
@@ -375,6 +404,7 @@ export const MapaArea = styled.div`
 export const ServicoCardIconArea = styled.div`
     width: 30%;
     height: 100%;
+    min-height: inherit;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -384,11 +414,18 @@ export const ServicoCardImg = styled.img`
     width: 100px;
     height: 100px;
     border-radius: 50%;
+
+    @media (max-width: 380px) {
+        width: 60px;
+        height: 60px;
+    }
 `
 
 export const ServicoCardContent = styled.div`
   flex: 1;
   flex-direction: column;
+  height: 100%;
+    min-height: inherit;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -19,6 +19,9 @@ import {
   DELETE_IMAGEMEMPRESA_REQUEST,
   DELETE_IMAGEMEMPRESA_SUCCESS,
   DELETE_IMAGEMEMPRESA_FAILURE,
+  GRAVAR_IMAGEMEMPRESA_SUCCESS,
+  GRAVAR_IMAGEMEMPRESA_FAILURE,
+  GRAVAR_IMAGEMEMPRESA_REQUEST,
 } from './actions';
 
 import api from '../../../services/api';
@@ -92,6 +95,17 @@ export function* deleteImagemEmpresa(action) {
 }
 
 
+export function* gravarImagemEmpresa(action) {
+  try {
+    const response = yield call(() => api.post(`/empresa/${action.payload.id}/imagem`, action.payload.imagemEmpresa));
+    const empresa = response.data[0];
+    yield put({ type: GRAVAR_IMAGEMEMPRESA_SUCCESS, payload:empresa });
+  } catch (error) {
+    yield put({ type: GRAVAR_IMAGEMEMPRESA_FAILURE, payload: error.message });
+  }
+}
+
+
 export default all([
   takeLatest(DELETE_EMPRESA_REQUEST, deleteEmpresa),
   takeLatest(UPDATE_EMPRESA_REQUEST, updateEmpresa),
@@ -99,4 +113,5 @@ export default all([
   takeLatest(SHOW_EMPRESA_REQUEST, showEmpresa),
   takeLatest(LISTAR_EMPRESA_REQUEST, listarEmpresa),
   takeLatest(DELETE_IMAGEMEMPRESA_REQUEST, deleteImagemEmpresa),
+  takeLatest(GRAVAR_IMAGEMEMPRESA_REQUEST, gravarImagemEmpresa),
 ])

@@ -13,6 +13,7 @@ import noticia from './Noticia/sagas';
 import servico from './Servico/sagas';
 import slider from './SliderItem/sagas';
 import curriculum from './Curriculum/sagas';
+import search from './Search/sagas';
 
 export default function* rootSaga() {
   return yield all([
@@ -30,5 +31,6 @@ export default function* rootSaga() {
     slider,
     curriculum,
     sindical,
+    search,
   ]);
 }
