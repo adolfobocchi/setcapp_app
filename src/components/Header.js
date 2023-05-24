@@ -65,8 +65,6 @@ const Header = ({loading, empresas, error, toggleMenu, fetchSearch, resultadoSea
     
   };
 
-  console.log(showDropdown);
-
   const handleDropdownItemClick = (link) => {
     // Aqui você pode definir a ação ao clicar em um item do dropdown,
     // por exemplo, redirecionar para a página correspondente.
