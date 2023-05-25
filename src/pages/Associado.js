@@ -103,7 +103,8 @@ const Home = ({ loading, criarAssociado, error, empresas }) => {
         <>
             <SectionArea background='rgba(254,254,254,0.7)' altura={400} direcao={'column'} >
                 <h3 style={{flex:1, textAlign: 'center', marginTop: 20 }}>SEJA UM ASSOCIADO</h3>
-                <div style={{marginTop: 20, marginBottom: 20}} dangerouslySetInnerHTML={{ __html: empresas.associadoPage }}></div>
+                <div style={{marginTop: 20, padding: 40}} dangerouslySetInnerHTML={{ __html: empresas.associadoPage }}></div>
+                <h3 style={{flex:1, textAlign: 'center', marginTop: 20 }}>FORMULÁRIO</h3>
                 <Form style={{ flex: 1, margin: 10, width: '90%' }} onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data' >
                     {
                         Object.keys(formEmpty).map((field, index) => {

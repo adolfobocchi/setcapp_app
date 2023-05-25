@@ -8,6 +8,7 @@ import { Button, Card, Container, Form, Input, Label } from './styled'
 import Modal from '../Modal';
 import { FaChevronLeft, FaChevronRight, FaTrash } from 'react-icons/fa';
 import { showConfirmation } from '../../store/modules/Confirmation/actions';
+import EditorHtml from '../EditorHtml';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
@@ -24,7 +25,7 @@ const ListarEvento = ({ loading, eventos, error, page, deleteImagemEvento, delet
   }
   const [eventoSelected, setEventoSelected] = useState(formEmpty);
   const [eventosState, setEventosState] = useState([]);
-  const { register, formState: { errors }, handleSubmit, reset } = useForm({
+  const { register, control,formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: eventoSelected
       ? {
         id: eventoSelected.id,
@@ -113,9 +114,8 @@ const ListarEvento = ({ loading, eventos, error, page, deleteImagemEvento, delet
         {errors.titulo && <span>Campo obrigatório</span>}
 
         <Label>Descricao</Label>
-        <Input
-          {...register('descricao', { required: true })}
-        />
+        <EditorHtml name="descricao" control={control} defaultValue={eventoSelected?.descricao} />
+        
         {errors.descricao && <span>Campo obrigatório</span>}
 
         <Label>Data</Label>
@@ -128,13 +128,13 @@ const ListarEvento = ({ loading, eventos, error, page, deleteImagemEvento, delet
         <Label>Hora</Label>
         <Input
           type='time'
-          {...register('hora', { required: true })}
+          {...register('hora', { required: false })}
         />
         {errors.hora && <span>Campo obrigatório</span>}
 
         <Label>Local</Label>
         <Input
-          {...register('local', { required: true })}
+          {...register('local', { required: false })}
         />
         {errors.local && <span>Campo obrigatório</span>}
 
@@ -179,7 +179,6 @@ const ListarEvento = ({ loading, eventos, error, page, deleteImagemEvento, delet
 
             </div>
 
-            <p>{evento.descricao}</p>
             <div style={{ display: 'flex', flex: 1, flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center' }}>
               {evento.imagens?.map(imagem => {
                 return (

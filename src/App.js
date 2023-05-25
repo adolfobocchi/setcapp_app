@@ -74,7 +74,7 @@ function App() {
             </DefaultPage>
 
           } />
-          <Route exact path="/sindical" element={
+          <Route exact path="/contribuicoes" element={
             <DefaultPage>
               <Sindical />
             </DefaultPage>

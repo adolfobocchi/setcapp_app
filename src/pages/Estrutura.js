@@ -1,13 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { GaleriaArea } from '../components/empresa/styled';
+import { SectionArea } from '../components/styled';
 
 const API_URL = process.env.REACT_APP_URL_API;
 
 const Home = ({loading, empresas, error}) => {
     return(
         <>
-        <h3>Estrutura</h3>
+        <h3 style={{textAlign: 'center'}}>Estrutura</h3>
+        <SectionArea background='rgba(254,254,254,0.7)' altura={400} direcao={'row'}>
         <GaleriaArea >
         {empresas?.imagens?.map(imagem => {
               return (
@@ -20,6 +22,7 @@ const Home = ({loading, empresas, error}) => {
 
             })}
             </GaleriaArea>
+            </SectionArea>
         </>
     )
 }

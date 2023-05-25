@@ -43,7 +43,7 @@ const DestaqueCardDescricaoArea = styled.div`
 
 const Destaque = () => {
     const destaqueItem = [
-        {key: 0, icone: 'FaBuffer', descricao: 'Contribuicao Sindical', link: 'sindical', background: '#F2791D' },
+        {key: 0, icone: 'FaBuffer', descricao: 'Contribuições', link: 'contribuicoes', background: '#F2791D' },
         {key: 1, icone: 'FaTruck', descricao: 'antt', link: 'antt', background: '#1DDAF2' },
         {key: 2, icone: 'FaHandshake', descricao: 'Acordo Coletivo', link:'acordos', background: '#BA29F2' },
     ]

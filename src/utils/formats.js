@@ -16,5 +16,5 @@ export const whatsAppFormat = (str) => {
 }
 
 export const strSpaceToMinus = (str) => {
-    return str.split(' ').join('-');
+    return str.split(' ').join('-').split('/').join('-');
 }

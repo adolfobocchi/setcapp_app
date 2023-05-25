@@ -62,7 +62,7 @@ const Painel = ({tokenIsExpired}) => {
     { key: 10, label: "Antt", component: <ListarAntt /> },
     { key: 11, label: "Associado", component: <ListarAssociado /> },
     { key: 12, label: "Curriculum", component: <ListarCurriculo /> },
-    { key: 13, label: "Sindical", component: <ListarSindical /> },
+    { key: 13, label: "Contribuições", component: <ListarSindical /> },
     { key: 14, label: "Sair", component: <Logout /> },
   ]
   const [selectedMenuItem, setSelectedMenuItem] = useState(menuItems[0]);

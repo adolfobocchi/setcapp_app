@@ -28,7 +28,7 @@ const Home = ({ loading, sindicals, fetchSindical, error }) => {
     return (
         <>
             <SindicalHeader>
-                <h2>contribuição sindical</h2>
+                <h2>contribuições</h2>
             </SindicalHeader>
 
             <PageAreaContent background='rgba(254,254,254,0.7)' altura={400} >
