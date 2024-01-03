@@ -1,0 +1,25 @@
+.print {
+    background-color: rgba(255, 255,255, 0.9);
+  
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  flex-direction: column;
+  overflow-y: auto;
+    width: 210mm; /* Tamanho da página A4 em largura */
+    height: 297mm; /* Tamanho da página A4 em altura */
+    page-break-inside: avoid; /* Evitar quebras de página dentro do conteúdo */
+    page-break-before: always; /* Forçar quebra de página antes do conteúdo */
+    page-break-after: always; /* Forçar quebra de página após o conteúdo */
+    
+
+      -webkit-print-color-adjust: exact !important;   /* Chrome, Safari 6 – 15.3, Edge */
+      color-adjust: exact !important;                 /* Firefox 48 – 96 */
+      print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
+  
+    }
+
+.a4 {
+    width: 210mm;
+}

@@ -99,6 +99,7 @@ const Home = ({ loading, criarAssociado, error, empresas }) => {
           handleClearAssociado();
     }
 
+
     return (
         <>
             <SectionArea background='rgba(254,254,254,0.7)' altura={400} direcao={'column'} >

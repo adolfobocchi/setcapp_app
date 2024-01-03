@@ -7,7 +7,8 @@ import { criarAssociadoRequest, deleteAssociadoRequest, listarAssociadoRequest, 
 import { Button, Card, Container, Form, Input, Label } from './styled'
 import Modal from '../Modal';
 import { showConfirmation } from '../../store/modules/Confirmation/actions';
-import { FaChevronLeft, FaChevronRight, FaTrash } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaPrint, FaTrash } from 'react-icons/fa';
+import ModalInfo from '../ModalInfo';
 
 const ListarAssociado = ({ loading, associados, error, page, fetchAssociado, criarAssociado, updateAssociado, deleteAssociado, confirmacao }) => {
   const ativo = 0;
@@ -84,6 +85,7 @@ const ListarAssociado = ({ loading, associados, error, page, fetchAssociado, cri
     cargaoutros: false,
 
   }
+  const [showModalInfoState, setShowModalInfoState] = useState(false);
   const [associadoSelected, setAssociadoSelected] = useState(formEmpty);
   const [associadosState, setAssociadosState] = useState([]);
   const { register, formState: { errors }, handleSubmit, reset } = useForm({
@@ -138,6 +140,18 @@ const ListarAssociado = ({ loading, associados, error, page, fetchAssociado, cri
   if (loading) {
     return <Modal />
   }
+
+  if (showModalInfoState) {
+    return <ModalInfo dados={associadoSelected} close={setShowModalInfoState} />
+  }
+
+  
+  const handleShow = (event, index) => {
+    event.preventDefault();
+    event.stopPropagation();
+    handleSelectAssociado(event, index)
+    setShowModalInfoState(true);
+  }
   return (
     <>
       <Form style={{ flex: 1, margin: 10 }} onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data' >
@@ -179,6 +193,7 @@ const ListarAssociado = ({ loading, associados, error, page, fetchAssociado, cri
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <h5 style={{ textAlign: 'justify', marginRight: 10, marginBottom: 10 }}>{associado.razaoSocial}</h5>
               <div style={{ cursor: 'pointer' }} >
+                <FaPrint onClick={(event) => handleShow(event, index)} style={{ height: '1em', width: '1em' }} />
                 <FaTrash onClick={(event) => handleDeleteAssociado(event, associado.id)} style={{ height: '1em', width: '1em' }} />
               </div>
             </div>

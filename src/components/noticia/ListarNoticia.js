@@ -103,6 +103,7 @@ const ListarNoticia = ({ loading, noticias, error, page, fetchNoticia, criarNoti
           {...register('ativo')}
         />
         {errors.ativo && <span>Campo obrigatório</span>}
+        
 
         <Button type="submit">Salvar</Button>
         <Button type="button" onClick={handleClearNoticia}>Limpar</Button>
